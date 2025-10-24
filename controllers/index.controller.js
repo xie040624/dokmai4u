@@ -1,14 +1,15 @@
 module.exports = {
     get: (req, res, next) => {
-        res.send(`get`)
+        res.send('Hi');
     },
     post: (req, res, next) => {
-        res.send(`post`)
+        const message = req.body.message;
+        res.send({ message: message });
     },
     put: (req, res, next) => {
-        res.send(`put`)
+        res.send('Put\'s done.');
     },
     delete: (req, res, next) => {
-        res.send(`delete`)
+        res.send('Delete\'s done.');
     }
 };

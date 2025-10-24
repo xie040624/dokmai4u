@@ -1,10 +1,14 @@
 const express = require('express');
-const dotenv = require('dotenv');
-const indexRoute = require('./routes/index.route');
-
 const app = express();
+app.use(express.json());
+
+const dotenv = require('dotenv');
 dotenv.config();
 
+const indexRoute = require('./routes/index.route');
 app.use('/', indexRoute);
 
-app.listen(process.env.port, () => console.log(`Run on http://localhost:${process.env.port}`));
+const adminRoute = require('./routes/admin.route');
+app.use('/admin', adminRoute);
+
+app.listen(process.env.PORT, () => console.log(`Run on http://localhost:${process.env.port}`));
