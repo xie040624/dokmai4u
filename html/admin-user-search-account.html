@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search User Account</title>
+    <link rel="stylesheet" href="desktop-shared.css">
+    <link rel="stylesheet" href="admin-product.css"> <!-- Use shared admin styles -->
+    <link rel="stylesheet" href="admin-users-account.css"> <!-- Specific account styles -->
+    <link rel="stylesheet" href="/html/moblie-nav.css">
+    <style>
+        .page-wrapper { padding-top: 60px; box-sizing: border-box; }
+        .main-content { flex-grow: 1; padding-top: 25px; padding-bottom: 25px; }
+        @media (min-width: 720px) { /* Adjust breakpoint if needed */
+             .page-wrapper { padding-top: 0; }
+            .main-content { padding: 30px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Mobile Navigation Bar -->
+    <nav class="mobile-nav">
+        <a href="home.html" class="mobile-logo">dokmai4u Shop</a>
+        <div id="hamburger-icon" class="hamburger-icon"><span></span><span></span><span></span></div>
+    </nav>
+    <div id="mobile-menu" class="mobile-menu">
+        <a href="home.html">Home</a>
+        <a href="search.html">Search</a>
+        <a href="admin-login.html">Login</a>
+    </div>
+
+    <!-- Desktop Navigation Bar -->
+    <nav class="desktop-nav">
+        <a href="home.html" class="logo">dokmai4u Shop</a>
+        <div class="nav-links">
+            <a href="home.html">Home</a>
+            <a href="search.html">Search</a>
+            <a href="admin-login.html">Login</a>
+        </div>
+    </nav>
+
+    <!-- Page Wrapper -->
+    <div class="page-wrapper">
+        <!-- Original Header (Hidden by CSS) -->
+        <header class="app-header">
+             <a href="admin-users-account-management.html" class="back-arrow">&lt;</a>
+             <h1 class="title" style="font-size: 20px;">Search User Account</h1>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="admin-container">
+
+                <!-- Toolbar: Search Input + Search Button -->
+                <div class="am-toolbar">
+                     <input type="text" class="am-search-bar" placeholder="username">
+                     <!-- Added Search Button -->
+                     <a href="#" class="am-search-btn">Search</a>
+                </div>
+
+                <!-- Sample Search Result -->
+                <div class="search-result-item">
+                     <div class="search-result-header">
+                          <div class="am-account-icon">👤</div>
+                          <div class="am-account-info">
+                              <h4>Username1</h4>
+                              <p>Role: Admin</p>
+                          </div>
+                     </div>
+                     <!-- Update / Delete Buttons -->
+                     <div class="search-result-actions">
+                          <a href="admin-user-update-account.html" class="btn-update">Update</a>
+                          <a href="admin-user-delete-account.html" class="btn-delete">Delete</a>
+                     </div>
+                </div>
+
+                 <!-- Add more .search-result-item blocks here if needed -->
+
+            </div>
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer class="desktop-footer">
+        <div class="footer-column left">
+            <h4>For Admin</h4>
+            <a href="admin-login.html">Login</a>
+            <a href="admin-product-management.html">Product Management</a>
+            <a href="admin-users-account-management.html">Account Management</a>
+        </div>
+        <div class="footer-column right">
+            <h4>Contact</h4>
+            <p>contact@gmail.com</p>
+            <p>012-345-6789</p>
+        </div>
+    </footer>
+
+    <!-- JS for Mobile Nav -->
+    <script src="/html/moblie-nav.js" defer></script>
+
+</body>
+</html>
+

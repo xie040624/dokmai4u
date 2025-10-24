@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Information</title>
+    <link rel="stylesheet" href="desktop-shared.css">
+    <link rel="stylesheet" href="admin-product.css">
+    <link rel="stylesheet" href="admin-users-account.css">
+    <link rel="stylesheet" href="/html/moblie-nav.css">
+    <style>
+        .page-wrapper { padding-top: 60px; box-sizing: border-box; }
+        .main-content { flex-grow: 1; padding-top: 25px; padding-bottom: 25px; }
+        @media (min-width: 720px) { /* Adjust breakpoint if needed */
+             .page-wrapper { padding-top: 0; }
+            .main-content { padding: 30px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Mobile Navigation Bar -->
+    <nav class="mobile-nav">
+        <a href="home.html" class="mobile-logo">dokmai4u Shop</a>
+        <div id="hamburger-icon" class="hamburger-icon"><span></span><span></span><span></span></div>
+    </nav>
+    <div id="mobile-menu" class="mobile-menu">
+        <a href="home.html">Home</a>
+        <a href="search.html">Search</a>
+        <a href="admin-login.html">Login</a>
+    </div>
+
+    <!-- Desktop Navigation Bar -->
+    <nav class="desktop-nav">
+        <a href="home.html" class="logo">dokmai4u Shop</a>
+        <div class="nav-links">
+            <a href="home.html">Home</a>
+            <a href="search.html">Search</a>
+            <a href="admin-login.html">Login</a>
+        </div>
+    </nav>
+
+    <!-- Page Wrapper -->
+    <div class="page-wrapper">
+        <!-- Original Header (Hidden by CSS) -->
+        <header class="app-header">
+             <a href="admin-user-search-account.html" class="back-arrow">&lt;</a>
+             <h1 class="title">Update Information</h1>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="admin-container">
+
+                <form action="#" method="post" class="admin-form">
+                    <div class="account-icon-large">👤</div>
+
+                    <div class="form-group">
+                        <label for="first-name">First Name</label>
+                        <input type="text" id="first-name" name="first-name" value="FirstNameExample">
+                    </div>
+                    <div class="form-group">
+                        <label for="last-name">Last Name</label>
+                        <input type="text" id="last-name" name="last-name" value="LastNameExample">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" value="user@example.com">
+                    </div>
+                     <div class="form-group">
+                        <label for="phone">Phone</label>
+                        <input type="tel" id="phone" name="phone" value="081-xxx-xxxx">
+                    </div>
+                    <div class="form-group">
+                        <label for="address">Address</label>
+                        <textarea id="address" name="address">123 Example Rd, Bangkok</textarea>
+                    </div>
+
+                    <button type="submit" class="btn-primary">Update</button>
+                </form>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer class="desktop-footer">
+        <div class="footer-column left">
+            <h4>For Admin</h4>
+            <a href="admin-login.html">Login</a>
+            <a href="admin-product-management.html">Product Management</a>
+            <a href="admin-users-account-management.html">Account Management</a>
+        </div>
+        <div class="footer-column right">
+            <h4>Contact</h4>
+            <p>contact@gmail.com</p>
+            <p>012-345-6789</p>
+        </div>
+    </footer>
+
+    <!-- JS for Mobile Nav -->
+    <script src="/html/moblie-nav.js" defer></script>
+
+</body>
+</html>
+

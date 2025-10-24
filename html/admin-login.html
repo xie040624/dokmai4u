@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login</title>
+
+    <link rel="stylesheet" href="desktop-shared.css">
+    <link rel="stylesheet" href="/html/moblie-nav.css">
+
+    <style>
+        /* --- 1. การตั้งค่าหน้าเว็บโดยรวม (Mobile First) --- */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #ffffff; /* 1. พื้นหลังเริ่มต้นเป็นสีขาว (สำหรับมือถือ) */
+        }
+
+        /* * 2. สร้าง Wrapper เพื่อควบคุม Layout
+         * บนมือถือ: จะยืดเต็ม 100%
+         * บน Desktop: จะหดลงและอยู่ตรงกลาง
+        */
+        .login-wrapper {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            background-color: #ffffff;
+            padding-top: 60px; 
+            box-sizing: border-box;
+            transition: none;
+        }
+
+        /* --- 3. ส่วนหัวของฟอร์ม (Mobile) --- */
+        .app-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 20px 25px; 
+        }
+
+        .app-header .back-arrow {
+            position: absolute;
+            left: 25px;
+            font-size: 24px;
+            font-weight: 500;
+            color: #000;
+            text-decoration: none;
+        }
+
+        .app-header .title-container {
+            text-align: center;
+        }
+
+        .app-header .title {
+            font-size: 34px;
+            font-weight: 700;
+            margin: 0;
+            color: #000;
+        }
+
+        .app-header .subtitle {
+            font-size: 16px;
+            color: #888;
+            margin-top: 4px;
+        }
+
+        /* --- 4. ส่วนฟอร์ม (Mobile) --- */
+        .login-container {
+            padding: 40px 25px;
+            flex-grow: 1; /* 5. ทำให้ฟอร์มยืดเต็มส่วนที่เหลือ */
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* จัดกลางแนวตั้ง */
+            align-items: center; /* จัดกลางแนวนอน */
+            box-sizing: border-box; /* เพิ่ม box-sizing */
+        }
+
+        .login-container form {
+             width: 100%;
+             max-width: 350px; /* กำหนดความกว้างสูงสุดให้ฟอร์มดูดี */
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 18px;
+            font-weight: 600;
+            color: #000;
+            margin-bottom: 10px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 15px 16px;
+            font-size: 16px;
+            border: none;
+            background-color: #f0f2f5;
+            border-radius: 12px;
+            box-sizing: border-box;
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
+        }
+
+        .login-button {
+            width: 100%;
+            padding: 16px;
+            font-size: 18px;
+            font-weight: 600;
+            color: #ffffff;
+            background-color: #007aff;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            margin-top: 15px;
+            box-shadow: 0 4px 10px rgba(0, 122, 255, 0.3);
+            transition: background-color 0.2s ease;
+        }
+
+        .login-button:hover {
+            background-color: #005ec4;
+        }
+
+        /* * ========================================
+         * 5. ส่วนสำหรับ Desktop (หน้าจอรอง) 
+         * ========================================
+         * ใช้ Media Query: เมื่อหน้าจอกว้าง 720px ขึ้นไป
+        */
+        @media (min-width: 720px) {
+            body {
+                background-color: #f0f2f5; 
+                display: flex; 
+                /*จัดโครงสร้างให้ Nav บนสุด */
+                flex-direction: column; 
+                min-height: 100vh; /*ให้ body สูงเต็มจอเสมอ */
+            }
+
+            /*ให้ Wrapper จัดกลางเฉพาะเนื้อหา ไม่รวม Nav/Footer */
+            .login-wrapper {
+                 width: 100%;
+                 max-width: 480px; /* จำกัดความกว้าง */
+                 min-height: auto; /*ไม่ต้องสูงเต็ม body */
+                 height: auto; 
+                 margin: 40px auto; /*จัดกลางแนวตั้ง/นอน และเว้นระยะ */
+                 padding-top: 0; /*เอา padding-top ของ mobile ออก */
+                 border-radius: 20px;
+                 box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+                 overflow: hidden; 
+            }
+
+            .app-header {
+                padding: 30px 30px 20px 30px; 
+                border-bottom: 1px solid #eee; 
+            }
+            .app-header .back-arrow { left: 30px; }
+            .login-container {
+                padding: 70px 30px 40px 30px; 
+                flex-grow: 1; /*ให้ยืดเต็มพื้นที่ที่เหลือใน card */
+            }
+        }
+    </style>
+</head>
+<body>
+    
+    <nav class="mobile-nav">
+        <a href="home.html" class="mobile-logo">dokmai4u Shop</a>
+        <div id="hamburger-icon" class="hamburger-icon">
+            <span></span><span></span><span></span>
+        </div>
+    </nav>
+    <div id="mobile-menu" class="mobile-menu">
+        <a href="home.html">Home</a>
+        <a href="search.html">Search</a>
+        <a href="admin-login.html">Login</a>
+    </div>
+
+    <nav class="desktop-nav">
+         <a href="home.html" class="logo">dokmai4u Shop</a>
+         <div class="nav-links">
+             <a href="home.html">Home</a>
+             <a href="search.html">Search</a>
+             <a href="admin-login.html">Login</a>
+         </div>
+    </nav>
+
+    <div class="login-wrapper">
+
+        <main class="login-container">
+
+            <h1 class="page-title">Login</h1>
+
+            <form action="#" method="post">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username">
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password">
+                </div>
+
+                <button type="submit" class="login-button">Login</button>
+            </form>
+        </main>
+
+    </div>
+
+    <footer class="desktop-footer"> 
+        <div class="footer-column left">
+            <h4>For Admin</h4>
+            <a href="admin-login.html">Login</a> 
+            <a href="admin-product-management.html">Product Management</a>
+            <a href="admin-users-account-management.html">Account Management</a>
+        </div>
+        <div class="footer-column right">
+            <h4>Contact</h4>
+            <p>contact@gmail.com</p>
+            <p>012-345-6789</p>
+        </div>
+    </footer>
+
+    <script src="/html/moblie-nav.js" defer></script>
+
+</body>
+</html>

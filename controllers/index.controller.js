@@ -1,15 +1,10 @@
+const path = require('path');
+
 module.exports = {
-    get: (req, res, next) => {
-        res.send('Hi');
+    home: (req, res, next) => {
+        res.sendFile(path.join(__dirname, './../html', 'home.html'));
     },
-    post: (req, res, next) => {
-        const message = req.body.message;
-        res.send({ message: message });
-    },
-    put: (req, res, next) => {
-        res.send('Put\'s done.');
-    },
-    delete: (req, res, next) => {
-        res.send('Delete\'s done.');
+    login: (req, res, next) => {
+        res.sendFile(path.join(__dirname, './../html', 'home.html'));
     }
 };

@@ -1,0 +1,91 @@
+/* --- 1. แถบ Nav มือถือ (แถบบนสุด) --- */
+.mobile-nav {
+    display: flex; 
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    height: 60px; 
+    background-color: #ffffff;
+    border-bottom: 1px solid #f0f0f0;
+    
+    position: fixed; 
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100; 
+}
+
+.mobile-logo {
+    font-size: 18px;
+    font-weight: 600;
+    color: #000;
+    text-decoration: none;
+}
+
+/* --- 2. ปุ่ม Hamburger (สามขีด) --- */
+.hamburger-icon {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 24px;
+    height: 18px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 102; 
+}
+
+.hamburger-icon span {
+    width: 24px;
+    height: 2px;
+    background-color: #333;
+    border-radius: 10px;
+    transition: all 0.3s linear;
+}
+
+/* --- 3. เมนู Dropdown (แก้ไข) --- */
+.mobile-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* ลดระยะห่าง */
+    
+    position: absolute; /* เปลี่ยนเป็น absolute */
+    top: 65px; /* ให้เริ่มใต้ Nav Bar เล็กน้อย */
+    right: 20px; /* ให้ชิดขวา */
+    
+    min-width: 180px; /* กำหนดความกว้างขั้นต่ำ */
+    padding: 20px;
+    box-sizing: border-box;
+    
+    background-color: #ffffff;
+    border: 1px solid #eee;
+    border-radius: 8px; /* เพิ่มขอบมน */
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1); /* เพิ่มเงา */
+    
+    z-index: 101;
+    
+    /* (ซ่อนไว้โดยการย่อแกน Y) */
+    transform: scaleY(0); 
+    transform-origin: top right; /* ให้ขยายจากมุมบนขวา */
+    transition: transform 0.2s ease-in-out;
+}
+
+/* (สถานะตอนเปิด) */
+.mobile-menu.open {
+    transform: scaleY(1); /* ขยายเต็ม */
+}
+
+.mobile-menu a {
+    font-size: 18px; /* ลดขนาดฟอนต์ */
+    font-weight: 500;
+    color: #333;
+    text-decoration: none;
+    padding: 5px 0; /* เพิ่ม padding บน-ล่าง */
+}
+
+/* --- 4.  ซ่อน Header เก่าบน Mobile --- */
+.app-header {
+    display: none !important; /* ซ่อน Header เดิม (เช่น dokmai4u shop | Search) */
+}
+

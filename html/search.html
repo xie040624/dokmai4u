@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Page</title>
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="desktop-shared.css">
+    <link rel="stylesheet" href="/html/moblie-nav.css">
+
+    <style>
+        /* --- 1. การตั้งค่าหน้าเว็บโดยรวม (Mobile First) --- */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #ffffff; 
+        }
+
+        .page-wrapper {
+            width: 100%;
+            min-height: 100%;
+            display: flex;
+            flex-direction: column;
+            background-color: #ffffff;
+            transition: none;
+        }
+
+        /* --- 2. ส่วนหัว (Header) --- */
+        .app-header {
+            display: flex;
+            align-items: center;
+            justify-content: center; /* จัดกลาง */
+            position: relative;
+            padding: 20px 25px; 
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .app-header .back-arrow {
+            position: absolute;
+            left: 25px;
+            font-size: 24px;
+            font-weight: 500;
+            color: #000;
+            text-decoration: none;
+        }
+
+        .app-header .title {
+            font-size: 34px;
+            font-weight: 700;
+            margin: 0;
+            color: #000;
+        }
+
+        /* --- 3. ส่วนเนื้อหาหลัก (ฟอร์ม + ผลลัพธ์) --- */
+        .main-content {
+            flex-grow: 1;
+            padding: 25px;
+        }
+        
+        .page-title {
+            font-size: 34px; 
+            font-weight: 700;
+            color: #000;
+            
+            /*จัดกลาง (ทำงานทั้ง Mobile & Desktop) */
+            text-align: center; 
+            
+            /*เว้นระยะห่างด้านบน (ทำงานทั้ง Mobile & Desktop) */
+            margin-top: 60px; 
+            
+            margin-bottom: 30px; /* เว้นระยะล่าง */
+            
+            /* (จำกัดความกว้าง จัดกลาง ให้ตรงกับฟอร์ม) */
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* --- 4. สไตล์ของฟอร์มค้นหา --- */
+        .search-form-container {
+            width: 100%;
+            max-width: 600px; /* 1. จำกัดความกว้าง ให้เท่ากับผลลัพธ์ */
+            margin: 0 auto 40px auto; /* 2. จัดกึ่งกลาง และเว้นระยะล่าง */
+            box-sizing: border-box; 
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 18px;
+            font-weight: 600;
+            color: #000;
+            margin-bottom: 10px;
+        }
+
+        /* สไตล์สำหรับช่อง Input, Select, Date */
+        .form-group input[type="text"],
+        .form-group input[type="date"],
+        .form-group select {
+            width: 100%;
+            padding: 15px 16px;
+            font-size: 16px;
+            border: none;
+            background-color: #f0f2f5;
+            border-radius: 12px;
+            box-sizing: border-box;
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
+            /* ทำให้ select box หน้าตาเหมือน input */
+            appearance: none; 
+        }
+        
+        /* เพิ่มลูกศร Dropdown ให้ Select */
+        .select-wrapper {
+            position: relative;
+        }
+        .select-wrapper::after {
+            content: '▼';
+            font-size: 12px;
+            color: #888;
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none; /* ทำให้คลิกทะลุได้ */
+        }
+
+        /* สไตล์สำหรับช่อง Min-Max */
+        .price-inputs {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .price-inputs input {
+            width: 40%; /* แบ่งครึ่งสำหรับ Min/Max */
+        }
+        .price-inputs span {
+            color: #888;
+        }
+
+        .search-button {
+            width: 100%;
+            padding: 16px;
+            font-size: 18px;
+            font-weight: 600;
+            color: #ffffff;
+            background-color: #007aff;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            margin-top: 15px;
+            box-shadow: 0 4px 10px rgba(0, 122, 255, 0.3);
+        }
+
+        /* --- 5. สไตล์ของผลการค้นหา --- */
+        .search-results-container h2 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            
+            /* จัดให้หัวข้อ "Results" อยู่กึ่งกลางด้วย */
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .result-item {
+            margin-bottom: 30px;
+        }
+
+        /* (ใช้ CSS เดิมของ Swiper) */
+        .slider-container {
+            width: 100%;
+            max-width: 600px; 
+            margin: 0 auto 15px auto; /* เว้นล่าง 15px */
+        }
+        .swiper {
+            width: 100%;
+            height: 250px; /* ความสูงสไลเดอร์ผลลัพธ์ */
+            border-radius: 18px; 
+        }
+        .swiper-slide {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #e9e9e9;
+        }
+        .swiper-slide a {
+        display: block;  /* 1. เปลี่ยน <a> ให้เป็นกล่อง (block) */
+        width: 100%;     /* 2. สั่งให้กล่อง <a> กว้าง 100% */
+        height: 100%;    /* 3. สั่งให้กล่อง <a> สูง 100% */
+        text-decoration: none; /* (แถม) ลบขีดเส้นใต้ */
+        }
+        .swiper-slide img {
+            width: 100%;      
+            height: 100%;     
+            object-fit: cover; 
+        }
+        .swiper-button-next,
+        .swiper-button-prev {
+            color: #ffffff; 
+            background-color: rgba(0, 0, 0, 0.3); 
+            width: 44px; height: 44px;
+            border-radius: 50%;
+            --swiper-navigation-size: 18px; 
+        }
+        
+        /* สไตล์ส่วนรายละเอียดสินค้า */
+        .product-details {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            max-width: 600px; /* จัดให้ตรงกับสไลเดอร์ */
+            margin: 0 auto;
+            padding: 0 5px; /* เว้นข้างเล็กน้อย */
+        }
+        .product-details h4 {
+            margin: 0;
+            font-size: 18px;
+            font-weight: 600;
+        }
+        .product-details p {
+            margin: 4px 0 0 0;
+            font-size: 14px;
+            color: #888;
+        }
+        .product-details .price {
+            font-size: 18px;
+            font-weight: 600;
+            color: #000;
+        }
+
+
+        /* * ========================================
+         * 6. ส่วนสำหรับ Desktop (หน้าจอรอง) 
+         * ========================================
+        */
+        @media (min-width: 720px) {
+            .app-header .back-arrow {
+                left: 30px;
+            }
+
+            .main-content {
+                padding: 25px 30px; 
+            }
+
+            .page-title {
+                margin-top: 20px; 
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="mobile-nav">
+        <a href="home.html" class="mobile-logo">dokmai4u Shop</a>
+        <div id="hamburger-icon" class="hamburger-icon">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+    <div id="mobile-menu" class="mobile-menu">
+        <a href="home.html">Home</a>
+        <a href="search.html">Search</a>
+        <a href="admin-login.html">Login</a>
+    </div>
+
+    <nav class="desktop-nav">
+         <a href="home.html" class="logo">dokmai4u Shop</a>
+         <div class="nav-links">
+             <a href="home.html">Home</a>
+             <a href="search.html">Search</a>
+             <a href="admin-login.html">Login</a>
+         </div>
+    </nav>
+
+    <div class="page-wrapper">
+    
+        <main class="main-content">
+
+            <h1 class="page-title">Search</h1>
+    
+            <section class="search-form-container">
+                <form action="#" method="get" id="search-form">
+                    <div class="form-group">
+                        <label for="keyword">Keyword</label>
+                        <input type="text" id="keyword" name="keyword">
+                    </div>
+    
+                    <div class="form-group">
+                        <label for="category">Category</label>
+                        <div class="select-wrapper">
+                            <select id="category" name="category">
+                                <option value="">Category</option>
+                                <option value="bouquets">Bouquets</option>
+                                <option value="gifts">Gift Sets</option>
+                                <option value="single">Single Stems</option>
+                            </select>
+                        </div>
+                    </div>
+    
+                    <div class="form-group">
+                        <label>Price</label>
+                        <div class="price-inputs">
+                            <input type="text" id="min-price" name="min-price" placeholder="Min">
+                            <span>—</span>
+                            <input type="text" id="max-price" name="max-price" placeholder="Max">
+                        </div>
+                    </div>
+    
+                    <div class="form-group">
+                        <label for="available">Available</label>
+                        <input type="date" id="available" name="available" value="2024-02-01">
+                    </div>
+    
+                    <button type="submit" class="search-button">Search</button>
+                </form>
+            </section>
+    
+            <section class="search-results-container">
+                <h2 id="search-results-heading">No criteria search</h2>
+                <div class="result-item">
+                    <div class="slider-container">
+                        <div class="swiper searchSwiper1">
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide">
+                                    <a href="">
+                                        <img src="" alt="Product 1">
+                                    </a>
+                                </div>
+                                <div class="swiper-slide">
+                                    <a href="">
+                                        <img src="" alt="Product 2">
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="swiper-button-next"></div>
+                            <div class="swiper-button-prev"></div>
+                        </div>
+                    </div>
+                    <div class="product-details">
+                        <div class="info">
+                            <h4>Product Name</h4>
+                            <p>Category</p>
+                        </div>
+                        <span class="price">Price</span>
+                    </div>
+                </div>
+    
+                <div class="result-item">
+                    <div class="slider-container">
+                        <div class="swiper searchSwiper2">
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide">
+                                    <a href="">
+                                        <img src="" alt="Rose">
+                                    </a>
+                                </div>
+                                <div class="swiper-slide">
+                                    <a href="">
+                                        <img src="" alt="Sunflower">
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="swiper-button-next"></div>
+                            <div class="swiper-button-prev"></div>
+                        </div>
+                    </div>
+                    <div class="product-details">
+                        <div class="info">
+                            <h4>Rose</h4>
+                            <p>Category</p>
+                        </div>
+                        <span class="price">8 $</span>
+                    </div>
+                </div>
+    
+            </section>
+    
+        </main>
+    
+    </div>
+
+    <footer class="desktop-footer">
+        <div class="footer-column left">
+            <h4>For Admin</h4>
+            <a href="admin-login.html">Login</a>
+            <a href="admin-product-management.html">Product Management</a>
+            <a href="admin-users-account-management.html">Account Management</a>
+        </div>
+        <div class="footer-column right">
+            <h4>Contact</h4>
+            <p>contact@gmail.com</p>
+            <p>012-345-6789</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+    <script>
+        var swiper1 = new Swiper(".searchSwiper1", {
+            navigation: {
+                nextEl: ".searchSwiper1 .swiper-button-next",
+                prevEl: ".searchSwiper1 .swiper-button-prev",
+            },
+            loop: true,
+        });
+
+        var swiper2 = new Swiper(".searchSwiper2", {
+            navigation: {
+                nextEl: ".searchSwiper2 .swiper-button-next",
+                prevEl: ".searchSwiper2 .swiper-button-prev",
+            },
+            loop: true,
+        });
+
+        // 1. เลือกฟอร์มและหัวข้อที่เราตั้ง id ไว้
+        var searchForm = document.getElementById('search-form');
+        var resultsHeading = document.getElementById('search-results-heading');
+
+        // 2. สั่งให้ดักฟังเหตุการณ์ 'submit' (เมื่อกดยืนยันฟอร์ม)
+        if (searchForm && resultsHeading) {
+            searchForm.addEventListener('submit', function(event) {
+                event.preventDefault(); 
+                resultsHeading.textContent = 'Search Result';
+            });
+        }
+    </script>
+
+    <script src="/html/moblie-nav.js" defer></script>
+
+</body>
+</html>

@@ -1,6 +1,10 @@
 const db = require('./../db');
+const path = require('path');
 
 module.exports = {
+    get: (req, res, next) => {
+        res.sendFile(path.resolve(__dirname, '../html/admin-users-account-management.html'));
+    },
     select: async (req, res, next) => {
         try {
             const [rows] = await db.query('SELECT * FROM admin');

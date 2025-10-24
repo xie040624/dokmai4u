@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detail Page</title>
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="desktop-shared.css">
+    <link rel="stylesheet" href="/html/moblie-nav.css">
+
+    <style>
+        /* --- 1. การตั้งค่าหน้าเว็บโดยรวม (Mobile First) --- */
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #ffffff;
+        }
+    
+        .page-wrapper {
+            width: 100%;
+            min-height: 100%;
+            display: flex;
+            flex-direction: column;
+            padding-top: 60px; 
+            box-sizing: border-box;
+        }
+    
+        /* --- 2. ส่วนหัว (Header) --- */
+        .app-header {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            /* จัดชิดซ้าย (สำหรับลูกศร) */
+            padding: 20px 25px;
+        }
+    
+        .app-header .back-arrow {
+            font-size: 24px;
+            font-weight: 500;
+            color: #000;
+            text-decoration: none;
+        }
+    
+        /* --- 3. ส่วนเนื้อหาหลัก --- */
+        .main-content {
+            flex-grow: 1;
+            /* เว้นที่ว่างด้านล่าง ให้เนื้อหาไม่ถูกปุ่ม "Order" บัง
+                  ค่า 120px = ความสูงปุ่ม (80px) + ระยะห่าง (40px) 
+                */
+            padding-bottom: 120px;
+        }
+    
+        /* --- 4. สไลเดอร์ --- */
+        .slider-container {
+            width: 100%;
+            max-width: 800px;
+            /* จำกัดความกว้างบนจอใหญ่ */
+            margin: 0 auto;
+            margin-top: 50px;
+            /* จัดกึ่งกลาง */
+            padding: 0 25px;
+            /* เว้นข้างบนมือถือ */
+            box-sizing: border-box;
+        }
+    
+        .swiper {
+            width: 100%;
+            height: 350px;
+            /* ทำให้สไลเดอร์สูงกว่าหน้า Home */
+            border-radius: 18px;
+            background-color: #f0f2f5;
+        }
+    
+        .swiper-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    
+        .swiper-button-next,
+        .swiper-button-prev {
+            color: #ffffff;
+            background-color: rgba(0, 0, 0, 0.3);
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            --swiper-navigation-size: 18px;
+        }
+    
+        /* --- 5. รายละเอียดสินค้า --- */
+        .product-info {
+            width: 100%;
+            max-width: 800px;
+            /* จำกัดความกว้างบนจอใหญ่ */
+            margin: 0 auto;
+            /* จัดกึ่งกลาง */
+            padding: 25px;
+            box-sizing: border-box;
+        }
+    
+        .product-info .product-name {
+            font-size: 34px;
+            font-weight: 700;
+            margin: 0 0 8px 0;
+            color: #000;
+        }
+    
+        .product-info .product-price {
+            font-size: 24px;
+            font-weight: 600;
+            margin: 0 0 25px 0;
+            color: #333;
+        }
+    
+        .product-info .section-title {
+            font-size: 22px;
+            font-weight: 600;
+            margin: 0 0 10px 0;
+            color: #000;
+        }
+    
+        .product-info .product-description {
+            font-size: 16px;
+            color: #555;
+            line-height: 1.5;
+            margin-bottom: 30px;
+        }
+    
+        .product-info .delivery-info,
+        .product-info .contact-info {
+            font-size: 14px;
+            color: #888;
+            line-height: 1.4;
+            margin-bottom: 10px;
+        }
+    
+        /* --- 6. ปุ่ม "Order" (Sticky Footer) --- */
+        .order-footer {
+            position: fixed;
+            /* (Mobile) ยึดไว้ด้านล่างจอ */
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: #ffffff;
+            padding: 20px 25px 30px 25px;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.08);
+        }
+    
+        .footer-content {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+    
+        .order-button {
+            width: 100%;
+            padding: 16px;
+            font-size: 18px;
+            font-weight: 600;
+            color: #ffffff;
+            background-color: #f5a623;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(245, 166, 35, 0.4);
+        }
+    
+        .order-button:hover {
+            background-color: #e09311;
+        }
+
+        /* * ========================================
+         * 7. ส่วนสำหรับ Desktop 
+         * ========================================
+        */
+        @media (min-width: 720px) {
+            .app-header .back-arrow {
+                left: 30px; /* ขยับลูกศรให้สัมพันธ์กัน */
+            }
+            .slider-container {
+                padding: 0; /* เอา padding ข้างออกบนจอใหญ่ */
+            }
+            .swiper {
+                height: 450px; /* ทำให้สไลเดอร์สูงขึ้นอีกบนจอใหญ่ */
+            }
+            .product-info {
+                padding: 25px 0; /* เอา padding ข้างออก */
+            }
+           /* 1. เปลี่ยนปุ่มส้มให้เป็นปุ่มธรรมดา (ไม่ลอย) */
+            .order-footer {
+                position: static; /* <-- ทำให้ไม่ลอย */
+                box-shadow: none; /* <-- เอาเงาออก */
+                padding: 0; /* <-- เอา padding ของ mobile ออก */
+                margin-top: 30px; /* (เพิ่ม) เว้นระยะห่างจากเนื้อหา */
+            }
+            
+            /* 2. เอาที่ว่างที่เว้นไว้ให้ปุ่มส้ม (บน mobile) ออก */
+            .main-content {
+                padding-bottom: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="mobile-nav">
+        <a href="home.html" class="mobile-logo">dokmai4u Shop</a>
+        <div id="hamburger-icon" class="hamburger-icon">
+            <span></span><span></span><span></span>
+        </div>
+    </nav>
+    <div id="mobile-menu" class="mobile-menu">
+        <a href="home.html">Home</a>
+        <a href="search.html">Search</a>
+        <a href="admin-login.html">Login</a>
+    </div>
+    
+    <nav class="desktop-nav">
+        <a href="home.html" class="logo">dokmai4u Shop</a>
+        <div class="nav-links">
+            <a href="home.html">Home</a>
+            <a href="search.html">Search</a>
+        </div>
+    </nav>
+
+    <div class="page-wrapper">
+
+        <header class="app-header">
+            <a href="home.html" class="back-arrow">&lt;</a>
+        </header>
+
+        <main class="main-content">
+
+            <div class="slider-container">
+                <div class="swiper detailSwiper">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+                            <img src="../image/Flower1.jpg" alt="Product Image 1">
+                        </div>
+                        <div class="swiper-slide">
+                            <img src="" alt="Product Image 2">
+                        </div>
+                    </div>
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                </div>
+            </div>
+
+            <section class="product-info">
+                <h1 class="product-name">Name</h1>
+                <p class="product-price">Price</p>
+
+                <h2 class="section-title">Meaning / Description</h2>
+                <p class="product-description">
+                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                    xxxxxxxxxxxxxxxxxxxx
+                </p>
+
+                <p class="delivery-info">Free delivery in Salaya area.</p>
+                <p class="contact-info">More information please contact us by E-mail inquiry.</p>
+            </section>
+
+            <footer class="order-footer">
+                <div class="footer-content">
+                    <button class="order-button">Order</button>
+                </div>
+            </footer>
+
+        </main>
+
+        <footer class="desktop-footer">
+            <div class="footer-column left">
+                <h4>For Admin</h4>
+                <a href="admin-login.html">Login</a> 
+                <a href="admin-product-management.html">Product Management</a>
+                <a href="admin-users-account-management.html">Account Management</a>
+            </div>
+            <div class="footer-column right">
+                <h4>Contact</h4>
+                <p>contact@gmail.com</p>
+                <p>012-345-6789</p>
+            </div>
+        </footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+    <script>
+        var swiper = new Swiper(".detailSwiper", {
+            navigation: {
+                nextEl: ".detailSwiper .swiper-button-next",
+                prevEl: ".detailSwiper .swiper-button-prev",
+            },
+            loop: true,
+        });
+    </script>
+
+    <script src="/html/moblie-nav.js" defer></script>
+
+</body>
+</html>

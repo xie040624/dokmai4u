@@ -1,0 +1,289 @@
+/* --- 1. Admin Container --- */
+.admin-container {
+    width: 100%;
+    max-width: 800px; /* จำกัดความกว้างเนื้อหา */
+    margin: 0 auto;
+    padding: 0 25px; /* เว้นระยะข้างบน Mobile */
+    box-sizing: border-box;
+}
+
+/* --- 2. สไตล์หน้า User Account Management --- */
+.am-toolbar {
+    display: flex;
+    /* อนุญาตให้ปุ่มตกบรรทัดได้ */
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 25px;
+    gap: 10px; /* ลด gap เล็กน้อย */
+}
+.am-search-bar {
+    /* ให้ยืดเต็มบรรทัด ถ้าปุ่มตกไปแล้ว */
+    flex-grow: 1; /* ถ้ามีที่เหลือก็ให้ยืด */
+    flex-basis: calc(100% - 120px); /* กำหนดความกว้างเริ่มต้น (100% ลบ ความกว้างปุ่ม Search + gap โดยประมาณ) */
+    padding: 12px 16px;
+    font-size: 16px;
+    border: none;
+    background-color: #f0f2f5;
+    border-radius: 10px;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.05);
+    min-width: 0;
+    box-sizing: border-box; /* เพิ่ม */
+}
+.am-search-btn {
+    flex-shrink: 0; /* ป้องกันปุ่มหด */
+    padding: 12px 20px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #ffffff;
+    background-color: #007aff; /* Blue color like Add button */
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    text-decoration: none;
+    white-space: nowrap; /* Prevent text wrapping */
+}
+
+.am-add-btn {
+    flex-shrink: 0; /* ป้องกันปุ่มหด */
+    padding: 12px 20px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #ffffff;
+    background-color: #007aff; /* สีฟ้า */
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+/* (สำหรับตอนที่ยังไม่มีสินค้า) */
+.am-empty-state {
+    text-align: center;
+    color: #888;
+    padding: 50px 0;
+    border-top: 1px solid #f0f0f0;
+}
+
+/* (รายการ Account) */
+.am-account-list {
+    border-top: 1px solid #f0f0f0;
+}
+.am-account-item {
+    display: flex;
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+.am-account-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #f0f2f5;
+    margin-right: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: #aaa;
+    flex-shrink: 0; /* เพิ่ม: ป้องกันไอคอนหด */
+}
+.am-account-info {
+    flex-grow: 1;
+    /* --- นี่คือส่วนที่แก้ไข --- */
+    overflow: hidden; /* เพิ่ม: ป้องกันข้อความยาวเกินดันกล่อง */
+    min-width: 0; /* เพิ่ม: ช่วยให้ flex item หดตัวได้ */
+    /* ------------------------ */
+}
+.am-account-info h4 {
+    margin: 0 0 4px 0;
+    font-size: 17px;
+    font-weight: 600;
+    color: #000;
+    white-space: nowrap; /* เพิ่ม: ทำให้ชื่อผู้ใช้ไม่ตกบรรทัด */
+    text-overflow: ellipsis; /* เพิ่ม: แสดง ... ถ้าชื่อยาวเกิน */
+    overflow: hidden; /* เพิ่ม: ซ่อนส่วนที่เกิน */
+}
+.am-account-info p {
+    margin: 0;
+    font-size: 14px;
+    color: #888;
+    white-space: nowrap; /* เพิ่ม */
+    text-overflow: ellipsis; /* เพิ่ม */
+    overflow: hidden; /* เพิ่ม */
+}
+
+/* --- 3. สไตล์หน้า Search User Account --- */
+.search-result-item {
+    background-color: #f9f9f9;
+    border: 1px solid #eee;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    overflow: hidden; /* เพิ่ม: กันเหนียว */
+}
+.search-result-header {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+}
+/* (ใช้ am-account-icon และ am-account-info ร่วมกันได้) */
+.search-result-actions {
+    display: flex;
+    border-top: 1px solid #eee;
+}
+.btn-update, .btn-delete {
+    flex: 1; /* แบ่งครึ่งปุ่ม */
+    padding: 12px 15px;
+    text-align: center;
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    background: none; /* เอาพื้นหลังสีเก่าออก */
+}
+.btn-update {
+    color: #007aff; /* สีฟ้า */
+    border-right: 1px solid #eee; /* เส้นแบ่งกลาง */
+}
+.btn-delete {
+    color: #ff3b30; /* สีแดง */
+}
+
+/* --- 4. สไตล์หน้า Add / Update (ฟอร์ม) --- */
+.account-icon-large { /* เปลี่ยนจาก product-icon-large */
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: #f0f2f5;
+    margin: 0 auto 30px auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 50px;
+    color: #aaa;
+}
+.form-group {
+    margin-bottom: 25px;
+}
+.form-group label {
+    display: block;
+    font-size: 18px;
+    font-weight: 600;
+    color: #000;
+    margin-bottom: 10px;
+}
+.form-group input[type="text"],
+.form-group input[type="email"], /* เพิ่ม email */
+.form-group input[type="tel"],    /* เพิ่ม tel */
+.form-group textarea {
+    width: 100%;
+    padding: 15px 16px;
+    font-size: 16px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    border: none;
+    background-color: #f0f2f5;
+    border-radius: 12px;
+    box-sizing: border-box;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.05);
+}
+.form-group textarea {
+    height: 100px;
+    resize: vertical;
+}
+.btn-primary {
+    width: 100%;
+    padding: 16px;
+    font-size: 18px;
+    font-weight: 600;
+    color: #ffffff;
+    background-color: #007aff;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    margin-top: 15px;
+}
+
+/* --- 5. สไตล์หน้า Delete --- */
+.delete-confirmation {
+    text-align: center;
+}
+.delete-info {
+    margin-bottom: 30px;
+    text-align: left;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 12px;
+}
+.delete-info p {
+    margin: 0 0 10px 0;
+    font-size: 17px;
+    /* เพิ่มการตัดคำ */
+    overflow-wrap: break-word;
+    word-break: break-all;
+}
+.delete-info p strong {
+    display: inline-block;
+    width: 120px; /* เพิ่มความกว้าง */
+    color: #555;
+    vertical-align: top; /* จัดชิดบน */
+}
+.delete-warning {
+    display: flex;
+    align-items: flex-start; /* จัดชิดบน */
+    background-color: #fffbe6;
+    border: 1px solid #ffe58f;
+    border-radius: 8px;
+    padding: 15px;
+    font-size: 15px;
+    color: #8a6d3b;
+    margin-bottom: 30px;
+    text-align: left;
+}
+.delete-warning span {
+    font-size: 20px; /* ลดขนาดไอคอน */
+    margin-right: 10px; /* ลดระยะห่าง */
+    line-height: 1.4; /* ให้ตรงกับข้อความ */
+}
+.btn-group {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+.btn-secondary, .btn-delete-confirm {
+    width: 100%;
+    padding: 16px;
+    font-size: 18px;
+    font-weight: 600;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    text-decoration: none;
+    box-sizing: border-box;
+}
+.btn-secondary {
+    background-color: #e5e5ea;
+    color: #000;
+}
+.btn-delete-confirm {
+    background-color: #ff3b30;
+    color: #ffffff;
+}
+
+/* --- 6. Desktop Adjustments --- */
+@media (min-width: 720px) { /* ใช้ breakpoint 720px ให้ตรงกัน */
+    .admin-container {
+        padding: 0;
+        margin-top: 30px;
+        margin-bottom: 30px;
+    }
+    .btn-group {
+        flex-direction: row;
+    }
+    .am-toolbar {
+        flex-wrap: nowrap; /* Desktop ไม่ต้องตกบรรทัด */
+    }
+    .am-search-bar {
+        flex-basis: auto; /* ให้ความกว้างเป็นไปตาม flex-grow */
+    }
+}
