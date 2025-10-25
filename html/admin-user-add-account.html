@@ -1,42 +1,60 @@
 <!DOCTYPE html>
 <html lang="th">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add User Account</title>
-    <link rel="stylesheet" href="desktop-shared.css">
-    <link rel="stylesheet" href="admin-product.css">
-    <link rel="stylesheet" href="admin-users-account.css">
-    <link rel="stylesheet" href="/html/moblie-nav.css">
+    <link rel="stylesheet" href="/desktop-shared.css">
+    <link rel="stylesheet" href="/admin-product.css">
+    <link rel="stylesheet" href="/admin-users-account.css">
+    <link rel="stylesheet" href="/moblie-nav.css">
     <style>
-        .page-wrapper { padding-top: 60px; box-sizing: border-box; }
-        .main-content { flex-grow: 1; padding-top: 25px; padding-bottom: 25px; }
-        @media (min-width: 720px) { /* Adjust breakpoint if needed */
-             .page-wrapper { padding-top: 0; }
-            .main-content { padding: 30px; }
+        .page-wrapper {
+            padding-top: 60px;
+            box-sizing: border-box;
+        }
+
+        .main-content {
+            flex-grow: 1;
+            padding-top: 25px;
+            padding-bottom: 25px;
+        }
+
+        @media (min-width: 720px) {
+
+            /* Adjust breakpoint if needed */
+            .page-wrapper {
+                padding-top: 0;
+            }
+
+            .main-content {
+                padding: 30px;
+            }
         }
     </style>
 </head>
+
 <body>
 
     <!-- Mobile Navigation Bar -->
     <nav class="mobile-nav">
-        <a href="home.html" class="mobile-logo">dokmai4u Shop</a>
+        <a href="/" class="mobile-logo">dokmai4u Shop</a>
         <div id="hamburger-icon" class="hamburger-icon"><span></span><span></span><span></span></div>
     </nav>
     <div id="mobile-menu" class="mobile-menu">
-        <a href="home.html">Home</a>
-        <a href="search.html">Search</a>
-        <a href="admin-login.html">Login</a>
+        <a href="/">Home</a>
+        <a href="/search">Search</a>
+        <a href="/login">Login</a>
     </div>
 
     <!-- Desktop Navigation Bar -->
     <nav class="desktop-nav">
-        <a href="home.html" class="logo">dokmai4u Shop</a>
+        <a href="/" class="logo">dokmai4u Shop</a>
         <div class="nav-links">
-            <a href="home.html">Home</a>
-            <a href="search.html">Search</a>
-            <a href="admin-login.html">Login</a>
+            <a href="/">Home</a>
+            <a href="/search">Search</a>
+            <a href="/login">Login</a>
         </div>
     </nav>
 
@@ -44,8 +62,8 @@
     <div class="page-wrapper">
         <!-- Original Header (Hidden by CSS) -->
         <header class="app-header">
-             <a href="admin-users-account-management.html" class="back-arrow">&lt;</a>
-             <h1 class="title">Add User Account</h1>
+            <a href="/account" class="back-arrow">&lt;</a>
+            <h1 class="title">Add User Account</h1>
         </header>
 
         <!-- Main Content -->
@@ -67,7 +85,7 @@
                         <label for="email">Email</label>
                         <input type="email" id="email" name="email">
                     </div>
-                     <div class="form-group">
+                    <div class="form-group">
                         <label for="phone">Phone</label>
                         <input type="tel" id="phone" name="phone">
                     </div>
@@ -87,9 +105,9 @@
     <footer class="desktop-footer">
         <div class="footer-column left">
             <h4>For Admin</h4>
-            <a href="admin-login.html">Login</a>
-            <a href="admin-product-management.html">Product Management</a>
-            <a href="admin-users-account-management.html">Account Management</a>
+            <a href="/login">Login</a>
+            <a href="/product">Product Management</a>
+            <a href="/account">Account Management</a>
         </div>
         <div class="footer-column right">
             <h4>Contact</h4>
@@ -99,8 +117,8 @@
     </footer>
 
     <!-- JS for Mobile Nav -->
-    <script src="/html/moblie-nav.js" defer></script>
+    <script src="/moblie-nav.js" defer></script>
 
 </body>
-</html>
 
+</html>

@@ -8,7 +8,7 @@
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <link rel="stylesheet" href="desktop-shared.css">
-    <link rel="stylesheet" href="/html/moblie-nav.css">
+    <link rel="stylesheet" href="moblie-nav.css">
 
     <style>
         /* --- 1. การตั้งค่าหน้าเว็บโดยรวม (Mobile First) --- */
@@ -28,8 +28,10 @@
             display: flex;
             flex-direction: column;
             background-color: #ffffff;
-            padding-top: 60px; /* เว้นที่สำหรับ Mobile Nav */
-            box-sizing: border-box; /* เพิ่มเพื่อให้ padding ไม่ขยายกล่อง */
+            padding-top: 60px;
+            /* เว้นที่สำหรับ Mobile Nav */
+            box-sizing: border-box;
+            /* เพิ่มเพื่อให้ padding ไม่ขยายกล่อง */
         }
 
         /* --- 3. ส่วนหัว (Header Mobile - ถูกซ่อนบน Desktop โดย desktop-shared.css) --- */
@@ -37,7 +39,8 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 25px; /* ลด padding บนลงเพราะมี mobile nav แล้ว */
+            padding: 20px 25px;
+            /* ลด padding บนลงเพราะมี mobile nav แล้ว */
             border-bottom: 1px solid #f0f0f0;
         }
 
@@ -57,7 +60,8 @@
         /* เพิ่ม: ให้ Main Content ยืดเต็มพื้นที่ */
         .main-content {
             flex-grow: 1;
-             padding-top: 25px; /* เพิ่มระยะห่างด้านบน */
+            padding-top: 25px;
+            /* เพิ่มระยะห่างด้านบน */
         }
 
         /* --- 4. CSS สำหรับ Swiper Slider --- */
@@ -111,7 +115,8 @@
             max-width: 600px;
             margin-left: auto;
             margin-right: auto;
-            padding: 0 25px; /* เพิ่ม padding ข้างสำหรับ Mobile */
+            padding: 0 25px;
+            /* เพิ่ม padding ข้างสำหรับ Mobile */
             box-sizing: border-box;
         }
 
@@ -136,7 +141,8 @@
             padding: 30px 25px;
             display: flex;
             justify-content: space-between;
-            flex-shrink: 0; /* ป้องกัน Footer หด */
+            flex-shrink: 0;
+            /* ป้องกัน Footer หด */
         }
 
         .app-footer .footer-column {
@@ -150,8 +156,10 @@
             color: #fff;
         }
 
-        .app-footer .footer-column.right h4:nth-of-type(2), /* Target About */
-        .app-footer .footer-column.right h4:nth-of-type(3) { /* Target Contact */
+        .app-footer .footer-column.right h4:nth-of-type(2),
+        /* Target About */
+        .app-footer .footer-column.right h4:nth-of-type(3) {
+            /* Target Contact */
             margin-top: 15px;
         }
 
@@ -175,13 +183,17 @@
 
         /* --- 7. ส่วนสำหรับ Desktop --- */
         @media (min-width: 720px) {
-             /* desktop-shared.css จัดการซ่อน .app-header และปรับ padding .page-wrapper แล้ว */
+
+            /* desktop-shared.css จัดการซ่อน .app-header และปรับ padding .page-wrapper แล้ว */
             .main-content {
                 padding: 25px 30px;
             }
+
             .text-section {
-                padding: 0; /* เอา padding ข้างออก */
+                padding: 0;
+                /* เอา padding ข้างออก */
             }
+
             .app-footer {
                 padding: 30px;
             }
@@ -193,23 +205,23 @@
 
     <!-- 1. Mobile Navigation Bar -->
     <nav class="mobile-nav">
-        <a href="home.html" class="mobile-logo">dokmai4u Shop</a>
+        <a href="/" class="mobile-logo">dokmai4u Shop</a>
         <div id="hamburger-icon" class="hamburger-icon"><span></span><span></span><span></span></div>
     </nav>
     <div id="mobile-menu" class="mobile-menu">
-        <a href="home.html">Home</a>
-        <a href="search.html">Search</a>
-        <a href="admin-login.html">Login</a>
+        <a href="/">Home</a>
+        <a href="/search">Search</a>
+        <a href="/login">Login</a>
     </div>
     <!-- (ลบ Overlay ออก) -->
 
     <!-- 2. Desktop Navigation Bar -->
     <nav class="desktop-nav">
-        <a href="home.html" class="logo">dokmai4u Shop</a>
+        <a href="/" class="logo">dokmai4u Shop</a>
         <div class="nav-links">
-            <a href="home.html">Home</a>
-            <a href="search.html">Search</a>
-            <a href="admin-login.html">Login</a>
+            <a href="/">Home</a>
+            <a href="/search">Search</a>
+            <a href="/login">Login</a>
         </div>
     </nav>
 
@@ -219,7 +231,7 @@
         <!-- Header (Mobile - ถูกซ่อนบน Desktop) -->
         <header class="app-header">
             <div class="shop-name">dokmai4u Shop</div>
-            <a href="search.html" class="search-link">Search</a>
+            <a href="/search" class="search-link">Search</a>
         </header>
 
         <!-- Main Content -->
@@ -230,7 +242,7 @@
                     <div class="swiper-wrapper">
                         <div class="swiper-slide">
                             <a href="detail-red-flower.html">
-                                <img src="/image/Flower1.jpg" alt="Flower 1">
+                                <img src="/image/Flower.jpg" alt="Flower 1">
                             </a>
                         </div>
                         <div class="swiper-slide">
@@ -240,7 +252,7 @@
                         </div>
                         <div class="swiper-slide">
                             <a href="detail.html">
-                                <img src="" alt="Flower 3">
+                                <img src="/image/Flower.jpg" alt="Flower 3">
                             </a>
                         </div>
                     </div>
@@ -286,13 +298,13 @@
     <footer class="app-footer">
         <div class="footer-column left">
             <h4>For Admin</h4>
-            <a href="admin-login.html">Login</a>
-            <a href="./admin-product-management.html">Product Management</a>
-            <a href="/admin/users">Account Management</a>
+            <a href="/login">Login</a>
+            <a href="/product">Product Management</a>
+            <a href="/account">Account Management</a>
         </div>
         <div class="footer-column right">
             <h4>About</h4>
-            <a href="team.html">Team</a> <!-- ลิงก์ไปยังหน้า Team -->
+            <a href="/team">Team</a>
             <h4>Contact</h4>
             <p>contact@gmail.com</p>
             <p>012-345-6789</p>
@@ -323,4 +335,3 @@
 </body>
 
 </html>
-

@@ -1,34 +1,36 @@
 <!DOCTYPE html>
 <html lang="th">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Delete Product</title>
-    <link rel="stylesheet" href="desktop-shared.css">
-    <link rel="stylesheet" href="admin-product.css"> 
-    <link rel="stylesheet" href="/html/moblie-nav.css">
+    <link rel="stylesheet" href="/desktop-shared.css">
+    <link rel="stylesheet" href="/admin-product.css">
+    <link rel="stylesheet" href="/moblie-nav.css">
     <style>
         .app-header .title {
-            font-size: 34px; 
+            font-size: 34px;
             font-weight: 700;
             margin: 0;
             color: #000;
         }
+
         .app-header .back-arrow {
             position: absolute;
             left: 25px;
             font-size: 24px;
             font-weight: 500;
-            color: #000;            
-            text-decoration: none; 
+            color: #000;
+            text-decoration: none;
         }
-        
+
         .main-content {
-            flex-grow: 1; 
+            flex-grow: 1;
             padding-top: 25px;
             padding-bottom: 25px;
         }
-        
+
         @media (min-width: 600px) {
             .main-content {
                 padding: 30px;
@@ -36,10 +38,11 @@
         }
     </style>
 </head>
+
 <body>
 
     <nav class="mobile-nav">
-        <a href="home.html" class="mobile-logo">dokmai4u Shop</a>
+        <a href="/" class="mobile-logo">dokmai4u Shop</a>
         <div id="hamburger-icon" class="hamburger-icon">
             <span></span>
             <span></span>
@@ -47,29 +50,29 @@
         </div>
     </nav>
     <div id="mobile-menu" class="mobile-menu">
-        <a href="home.html">Home</a>
-        <a href="search.html">Search</a>
-        <a href="admin-login.html">Login</a>
-    </div>     
+        <a href="/">Home</a>
+        <a href="/search">Search</a>
+        <a href="/login">Login</a>
+    </div>
 
     <nav class="desktop-nav">
-        <a href="home.html" class="logo">dokmai4u Shop</a>
+        <a href="/" class="logo">dokmai4u Shop</a>
         <div class="nav-links">
-            <a href="home.html">Home</a>
-            <a href="search.html">Search</a>
-            <a href="admin-login.html">Login</a>
+            <a href="/">Home</a>
+            <a href="/search">Search</a>
+            <a href="/login">Login</a>
         </div>
     </nav>
 
     <div class="page-wrapper">
         <header class="app-header">
-            <a href="admin-product-management.html" class="back-arrow">&lt;</a>
+            <a href="/product" class="back-arrow">&lt;</a>
             <h1 class="title">Delete Product</h1>
         </header>
 
         <main class="main-content">
             <div class="admin-container">
-                
+
                 <div class="delete-confirmation">
                     <div class="product-icon-large">✿</div>
 
@@ -85,8 +88,8 @@
                     </div>
 
                     <div class="btn-group">
-                        <a href="admin-product-management.html" class="btn-secondary">Cancel</a>
-                        <a href="admin-product-management.html" class="btn-delete-confirm">Delete</a>
+                        <a href="/product" class="btn-secondary">Cancel</a>
+                        <a href="/product" class="btn-delete-confirm">Delete</a>
                     </div>
                 </div>
 
@@ -97,9 +100,9 @@
     <footer class="desktop-footer">
         <div class="footer-column left">
             <h4>For Admin</h4>
-            <a href="login.html">Login</a>
-            <a href="admin-product-management.html">Product Management</a>
-            <a href="admin-users-account-management.html">Account Management</a>
+            <a href="/login">Login</a>
+            <a href="/product">Product Management</a>
+            <a href="/account">Account Management</a>
         </div>
         <div class="footer-column right">
             <h4>Contact</h4>
@@ -109,4 +112,5 @@
     </footer>
 
 </body>
+
 </html>

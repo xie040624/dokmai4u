@@ -1,8 +1,8 @@
-const db = require('./../db');
+const db = require('../db');
 const path = require('path');
 
 module.exports = {
-    get: (req, res, next) => {
+    root: (req, res, next) => {
         res.sendFile(path.resolve(__dirname, '../html/admin-users-account-management.html'));
     },
     select: async (req, res, next) => {
