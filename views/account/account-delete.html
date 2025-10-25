@@ -4,11 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add User Account</title>
-    <link rel="stylesheet" href="/desktop-shared.css">
-    <link rel="stylesheet" href="/admin-product.css">
-    <link rel="stylesheet" href="/admin-users-account.css">
-    <link rel="stylesheet" href="/moblie-nav.css">
+    <title>Delete Account</title>
+    <link rel="stylesheet" href="/assets/desktop-shared.css">
+    <link rel="stylesheet" href="/assets/admin-product.css">
+    <link rel="stylesheet" href="/assets/admin-users-account.css">
+    <link rel="stylesheet" href="/assets/moblie-nav.css">
     <style>
         .page-wrapper {
             padding-top: 60px;
@@ -31,6 +31,11 @@
             .main-content {
                 padding: 30px;
             }
+        }
+
+        /* Increase width for labels in Delete info */
+        .delete-info p strong {
+            width: 120px;
         }
     </style>
 </head>
@@ -62,40 +67,34 @@
     <div class="page-wrapper">
         <!-- Original Header (Hidden by CSS) -->
         <header class="app-header">
-            <a href="/account" class="back-arrow">&lt;</a>
-            <h1 class="title">Add User Account</h1>
+            <a href="/account/search" class="back-arrow">&lt;</a>
+            <h1 class="title">Delete Account</h1>
         </header>
 
         <!-- Main Content -->
         <main class="main-content">
             <div class="admin-container">
 
-                <form action="#" method="post" class="admin-form">
+                <div class="delete-confirmation">
                     <div class="account-icon-large">👤</div>
 
-                    <div class="form-group">
-                        <label for="first-name">First Name</label>
-                        <input type="text" id="first-name" name="first-name">
-                    </div>
-                    <div class="form-group">
-                        <label for="last-name">Last Name</label>
-                        <input type="text" id="last-name" name="last-name">
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email">
-                    </div>
-                    <div class="form-group">
-                        <label for="phone">Phone</label>
-                        <input type="tel" id="phone" name="phone">
-                    </div>
-                    <div class="form-group">
-                        <label for="address">Address</label>
-                        <textarea id="address" name="address"></textarea>
+                    <div class="delete-info">
+                        <p><strong>Name:</strong> FirstName LastName</p>
+                        <p><strong>Email:</strong> dokmai4u@gmail.com</p>
+                        <p><strong>Username:</strong> Username1</p>
+                        <p><strong>Address:</strong> XXXXXXXXXXXXXX</p>
                     </div>
 
-                    <button type="submit" class="btn-primary">Add</button>
-                </form>
+                    <div class="delete-warning">
+                        <span>⚠️</span>
+                        <p>Are you sure you want to delete this user?</p>
+                    </div>
+
+                    <div class="btn-group">
+                        <a href="/account/search" class="btn-secondary">Cancel</a>
+                        <a href="/account/search" class="btn-delete-confirm">Delete</a>
+                    </div>
+                </div>
 
             </div>
         </main>
@@ -117,7 +116,7 @@
     </footer>
 
     <!-- JS for Mobile Nav -->
-    <script src="/moblie-nav.js" defer></script>
+    <script src="/assets/moblie-nav.js" defer></script>
 
 </body>
 

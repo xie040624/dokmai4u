@@ -1,22 +1,24 @@
 <!DOCTYPE html>
 <html lang="th">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Search Page</title>
-    
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-    <link rel="stylesheet" href="/desktop-shared.css">
-    <link rel="stylesheet" href="/moblie-nav.css">
+    <link rel="stylesheet" href="/assets/desktop-shared.css">
+    <link rel="stylesheet" href="/assets/moblie-nav.css">
 
     <style>
         /* --- 1. การตั้งค่าหน้าเว็บโดยรวม (Mobile First) --- */
-        body, html {
+        body,
+        html {
             margin: 0;
             padding: 0;
             height: 100%;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: #ffffff; 
+            background-color: #ffffff;
         }
 
         .page-wrapper {
@@ -32,9 +34,10 @@
         .app-header {
             display: flex;
             align-items: center;
-            justify-content: center; /* จัดกลาง */
+            justify-content: center;
+            /* จัดกลาง */
             position: relative;
-            padding: 20px 25px; 
+            padding: 20px 25px;
             border-bottom: 1px solid #f0f0f0;
         }
 
@@ -59,20 +62,21 @@
             flex-grow: 1;
             padding: 25px;
         }
-        
+
         .page-title {
-            font-size: 34px; 
+            font-size: 34px;
             font-weight: 700;
             color: #000;
-            
+
             /*จัดกลาง (ทำงานทั้ง Mobile & Desktop) */
-            text-align: center; 
-            
+            text-align: center;
+
             /*เว้นระยะห่างด้านบน (ทำงานทั้ง Mobile & Desktop) */
-            margin-top: 60px; 
-            
-            margin-bottom: 30px; /* เว้นระยะล่าง */
-            
+            margin-top: 60px;
+
+            margin-bottom: 30px;
+            /* เว้นระยะล่าง */
+
             /* (จำกัดความกว้าง จัดกลาง ให้ตรงกับฟอร์ม) */
             max-width: 600px;
             margin-left: auto;
@@ -82,9 +86,11 @@
         /* --- 4. สไตล์ของฟอร์มค้นหา --- */
         .search-form-container {
             width: 100%;
-            max-width: 600px; /* 1. จำกัดความกว้าง ให้เท่ากับผลลัพธ์ */
-            margin: 0 auto 40px auto; /* 2. จัดกึ่งกลาง และเว้นระยะล่าง */
-            box-sizing: border-box; 
+            max-width: 600px;
+            /* 1. จำกัดความกว้าง ให้เท่ากับผลลัพธ์ */
+            margin: 0 auto 40px auto;
+            /* 2. จัดกึ่งกลาง และเว้นระยะล่าง */
+            box-sizing: border-box;
         }
 
         .form-group {
@@ -112,13 +118,14 @@
             box-sizing: border-box;
             box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
             /* ทำให้ select box หน้าตาเหมือน input */
-            appearance: none; 
+            appearance: none;
         }
-        
+
         /* เพิ่มลูกศร Dropdown ให้ Select */
         .select-wrapper {
             position: relative;
         }
+
         .select-wrapper::after {
             content: '▼';
             font-size: 12px;
@@ -127,7 +134,8 @@
             right: 16px;
             top: 50%;
             transform: translateY(-50%);
-            pointer-events: none; /* ทำให้คลิกทะลุได้ */
+            pointer-events: none;
+            /* ทำให้คลิกทะลุได้ */
         }
 
         /* สไตล์สำหรับช่อง Min-Max */
@@ -138,8 +146,10 @@
         }
 
         .price-inputs input {
-            width: 40%; /* แบ่งครึ่งสำหรับ Min/Max */
+            width: 40%;
+            /* แบ่งครึ่งสำหรับ Min/Max */
         }
+
         .price-inputs span {
             color: #888;
         }
@@ -163,7 +173,7 @@
             font-size: 24px;
             font-weight: 600;
             margin-bottom: 20px;
-            
+
             /* จัดให้หัวข้อ "Results" อยู่กึ่งกลางด้วย */
             max-width: 600px;
             margin-left: auto;
@@ -177,59 +187,76 @@
         /* (ใช้ CSS เดิมของ Swiper) */
         .slider-container {
             width: 100%;
-            max-width: 600px; 
-            margin: 0 auto 15px auto; /* เว้นล่าง 15px */
+            max-width: 600px;
+            margin: 0 auto 15px auto;
+            /* เว้นล่าง 15px */
         }
+
         .swiper {
             width: 100%;
-            height: 250px; /* ความสูงสไลเดอร์ผลลัพธ์ */
-            border-radius: 18px; 
+            height: 250px;
+            /* ความสูงสไลเดอร์ผลลัพธ์ */
+            border-radius: 18px;
         }
+
         .swiper-slide {
             display: flex;
             justify-content: center;
             align-items: center;
             background-color: #e9e9e9;
         }
+
         .swiper-slide a {
-        display: block;  /* 1. เปลี่ยน <a> ให้เป็นกล่อง (block) */
-        width: 100%;     /* 2. สั่งให้กล่อง <a> กว้าง 100% */
-        height: 100%;    /* 3. สั่งให้กล่อง <a> สูง 100% */
-        text-decoration: none; /* (แถม) ลบขีดเส้นใต้ */
+            display: block;
+            /* 1. เปลี่ยน <a> ให้เป็นกล่อง (block) */
+            width: 100%;
+            /* 2. สั่งให้กล่อง <a> กว้าง 100% */
+            height: 100%;
+            /* 3. สั่งให้กล่อง <a> สูง 100% */
+            text-decoration: none;
+            /* (แถม) ลบขีดเส้นใต้ */
         }
+
         .swiper-slide img {
-            width: 100%;      
-            height: 100%;     
-            object-fit: cover; 
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
+
         .swiper-button-next,
         .swiper-button-prev {
-            color: #ffffff; 
-            background-color: rgba(0, 0, 0, 0.3); 
-            width: 44px; height: 44px;
+            color: #ffffff;
+            background-color: rgba(0, 0, 0, 0.3);
+            width: 44px;
+            height: 44px;
             border-radius: 50%;
-            --swiper-navigation-size: 18px; 
+            --swiper-navigation-size: 18px;
         }
-        
+
         /* สไตล์ส่วนรายละเอียดสินค้า */
         .product-details {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            max-width: 600px; /* จัดให้ตรงกับสไลเดอร์ */
+            max-width: 600px;
+            /* จัดให้ตรงกับสไลเดอร์ */
             margin: 0 auto;
-            padding: 0 5px; /* เว้นข้างเล็กน้อย */
+            padding: 0 5px;
+            /* เว้นข้างเล็กน้อย */
         }
+
         .product-details h4 {
             margin: 0;
             font-size: 18px;
             font-weight: 600;
         }
+
         .product-details p {
             margin: 4px 0 0 0;
             font-size: 14px;
             color: #888;
         }
+
         .product-details .price {
             font-size: 18px;
             font-weight: 600;
@@ -247,15 +274,16 @@
             }
 
             .main-content {
-                padding: 25px 30px; 
+                padding: 25px 30px;
             }
 
             .page-title {
-                margin-top: 20px; 
+                margin-top: 20px;
             }
         }
     </style>
 </head>
+
 <body>
     <nav class="mobile-nav">
         <a href="/" class="mobile-logo">dokmai4u Shop</a>
@@ -272,27 +300,27 @@
     </div>
 
     <nav class="desktop-nav">
-         <a href="/" class="logo">dokmai4u Shop</a>
-         <div class="nav-links">
-             <a href="/">Home</a>
-             <a href="/search">Search</a>
-             <a href="/login">Login</a>
-         </div>
+        <a href="/" class="logo">dokmai4u Shop</a>
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/search">Search</a>
+            <a href="/login">Login</a>
+        </div>
     </nav>
 
     <div class="page-wrapper">
-    
+
         <main class="main-content">
 
             <h1 class="page-title">Search</h1>
-    
+
             <section class="search-form-container">
                 <form action="#" method="get" id="search-form">
                     <div class="form-group">
                         <label for="keyword">Keyword</label>
                         <input type="text" id="keyword" name="keyword">
                     </div>
-    
+
                     <div class="form-group">
                         <label for="category">Category</label>
                         <div class="select-wrapper">
@@ -304,7 +332,7 @@
                             </select>
                         </div>
                     </div>
-    
+
                     <div class="form-group">
                         <label>Price</label>
                         <div class="price-inputs">
@@ -313,16 +341,16 @@
                             <input type="text" id="max-price" name="max-price" placeholder="Max">
                         </div>
                     </div>
-    
+
                     <div class="form-group">
                         <label for="available">Available</label>
                         <input type="date" id="available" name="available" value="2024-02-01">
                     </div>
-    
+
                     <button type="submit" class="search-button">Search</button>
                 </form>
             </section>
-    
+
             <section class="search-results-container">
                 <h2 id="search-results-heading">No criteria search</h2>
                 <div class="result-item">
@@ -352,7 +380,7 @@
                         <span class="price">Price</span>
                     </div>
                 </div>
-    
+
                 <div class="result-item">
                     <div class="slider-container">
                         <div class="swiper searchSwiper2">
@@ -380,11 +408,11 @@
                         <span class="price">8 $</span>
                     </div>
                 </div>
-    
+
             </section>
-    
+
         </main>
-    
+
     </div>
 
     <footer class="desktop-footer">
@@ -426,14 +454,29 @@
 
         // 2. สั่งให้ดักฟังเหตุการณ์ 'submit' (เมื่อกดยืนยันฟอร์ม)
         if (searchForm && resultsHeading) {
-            searchForm.addEventListener('submit', function(event) {
-                event.preventDefault(); 
+            searchForm.addEventListener('submit', function (event) {
+                event.preventDefault();
                 resultsHeading.textContent = 'Search Result';
             });
         }
     </script>
 
-    <script src="/moblie-nav.js" defer></script>
+    <script src="/assets/moblie-nav.js" defer>
+        document.getElementById('searchForm').addEventListener('submit', async e => {
+            e.preventDefault();
+            const AdminID = e.target.AdminID.value;
+
+            const res = await fetch('/admin/account/search', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ AdminID })
+            });
+
+            const data = await res.json();
+            document.getElementById('result').textContent = JSON.stringify(data, null, 2);
+        });
+    </script>
 
 </body>
+
 </html>

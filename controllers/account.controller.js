@@ -2,16 +2,24 @@ const db = require('../db');
 const path = require('path');
 
 module.exports = {
-    root: (req, res, next) => {
-        res.sendFile(path.resolve(__dirname, '../html/admin-users-account-management.html'));
+    get: (req, res) => {
+        res.sendFile(path.join(__dirname, '../views/account', 'account-management.html'));
     },
-    select: async (req, res, next) => {
+    searchPage: (req, res) => {
+        res.sendFile(path.join(__dirname, '../views/account', 'account-search.html'));
+    },
+    select: async (req, res) => {
         try {
-            const [rows] = await db.query('SELECT * FROM admin');
+            const { AdminID } = req.body;
+            const [rows] = await db.query(
+                'SELECT * FROM admin WHERE AdminID LIKE ? OR Username LIKE ?',
+                [`%${AdminID}%`, `%${AdminID}%`]
+            );
+
             res.json(rows);
         } catch (error) {
             console.error(error);
-            res.status(500).send('Database error');
+            res.status(500).json({ message: 'Database error' });
         }
     },
     insert: async (req, res, next) => {

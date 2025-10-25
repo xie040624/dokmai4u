@@ -1,21 +1,24 @@
 <!DOCTYPE html>
 <html lang="th">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Login</title>
 
-    <link rel="stylesheet" href="/desktop-shared.css">
-    <link rel="stylesheet" href="/moblie-nav.css">
+    <link rel="stylesheet" href="/assets/desktop-shared.css">
+    <link rel="stylesheet" href="/assets/moblie-nav.css">
 
     <style>
         /* --- 1. การตั้งค่าหน้าเว็บโดยรวม (Mobile First) --- */
-        body, html {
+        body,
+        html {
             margin: 0;
             padding: 0;
             height: 100%;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: #ffffff; /* 1. พื้นหลังเริ่มต้นเป็นสีขาว (สำหรับมือถือ) */
+            background-color: #ffffff;
+            /* 1. พื้นหลังเริ่มต้นเป็นสีขาว (สำหรับมือถือ) */
         }
 
         /* * 2. สร้าง Wrapper เพื่อควบคุม Layout
@@ -28,7 +31,7 @@
             display: flex;
             flex-direction: column;
             background-color: #ffffff;
-            padding-top: 60px; 
+            padding-top: 60px;
             box-sizing: border-box;
             transition: none;
         }
@@ -39,7 +42,7 @@
             align-items: center;
             justify-content: center;
             position: relative;
-            padding: 20px 25px; 
+            padding: 20px 25px;
         }
 
         .app-header .back-arrow {
@@ -71,17 +74,22 @@
         /* --- 4. ส่วนฟอร์ม (Mobile) --- */
         .login-container {
             padding: 40px 25px;
-            flex-grow: 1; /* 5. ทำให้ฟอร์มยืดเต็มส่วนที่เหลือ */
+            flex-grow: 1;
+            /* 5. ทำให้ฟอร์มยืดเต็มส่วนที่เหลือ */
             display: flex;
             flex-direction: column;
-            justify-content: center; /* จัดกลางแนวตั้ง */
-            align-items: center; /* จัดกลางแนวนอน */
-            box-sizing: border-box; /* เพิ่ม box-sizing */
+            justify-content: center;
+            /* จัดกลางแนวตั้ง */
+            align-items: center;
+            /* จัดกลางแนวนอน */
+            box-sizing: border-box;
+            /* เพิ่ม box-sizing */
         }
 
         .login-container form {
-             width: 100%;
-             max-width: 350px; /* กำหนดความกว้างสูงสุดให้ฟอร์มดูดี */
+            width: 100%;
+            max-width: 350px;
+            /* กำหนดความกว้างสูงสุดให้ฟอร์มดูดี */
         }
 
         .form-group {
@@ -133,40 +141,51 @@
         */
         @media (min-width: 720px) {
             body {
-                background-color: #f0f2f5; 
-                display: flex; 
+                background-color: #f0f2f5;
+                display: flex;
                 /*จัดโครงสร้างให้ Nav บนสุด */
-                flex-direction: column; 
-                min-height: 100vh; /*ให้ body สูงเต็มจอเสมอ */
+                flex-direction: column;
+                min-height: 100vh;
+                /*ให้ body สูงเต็มจอเสมอ */
             }
 
             /*ให้ Wrapper จัดกลางเฉพาะเนื้อหา ไม่รวม Nav/Footer */
             .login-wrapper {
-                 width: 100%;
-                 max-width: 480px; /* จำกัดความกว้าง */
-                 min-height: auto; /*ไม่ต้องสูงเต็ม body */
-                 height: auto; 
-                 margin: 40px auto; /*จัดกลางแนวตั้ง/นอน และเว้นระยะ */
-                 padding-top: 0; /*เอา padding-top ของ mobile ออก */
-                 border-radius: 20px;
-                 box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-                 overflow: hidden; 
+                width: 100%;
+                max-width: 480px;
+                /* จำกัดความกว้าง */
+                min-height: auto;
+                /*ไม่ต้องสูงเต็ม body */
+                height: auto;
+                margin: 40px auto;
+                /*จัดกลางแนวตั้ง/นอน และเว้นระยะ */
+                padding-top: 0;
+                /*เอา padding-top ของ mobile ออก */
+                border-radius: 20px;
+                box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+                overflow: hidden;
             }
 
             .app-header {
-                padding: 30px 30px 20px 30px; 
-                border-bottom: 1px solid #eee; 
+                padding: 30px 30px 20px 30px;
+                border-bottom: 1px solid #eee;
             }
-            .app-header .back-arrow { left: 30px; }
+
+            .app-header .back-arrow {
+                left: 30px;
+            }
+
             .login-container {
-                padding: 70px 30px 40px 30px; 
-                flex-grow: 1; /*ให้ยืดเต็มพื้นที่ที่เหลือใน card */
+                padding: 70px 30px 40px 30px;
+                flex-grow: 1;
+                /*ให้ยืดเต็มพื้นที่ที่เหลือใน card */
             }
         }
     </style>
 </head>
+
 <body>
-    
+
     <nav class="mobile-nav">
         <a href="/" class="mobile-logo">dokmai4u Shop</a>
         <div id="hamburger-icon" class="hamburger-icon">
@@ -180,12 +199,12 @@
     </div>
 
     <nav class="desktop-nav">
-         <a href="/" class="logo">dokmai4u Shop</a>
-         <div class="nav-links">
-             <a href="/">Home</a>
-             <a href="/search">Search</a>
-             <a href="/login">Login</a>
-         </div>
+        <a href="/" class="logo">dokmai4u Shop</a>
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/search">Search</a>
+            <a href="/login">Login</a>
+        </div>
     </nav>
 
     <div class="login-wrapper">
@@ -194,15 +213,15 @@
 
             <h1 class="page-title">Login</h1>
 
-            <form action="#" method="post">
+            <form action="/auth/login" method="post">
                 <div class="form-group">
                     <label for="username">Username</label>
-                    <input type="text" id="username" name="username">
+                    <input type="text" id="username" name="username" required>
                 </div>
 
                 <div class="form-group">
                     <label for="password">Password</label>
-                    <input type="password" id="password" name="password">
+                    <input type="password" id="password" name="password" required>
                 </div>
 
                 <button type="submit" class="login-button">Login</button>
@@ -211,21 +230,26 @@
 
     </div>
 
-    <footer class="desktop-footer"> 
+    <footer class="desktop-footer">
         <div class="footer-column left">
             <h4>For Admin</h4>
-            <a href="/login">Login</a> 
+            <a href="/login">Login</a>
             <a href="/product">Product Management</a>
             <a href="/account">Account Management</a>
         </div>
         <div class="footer-column right">
             <h4>Contact</h4>
-            <p>contact@gmail.com</p>
+            <a href="/team">Team</a>
+            <p>admin@example.com</p>
             <p>012-345-6789</p>
         </div>
     </footer>
 
-    <script src="/moblie-nav.js" defer></script>
+    <script src="/assets/moblie-nav.js" defer>
+        const params = new URLSearchParams(location.search);
+        if (params.get('error')) alert(params.get('error'));
+    </script>
 
 </body>
+
 </html>

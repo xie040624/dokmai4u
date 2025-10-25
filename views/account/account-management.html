@@ -1,42 +1,60 @@
 <!DOCTYPE html>
 <html lang="th">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Account Management</title>
-    <link rel="stylesheet" href="desktop-shared.css">
-    <link rel="stylesheet" href="admin-product.css"> <!-- Use shared admin styles -->
-    <link rel="stylesheet" href="admin-users-account.css"> <!-- Specific account styles -->
-    <link rel="stylesheet" href="moblie-nav.css">
+    <link rel="stylesheet" href="/assets/desktop-shared.css">
+    <link rel="stylesheet" href="/assets/admin-product.css">
+    <link rel="stylesheet" href="/assets/admin-users-account.css">
+    <link rel="stylesheet" href="/assets/moblie-nav.css">
     <style>
-        .page-wrapper { padding-top: 60px; box-sizing: border-box; }
-        .main-content { flex-grow: 1; padding-top: 25px; padding-bottom: 25px; }
-        @media (min-width: 720px) { /* Adjust breakpoint if needed */
-             .page-wrapper { padding-top: 0; }
-            .main-content { padding: 30px; }
+        .page-wrapper {
+            padding-top: 60px;
+            box-sizing: border-box;
+        }
+
+        .main-content {
+            flex-grow: 1;
+            padding-top: 25px;
+            padding-bottom: 25px;
+        }
+
+        @media (min-width: 720px) {
+
+            /* Adjust breakpoint if needed */
+            .page-wrapper {
+                padding-top: 0;
+            }
+
+            .main-content {
+                padding: 30px;
+            }
         }
     </style>
 </head>
+
 <body>
 
     <!-- Mobile Navigation Bar -->
     <nav class="mobile-nav">
-        <a href="home.html" class="mobile-logo">dokmai4u Shop</a>
+        <a href="/" class="mobile-logo">dokmai4u Shop</a>
         <div id="hamburger-icon" class="hamburger-icon"><span></span><span></span><span></span></div>
     </nav>
     <div id="mobile-menu" class="mobile-menu">
-        <a href="home.html">Home</a>
-        <a href="search.html">Search</a>
-        <a href="admin-login.html">Login</a>
+        <a href="/">Home</a>
+        <a href="/search">Search</a>
+        <a href="/login">Login</a>
     </div>
 
     <!-- Desktop Navigation Bar -->
     <nav class="desktop-nav">
-        <a href="home.html" class="logo">dokmai4u Shop</a>
+        <a href="/" class="logo">dokmai4u Shop</a>
         <div class="nav-links">
-            <a href="home.html">Home</a>
-            <a href="search.html">Search</a>
-            <a href="admin-login.html">Login</a>
+            <a href="/">Home</a>
+            <a href="/search">Search</a>
+            <a href="/login">Login</a>
         </div>
     </nav>
 
@@ -44,8 +62,8 @@
     <div class="page-wrapper">
         <!-- Original Header (Hidden by CSS) -->
         <header class="app-header">
-             <a href="home.html" class="back-arrow">&lt;</a>
-             <h1 class="title" style="font-size: 20px;">User Account Management</h1>
+            <a href="/" class="back-arrow">&lt;</a>
+            <h1 class="title" style="font-size: 20px;">User Account Management</h1>
         </header>
 
         <!-- Main Content -->
@@ -54,10 +72,10 @@
 
                 <!-- Toolbar: Search Input + Search Button + Add Button -->
                 <div class="am-toolbar">
-                     <input type="text" class="am-search-bar" placeholder="Search user account">
-                     <!-- Added Search Button -->
-                     <a href="admin-user-search-account.html" class="am-search-btn">Search</a>
-                     <a href="admin-user-add-account.html" class="am-add-btn">Add User Account</a>
+                    <input type="text" class="am-search-bar" placeholder="Search user account" name="AdminID">
+                    <!-- Added Search Button -->
+                    <a href="/account/search" class="am-search-btn">Search</a>
+                    <a href="/account/add" class="am-add-btn">Add User Account</a>
                 </div>
 
                 <!-- Account List (with 3 sample accounts) -->
@@ -70,7 +88,7 @@
                             <p>Role: Admin</p>
                         </div>
                     </div>
-                     <!-- Sample Account 2 -->
+                    <!-- Sample Account 2 -->
                     <div class="am-account-item">
                         <div class="am-account-icon">👤</div>
                         <div class="am-account-info">
@@ -78,7 +96,7 @@
                             <p>Role: Admin</p>
                         </div>
                     </div>
-                     <!-- Sample Account 3 -->
+                    <!-- Sample Account 3 -->
                     <div class="am-account-item">
                         <div class="am-account-icon">👤</div>
                         <div class="am-account-info">
@@ -96,9 +114,9 @@
     <footer class="desktop-footer">
         <div class="footer-column left">
             <h4>For Admin</h4>
-            <a href="admin-login.html">Login</a>
-            <a href="admin-product-management.html">Product Management</a>
-            <a href="admin-users-account-management.html">Account Management</a>
+            <a href="/login">Login</a>
+            <a href="/product">Product Management</a>
+            <a href="/account">Account Management</a>
         </div>
         <div class="footer-column right">
             <h4>Contact</h4>
@@ -107,9 +125,28 @@
         </div>
     </footer>
 
+    <form action="/auth/logout" method="POST" style="display:inline">
+        <button type="submit">Logout</button>
+    </form>
+
+
     <!-- JS for Mobile Nav -->
-    <script src="/html/moblie-nav.js" defer></script>
+    <script src="/assets/moblie-nav.js" defer>
+        document.getElementById('searchForm').addEventListener('submit', async e => {
+            e.preventDefault();
+            const AdminID = e.target.AdminID.value;
+
+            const res = await fetch('/account/search', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ AdminID })
+            });
+
+            const data = await res.json();
+            document.getElementById('result').textContent = JSON.stringify(data, null, 2);
+        });
+    </script>
 
 </body>
-</html>
 
+</html>
