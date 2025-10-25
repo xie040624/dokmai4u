@@ -70,29 +70,37 @@
         <main class="main-content">
             <div class="admin-container">
 
-                <form action="#" method="post" class="admin-form">
+                <form id="addForm" action="#" method="post" class="admin-form">
                     <div class="account-icon-large">👤</div>
 
                     <div class="form-group">
                         <label for="first-name">First Name</label>
-                        <input type="text" id="first-name" name="first-name">
+                        <input type="text" name="FName" placeholder="First Name" required>
                     </div>
                     <div class="form-group">
                         <label for="last-name">Last Name</label>
-                        <input type="text" id="last-name" name="last-name">
+                        <input type="text" name="LName" placeholder="Last Name" required>
                     </div>
                     <div class="form-group">
                         <label for="email">Email</label>
-                        <input type="email" id="email" name="email">
+                        <input type="email" name="Email" placeholder="Email" required>
                     </div>
                     <div class="form-group">
                         <label for="phone">Phone</label>
-                        <input type="tel" id="phone" name="phone">
+                        <input type="text" name="PhoneNumber" placeholder="Phone Number" required>
                     </div>
                     <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" name="Username" placeholder="Username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" name="Password" placeholder="Password" required>
+                    </div>
+                    <!-- <div class="form-group">
                         <label for="address">Address</label>
                         <textarea id="address" name="address"></textarea>
-                    </div>
+                    </div> -->
 
                     <button type="submit" class="btn-primary">Add</button>
                 </form>
@@ -118,6 +126,21 @@
 
     <!-- JS for Mobile Nav -->
     <script src="/assets/moblie-nav.js" defer></script>
+    <script>
+        document.getElementById('addForm').addEventListener('submit', async e => {
+            e.preventDefault();
+            const formData = Object.fromEntries(new FormData(e.target).entries());
+
+            const res = await fetch('/account/add', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData)
+            });
+
+            const data = await res.json();
+            alert(data.message);
+        });
+    </script>
 
 </body>
 
