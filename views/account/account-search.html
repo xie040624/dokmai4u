@@ -1,24 +1,41 @@
 <!DOCTYPE html>
-<html lang="th">
+<html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Search User Account</title>
-  <link rel="stylesheet" href="/assets/desktop-shared.css">
-  <link rel="stylesheet" href="/assets/admin-product.css">
-  <link rel="stylesheet" href="/assets/admin-users-account.css">
-  <link rel="stylesheet" href="/assets/moblie-nav.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Search Account</title>
+  <link rel="stylesheet" href="/assets/admin-users-account.css" />
+  <link rel="stylesheet" href="/assets/desktop-shared.css" />
+  <link rel="stylesheet" href="/assets/moblie-nav.css" />
   <style>
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
     .page-wrapper {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
       padding-top: 60px;
       box-sizing: border-box;
     }
 
     .main-content {
       flex-grow: 1;
-      padding-top: 25px;
-      padding-bottom: 25px;
+      padding: 25px 0;
+    }
+
+    .desktop-footer {
+      background: #4a0072;
+      padding: 30px;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
     }
 
     @media (min-width: 720px) {
@@ -34,18 +51,21 @@
 </head>
 
 <body>
-  <!-- Mobile Navigation Bar -->
+  <!-- Mobile Nav -->
   <nav class="mobile-nav">
     <a href="/" class="mobile-logo">dokmai4u Shop</a>
-    <div id="hamburger-icon" class="hamburger-icon"><span></span><span></span><span></span></div>
+    <div id="hamburger-icon" class="hamburger-icon">
+      <span></span><span></span><span></span>
+    </div>
   </nav>
+
   <div id="mobile-menu" class="mobile-menu">
     <a href="/">Home</a>
     <a href="/search">Search</a>
     <a href="/login">Login</a>
   </div>
 
-  <!-- Desktop Navigation Bar -->
+  <!-- Desktop Nav -->
   <nav class="desktop-nav">
     <a href="/" class="logo">dokmai4u Shop</a>
     <div class="nav-links">
@@ -55,66 +75,59 @@
     </div>
   </nav>
 
-  <!-- Page Wrapper -->
+  <!-- Main Page -->
   <div class="page-wrapper">
-    <header class="app-header">
-      <a href="/account" class="back-arrow">&lt;</a>
-      <h1 class="title" style="font-size: 20px;">Search User Account</h1>
-    </header>
-
-    <!-- Main Content -->
     <main class="main-content">
       <div class="admin-container">
-
-        <!-- ✅ เพิ่ม form -->
         <form id="searchForm" class="am-toolbar">
-          <input type="text" class="am-search-bar" placeholder="Enter Admin ID or Username" name="AdminID" required>
-          <button type="submit">Search</button>
+          <input type="text" class="am-search-bar" placeholder="Enter Admin ID or Username" name="searchKey" required />
+          <button type="submit" class="am-search-btn">Search</button>
         </form>
-
-        <!-- ✅ ที่ว่างสำหรับผลลัพธ์ -->
         <div id="result" class="search-results"></div>
-
       </div>
     </main>
   </div>
 
+  <!-- Footer -->
   <footer class="desktop-footer">
     <div class="footer-column left">
       <h4>For Admin</h4>
-      <a href="/login">Login</a>
       <a href="/product">Product Management</a>
       <a href="/account">Account Management</a>
     </div>
     <div class="footer-column right">
       <h4>Contact</h4>
-      <p>contact@gmail.com</p>
+      <a href="/team">Team</a>
+      <p>contact@dokmai4u.com</p>
       <p>012-345-6789</p>
     </div>
   </footer>
 
   <script src="/assets/moblie-nav.js" defer></script>
   <script>
-    document.getElementById('searchForm').addEventListener('submit', async (e) => {
+    document.getElementById("searchForm").addEventListener("submit", async (e) => {
       e.preventDefault();
-      const AdminID = e.target.AdminID.value;
-
-      const res = await fetch('/account/search', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ AdminID })
+      const searchKey = e.target.searchKey.value;
+      const res = await fetch("/account/search", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ searchKey }),
       });
 
       const data = await res.json();
-      const resultDiv = document.getElementById('result');
+      const resultDiv = document.getElementById("result");
 
-      if (data.length === 0) {
+      if (!data.length) {
         resultDiv.innerHTML = `<p>No results found.</p>`;
-      } else {
-        resultDiv.innerHTML = data.map(user => `
+        return;
+      }
+
+      resultDiv.innerHTML = data
+        .map(
+          (user) => `
           <div class="search-result-item">
             <div class="search-result-header">
-              <div class="am-account-icon">👤</div>
+              <div class="am-account-icon">👨🏻‍💼</div>
               <div class="am-account-info">
                 <h4>${user.Username}</h4>
                 <p>Role: ${user.Role}</p>
@@ -124,12 +137,11 @@
               <a href="/account/update/${user.AdminID}" class="btn-update">Update</a>
               <a href="/account/delete/${user.AdminID}" class="btn-delete">Delete</a>
             </div>
-          </div>
-        `).join('');
-      }
+          </div>`
+        )
+        .join("");
     });
   </script>
-
 </body>
 
 </html>

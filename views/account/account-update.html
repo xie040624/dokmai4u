@@ -1,29 +1,44 @@
 <!DOCTYPE html>
-<html lang="th">
+<html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Update Information</title>
-    <link rel="stylesheet" href="/assets/desktop-shared.css">
-    <link rel="stylesheet" href="/assets/admin-product.css">
-    <link rel="stylesheet" href="/assets/admin-users-account.css">
-    <link rel="stylesheet" href="/assets/moblie-nav.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Update Account</title>
+    <link rel="stylesheet" href="/assets/admin-users-account.css" />
+    <link rel="stylesheet" href="/assets/desktop-shared.css" />
+    <link rel="stylesheet" href="/assets/moblie-nav.css" />
     <style>
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
         .page-wrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
             padding-top: 60px;
             box-sizing: border-box;
         }
 
         .main-content {
             flex-grow: 1;
-            padding-top: 25px;
-            padding-bottom: 25px;
+            padding: 25px 0;
+        }
+
+        .desktop-footer {
+            background: #4a0072;
+            padding: 30px;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
         }
 
         @media (min-width: 720px) {
-
-            /* Adjust breakpoint if needed */
             .page-wrapper {
                 padding-top: 0;
             }
@@ -36,70 +51,56 @@
 </head>
 
 <body>
-
-    <!-- Mobile Navigation Bar -->
+    <!-- Mobile Nav -->
     <nav class="mobile-nav">
-        <a href="home.html" class="mobile-logo">dokmai4u Shop</a>
-        <div id="hamburger-icon" class="hamburger-icon"><span></span><span></span><span></span></div>
-    </nav>
-    <div id="mobile-menu" class="mobile-menu">
-        <a href="home.html">Home</a>
-        <a href="search.html">Search</a>
-        <a href="admin-login.html">Login</a>
-    </div>
-
-    <!-- Desktop Navigation Bar -->
-    <nav class="desktop-nav">
-        <a href="home.html" class="logo">dokmai4u Shop</a>
-        <div class="nav-links">
-            <a href="home.html">Home</a>
-            <a href="search.html">Search</a>
-            <a href="admin-login.html">Login</a>
+        <a href="/" class="mobile-logo">dokmai4u Shop</a>
+        <div id="hamburger-icon" class="hamburger-icon">
+            <span></span><span></span><span></span>
         </div>
     </nav>
 
-    <!-- Page Wrapper -->
-    <div class="page-wrapper">
-        <!-- Original Header (Hidden by CSS) -->
-        <header class="app-header">
-            <a href="admin-user-search-account.html" class="back-arrow">&lt;</a>
-            <h1 class="title">Update Information</h1>
-        </header>
+    <div id="mobile-menu" class="mobile-menu">
+        <a href="/">Home</a>
+        <a href="/search">Search</a>
+        <a href="/login">Login</a>
+    </div>
 
-        <!-- Main Content -->
+    <!-- Desktop Nav -->
+    <nav class="desktop-nav">
+        <a href="/" class="logo">dokmai4u Shop</a>
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/search">Search</a>
+            <a href="/login">Login</a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="page-wrapper">
         <main class="main-content">
             <div class="admin-container">
-
                 <form id="updateForm" class="admin-form">
-                    <div class="account-icon-large">👤</div>
-
-                    <!-- เก็บ AdminID ไว้แบบ hidden -->
+                    <div class="account-icon-large">👨🏻‍💼</div>
                     <input type="hidden" id="AdminID" name="AdminID" />
-
                     <div class="form-group">
                         <label for="FName">First Name</label>
-                        <input type="text" id="FName" name="FName" />
+                        <input type="text" id="FName" name="FName" placeholder="Enter your first name" required />
                     </div>
-
                     <div class="form-group">
                         <label for="LName">Last Name</label>
-                        <input type="text" id="LName" name="LName" />
+                        <input type="text" id="LName" name="LName" placeholder="Enter your last name" required />
                     </div>
-
                     <div class="form-group">
                         <label for="Email">Email</label>
-                        <input type="email" id="Email" name="Email" />
+                        <input type="email" id="Email" name="Email" placeholder="Enter your email" required />
                     </div>
-
                     <div class="form-group">
                         <label for="Phone">Phone</label>
-                        <input type="tel" id="Phone" name="Phone" />
+                        <input type="tel" id="Phone" name="Phone" placeholder="Enter your phone number" required />
                     </div>
-
+                    <div id="result" style="color: rgb(200, 0, 0);"></div>
                     <button type="submit" class="btn-primary">Update</button>
-                    <div id="result" style="margin-top:8px;"></div>
                 </form>
-
             </div>
         </main>
     </div>
@@ -108,48 +109,46 @@
     <footer class="desktop-footer">
         <div class="footer-column left">
             <h4>For Admin</h4>
-            <a href="admin-login.html">Login</a>
-            <a href="admin-product-management.html">Product Management</a>
-            <a href="admin-users-account-management.html">Account Management</a>
+            <a href="/product">Product Management</a>
+            <a href="/account">Account Management</a>
         </div>
         <div class="footer-column right">
             <h4>Contact</h4>
-            <p>contact@gmail.com</p>
+            <a href="/team">Team</a>
+            <p>contact@dokmai4u.com</p>
             <p>012-345-6789</p>
         </div>
     </footer>
 
-    <!-- JS for Mobile Nav -->
     <script src="/assets/moblie-nav.js" defer></script>
     <script>
-        // ดึง id จาก URL เช่น /account/update/123
+        // คืนค่า Path ของ URL แยกตาม / เป็น array ["", "account", "update", ":id"] .filter(Boolean) → ตัดค่าว่าง ("")
         const pathParts = window.location.pathname.split('/').filter(Boolean);
+        // ดึงค่าตัวสุดท้ายของ array id = :id
         const id = pathParts[pathParts.length - 1];
 
         const $ = (s) => document.querySelector(s);
         const resultDiv = $('#result');
 
-        // ดึงข้อมูลเดิมมาเติมฟอร์ม
         async function loadData() {
             try {
                 const res = await fetch(`/account/api/admin/${id}`);
                 if (!res.ok) {
-                    resultDiv.textContent = 'ไม่พบข้อมูลผู้ใช้';
+                    resultDiv.textContent = 'No results found!';
                     return;
                 }
-                const u = await res.json();
-                $('#AdminID').value = u.AdminID || '';
-                $('#FName').value = u.FName || '';
-                $('#LName').value = u.LName || '';
-                $('#Email').value = u.Email || '';
-                $('#Phone').value = u.PhoneNumber || '';
+                const data = await res.json();
+                $('#AdminID').value = data.AdminID || '';
+                $('#FName').value = data.FName || '';
+                $('#LName').value = data.LName || '';
+                $('#Email').value = data.Email || '';
+                $('#Phone').value = data.PhoneNumber || '';
             } catch (e) {
                 console.error(e);
-                resultDiv.textContent = 'โหลดข้อมูลล้มเหลว';
+                resultDiv.textContent = 'Load data error!';
             }
         }
 
-        // Submit แบบ fetch ไปที่ /account/update/:id (จริง ๆ)
         $('#updateForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const payload = {
@@ -168,20 +167,19 @@
 
                 const data = await res.json();
                 if (!res.ok) {
-                    resultDiv.textContent = data?.message || 'อัปเดตไม่สำเร็จ';
+                    resultDiv.textContent = data?.message || 'Update failed!';
                     return;
                 }
 
-                resultDiv.textContent = 'อัปเดตสำเร็จ';
+                resultDiv.textContent = 'Update Success!';
             } catch (e) {
                 console.error(e);
-                resultDiv.textContent = 'มีข้อผิดพลาดในการอัปเดต';
+                resultDiv.textContent = 'There was an error updating.';
             }
         });
 
         loadData();
     </script>
-
 </body>
 
 </html>

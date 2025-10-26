@@ -1,29 +1,44 @@
 <!DOCTYPE html>
-<html lang="th">
+<html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add User Account</title>
-    <link rel="stylesheet" href="/assets/desktop-shared.css">
-    <link rel="stylesheet" href="/assets/admin-product.css">
-    <link rel="stylesheet" href="/assets/admin-users-account.css">
-    <link rel="stylesheet" href="/assets/moblie-nav.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Search Account</title>
+    <link rel="stylesheet" href="/assets/admin-users-account.css" />
+    <link rel="stylesheet" href="/assets/desktop-shared.css" />
+    <link rel="stylesheet" href="/assets/moblie-nav.css" />
     <style>
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
         .page-wrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
             padding-top: 60px;
             box-sizing: border-box;
         }
 
         .main-content {
             flex-grow: 1;
-            padding-top: 25px;
-            padding-bottom: 25px;
+            padding: 25px 0;
+        }
+
+        .desktop-footer {
+            background: #4a0072;
+            padding: 30px;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
         }
 
         @media (min-width: 720px) {
-
-            /* Adjust breakpoint if needed */
             .page-wrapper {
                 padding-top: 0;
             }
@@ -36,19 +51,21 @@
 </head>
 
 <body>
-
-    <!-- Mobile Navigation Bar -->
+    <!-- Mobile Nav -->
     <nav class="mobile-nav">
         <a href="/" class="mobile-logo">dokmai4u Shop</a>
-        <div id="hamburger-icon" class="hamburger-icon"><span></span><span></span><span></span></div>
+        <div id="hamburger-icon" class="hamburger-icon">
+            <span></span><span></span><span></span>
+        </div>
     </nav>
+
     <div id="mobile-menu" class="mobile-menu">
         <a href="/">Home</a>
         <a href="/search">Search</a>
         <a href="/login">Login</a>
     </div>
 
-    <!-- Desktop Navigation Bar -->
+    <!-- Desktop Nav -->
     <nav class="desktop-nav">
         <a href="/" class="logo">dokmai4u Shop</a>
         <div class="nav-links">
@@ -58,53 +75,40 @@
         </div>
     </nav>
 
-    <!-- Page Wrapper -->
+    <!-- Main Content -->
     <div class="page-wrapper">
-        <!-- Original Header (Hidden by CSS) -->
-        <header class="app-header">
-            <a href="/account" class="back-arrow">&lt;</a>
-            <h1 class="title">Add User Account</h1>
-        </header>
-
-        <!-- Main Content -->
         <main class="main-content">
             <div class="admin-container">
-
-                <form id="addForm" action="#" method="post" class="admin-form">
-                    <div class="account-icon-large">👤</div>
-
+                <form id="addForm" method="post" class="admin-form">
+                    <div class="account-icon-large">👨🏻‍💼</div>
                     <div class="form-group">
-                        <label for="first-name">First Name</label>
-                        <input type="text" name="FName" placeholder="First Name" required>
+                        <label for="FName">First Name</label>
+                        <input type="text" id="FName" name="FName" placeholder="Enter your first name" required />
                     </div>
                     <div class="form-group">
-                        <label for="last-name">Last Name</label>
-                        <input type="text" name="LName" placeholder="Last Name" required>
+                        <label for="LName">Last Name</label>
+                        <input type="text" id="LName" name="LName" placeholder="Enter your last name" required />
                     </div>
                     <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" name="Email" placeholder="Email" required>
+                        <label for="Email">Email</label>
+                        <input type="email" id="Email" name="Email" placeholder="Enter your email" required />
                     </div>
                     <div class="form-group">
-                        <label for="phone">Phone</label>
-                        <input type="text" name="PhoneNumber" placeholder="Phone Number" required>
+                        <label for="PhoneNumber">Phone number</label>
+                        <input type="tel" id="PhoneNumber" name="PhoneNumber" placeholder="Enter your phone number"
+                            required />
                     </div>
                     <div class="form-group">
-                        <label for="username">Username</label>
-                        <input type="text" name="Username" placeholder="Username" required>
+                        <label for="Username">Username</label>
+                        <input type="text" id="Username" name="Username" placeholder="Enter your username" required>
                     </div>
                     <div class="form-group">
-                        <label for="password">Password</label>
-                        <input type="password" name="Password" placeholder="Password" required>
+                        <label for="Password">Password</label>
+                        <input type="password" id="Password" name="Password" placeholder="Enter your password" required>
                     </div>
-                    <!-- <div class="form-group">
-                        <label for="address">Address</label>
-                        <textarea id="address" name="address"></textarea>
-                    </div> -->
-
+                    <div id="result" style="color: rgb(200, 0, 0);"></div>
                     <button type="submit" class="btn-primary">Add</button>
                 </form>
-
             </div>
         </main>
     </div>
@@ -113,35 +117,53 @@
     <footer class="desktop-footer">
         <div class="footer-column left">
             <h4>For Admin</h4>
-            <a href="/login">Login</a>
             <a href="/product">Product Management</a>
             <a href="/account">Account Management</a>
         </div>
         <div class="footer-column right">
             <h4>Contact</h4>
-            <p>contact@gmail.com</p>
+            <a href="/team">Team</a>
+            <p>contact@dokmai4u.com</p>
             <p>012-345-6789</p>
         </div>
     </footer>
 
-    <!-- JS for Mobile Nav -->
     <script src="/assets/moblie-nav.js" defer></script>
     <script>
-        document.getElementById('addForm').addEventListener('submit', async e => {
+        const $ = (s) => document.querySelector(s);
+        const resultDiv = $('#result');
+
+        $('#addForm').addEventListener('submit', async (e) => {
             e.preventDefault();
-            const formData = Object.fromEntries(new FormData(e.target).entries());
+            const payload = {
+                FName: $('#FName').value.trim(),
+                LName: $('#LName').value.trim(),
+                Email: $('#Email').value.trim(),
+                PhoneNumber: $('#PhoneNumber').value.trim(),
+                Username: $('#Username').value.trim(),
+                Password: $('#Password').value.trim()
+            };
 
-            const res = await fetch('/account/add', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(formData)
-            });
+            try {
+                const res = await fetch('/account/add', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
 
-            const data = await res.json();
-            alert(data.message);
+                const data = await res.json();
+                if (!res.ok) {
+                    resultDiv.textContent = data?.message || 'Add failed!';
+                    return;
+                }
+
+                resultDiv.textContent = 'Add Success!';
+            } catch (e) {
+                console.error(e);
+                resultDiv.textContent = 'There was an error adding.';
+            }
         });
     </script>
-
 </body>
 
 </html>

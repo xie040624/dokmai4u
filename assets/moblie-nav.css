@@ -84,8 +84,3 @@
     padding: 5px 0; /* เพิ่ม padding บน-ล่าง */
 }
 
-/* --- 4.  ซ่อน Header เก่าบน Mobile --- */
-.app-header {
-    display: none !important; /* ซ่อน Header เดิม (เช่น dokmai4u shop | Search) */
-}
-

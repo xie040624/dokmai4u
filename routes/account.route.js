@@ -1,23 +1,21 @@
 const express = require('express');
-const accountController = require('../controllers/account.controller');
-const requireAuth = require('../middleware/requireAuth');
-
 const router = express.Router();
+const ctrl = require('../controllers/account.controller');
+const requireAuth = require('../middleware/requireAuth');
 
 router.use(requireAuth);
 
-router.get('/', accountController.get);
-router.get('/search', accountController.searchPage);
-router.post('/search', accountController.search);
-router.get('/add', accountController.addPage);
-router.post('/add', accountController.add);
-router.get('/delete/:id', accountController.deletePage);
+router.get('/api/admin/:id', ctrl.getOne);
 
-// แสดงหน้า
-router.get('/update/:id', accountController.updatePage);
+router.get('/', ctrl.root);
+router.get('/search', ctrl.searchPage);
+router.get('/add', ctrl.addPage);
+router.get('/update/:id', ctrl.updatePage);
+router.get('/delete/:id', ctrl.deletePage);
 
-// API สำหรับหน้า update นี้
-router.get('/api/admin/:id', accountController.getOne);
-router.post('/update/:id', accountController.update);
+router.post('/search', ctrl.search);
+router.post('/add', ctrl.add);
+router.post('/update/:id', ctrl.update);
+router.post('/delete/:id', ctrl.delete);
 
 module.exports = router;

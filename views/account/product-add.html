@@ -1,31 +1,71 @@
 <!DOCTYPE html>
-<html lang="th">
+<html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Product</title>
-    <link rel="stylesheet" href="/assets/desktop-shared.css">
-    <link rel="stylesheet" href="/assets/admin-product.css">
-    <link rel="stylesheet" href="/assets/moblie-nav.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Search Account</title>
+    <link rel="stylesheet" href="/assets/admin-users-account.css" />
+    <link rel="stylesheet" href="/assets/desktop-shared.css" />
+    <link rel="stylesheet" href="/assets/moblie-nav.css" />
+    <style>
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .page-wrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding-top: 60px;
+            box-sizing: border-box;
+        }
+
+        .main-content {
+            flex-grow: 1;
+            padding: 25px 0;
+        }
+
+        .desktop-footer {
+            background: #4a0072;
+            padding: 30px;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        @media (min-width: 720px) {
+            .page-wrapper {
+                padding-top: 0;
+            }
+
+            .main-content {
+                padding: 30px;
+            }
+        }
+    </style>
 </head>
 
 <body>
-
+    <!-- Mobile Nav -->
     <nav class="mobile-nav">
         <a href="/" class="mobile-logo">dokmai4u Shop</a>
         <div id="hamburger-icon" class="hamburger-icon">
-            <span></span>
-            <span></span>
-            <span></span>
+            <span></span><span></span><span></span>
         </div>
     </nav>
+
     <div id="mobile-menu" class="mobile-menu">
         <a href="/">Home</a>
         <a href="/search">Search</a>
         <a href="/login">Login</a>
     </div>
 
+    <!-- Desktop Nav -->
     <nav class="desktop-nav">
         <a href="/" class="logo">dokmai4u Shop</a>
         <div class="nav-links">
@@ -35,12 +75,8 @@
         </div>
     </nav>
 
-    <div class="page-wrapper">
-        <header class="app-header">
-            <a href="/product" class="back-arrow">&lt;</a>
-            <h1 class="title">Add Product</h1>
-        </header>
 
+    <div class="page-wrapper">
         <main class="main-content">
             <div class="admin-container">
 

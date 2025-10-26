@@ -1,9 +1,11 @@
 /* --- 1. Admin Container --- */
 .admin-container {
     width: 100%;
-    max-width: 800px; /* จำกัดความกว้างเนื้อหา */
+    max-width: 800px;
+    /* จำกัดความกว้างเนื้อหา */
     margin: 0 auto;
-    padding: 0 25px; /* เว้นระยะข้างบน Mobile */
+    padding: 0 25px;
+    /* เว้นระยะข้างบน Mobile */
     box-sizing: border-box;
 }
 
@@ -14,42 +16,53 @@
     flex-wrap: wrap;
     align-items: center;
     margin-bottom: 25px;
-    gap: 10px; /* ลด gap เล็กน้อย */
+    gap: 10px;
+    /* ลด gap เล็กน้อย */
 }
+
 .am-search-bar {
     /* ให้ยืดเต็มบรรทัด ถ้าปุ่มตกไปแล้ว */
-    flex-grow: 1; /* ถ้ามีที่เหลือก็ให้ยืด */
-    flex-basis: calc(100% - 120px); /* กำหนดความกว้างเริ่มต้น (100% ลบ ความกว้างปุ่ม Search + gap โดยประมาณ) */
+    flex-grow: 1;
+    /* ถ้ามีที่เหลือก็ให้ยืด */
+    flex-basis: calc(100% - 120px);
+    /* กำหนดความกว้างเริ่มต้น (100% ลบ ความกว้างปุ่ม Search + gap โดยประมาณ) */
     padding: 12px 16px;
     font-size: 16px;
     border: none;
     background-color: #f0f2f5;
     border-radius: 10px;
-    box-shadow: inset 0 1px 2px rgba(0,0,0,0.05);
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
     min-width: 0;
-    box-sizing: border-box; /* เพิ่ม */
+    box-sizing: border-box;
+    /* เพิ่ม */
 }
+
 .am-search-btn {
-    flex-shrink: 0; /* ป้องกันปุ่มหด */
+    flex-shrink: 0;
+    /* ป้องกันปุ่มหด */
     padding: 12px 20px;
     font-size: 16px;
     font-weight: 600;
     color: #ffffff;
-    background-color: #007aff; /* Blue color like Add button */
+    background-color: #007aff;
+    /* Blue color like Add button */
     border: none;
     border-radius: 10px;
     cursor: pointer;
     text-decoration: none;
-    white-space: nowrap; /* Prevent text wrapping */
+    white-space: nowrap;
+    /* Prevent text wrapping */
 }
 
 .am-add-btn {
-    flex-shrink: 0; /* ป้องกันปุ่มหด */
+    flex-shrink: 0;
+    /* ป้องกันปุ่มหด */
     padding: 12px 20px;
     font-size: 16px;
     font-weight: 600;
     color: #ffffff;
-    background-color: #007aff; /* สีฟ้า */
+    background-color: #007aff;
+    /* สีฟ้า */
     border: none;
     border-radius: 10px;
     cursor: pointer;
@@ -69,89 +82,121 @@
 .am-account-list {
     border-top: 1px solid #f0f0f0;
 }
+
 .am-account-item {
     display: flex;
     align-items: center;
     padding: 15px 0;
     border-bottom: 1px solid #f0f0f0;
 }
+
 .am-account-icon {
-    width: 50px;
-    height: 50px;
+    font-size: 28px;
+    background: #f2f5ff;
     border-radius: 50%;
-    background-color: #f0f2f5;
-    margin-right: 15px;
+    width: 48px;
+    height: 48px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 24px;
-    color: #aaa;
-    flex-shrink: 0; /* เพิ่ม: ป้องกันไอคอนหด */
 }
+
 .am-account-info {
     flex-grow: 1;
-    /* --- นี่คือส่วนที่แก้ไข --- */
-    overflow: hidden; /* เพิ่ม: ป้องกันข้อความยาวเกินดันกล่อง */
-    min-width: 0; /* เพิ่ม: ช่วยให้ flex item หดตัวได้ */
-    /* ------------------------ */
+    overflow: hidden;
+    min-width: 0;
 }
+
 .am-account-info h4 {
-    margin: 0 0 4px 0;
-    font-size: 17px;
+    margin: 0;
+    font-size: 18px;
     font-weight: 600;
-    color: #000;
-    white-space: nowrap; /* เพิ่ม: ทำให้ชื่อผู้ใช้ไม่ตกบรรทัด */
-    text-overflow: ellipsis; /* เพิ่ม: แสดง ... ถ้าชื่อยาวเกิน */
-    overflow: hidden; /* เพิ่ม: ซ่อนส่วนที่เกิน */
+    color: #333;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
+
 .am-account-info p {
     margin: 0;
     font-size: 14px;
-    color: #888;
-    white-space: nowrap; /* เพิ่ม */
-    text-overflow: ellipsis; /* เพิ่ม */
-    overflow: hidden; /* เพิ่ม */
+    color: #777;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 
-/* --- 3. สไตล์หน้า Search User Account --- */
+/* Search Account */
 .search-result-item {
-    background-color: #f9f9f9;
-    border: 1px solid #eee;
+    background: #ffffff;
+    border: 1px solid #e0e0e0;
     border-radius: 12px;
-    margin-bottom: 20px;
-    overflow: hidden; /* เพิ่ม: กันเหนียว */
+    padding: 16px 20px;
+    margin-bottom: 16px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
+
+.search-result-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
 .search-result-header {
     display: flex;
     align-items: center;
-    padding: 15px;
+    gap: 12px;
+    margin-bottom: 10px;
 }
-/* (ใช้ am-account-icon และ am-account-info ร่วมกันได้) */
+
 .search-result-actions {
     display: flex;
-    border-top: 1px solid #eee;
+    gap: 10px;
+    margin-top: 8px;
+    border-top: 1px solid #e0e0e0;
 }
-.btn-update, .btn-delete {
-    flex: 1; /* แบ่งครึ่งปุ่ม */
+
+.btn-update,
+.btn-delete {
+    flex: 1;
+    display: inline-block;
     padding: 12px 15px;
     text-align: center;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 600;
     text-decoration: none;
     border: none;
+    border-radius: 6px;
     cursor: pointer;
-    background: none; /* เอาพื้นหลังสีเก่าออก */
+    background: none;
+    transition: background 0.2s ease, color 0.2s ease;
 }
+
 .btn-update {
-    color: #007aff; /* สีฟ้า */
-    border-right: 1px solid #eee; /* เส้นแบ่งกลาง */
+    background: #e8f3ff;
+    color: #0077ff;
+    border: 1px solid #bcd9ff;
 }
+
+.btn-update:hover {
+    background: #0077ff;
+    color: #fff;
+}
+
 .btn-delete {
-    color: #ff3b30; /* สีแดง */
+    background: #ffeaea;
+    color: #d63031;
+    border: 1px solid #ffcfcf;
+}
+
+.btn-delete:hover {
+    background: #d63031;
+    color: #fff;
 }
 
 /* --- 4. สไตล์หน้า Add / Update (ฟอร์ม) --- */
-.account-icon-large { /* เปลี่ยนจาก product-icon-large */
+.account-icon-large {
+    /* เปลี่ยนจาก product-icon-large */
     width: 100px;
     height: 100px;
     border-radius: 50%;
@@ -163,9 +208,11 @@
     font-size: 50px;
     color: #aaa;
 }
+
 .form-group {
     margin-bottom: 25px;
 }
+
 .form-group label {
     display: block;
     font-size: 18px;
@@ -173,9 +220,12 @@
     color: #000;
     margin-bottom: 10px;
 }
+
 .form-group input[type="text"],
-.form-group input[type="email"], /* เพิ่ม email */
-.form-group input[type="tel"],    /* เพิ่ม tel */
+.form-group input[type="email"],
+/* เพิ่ม email */
+.form-group input[type="tel"],
+/* เพิ่ม tel */
 .form-group textarea {
     width: 100%;
     padding: 15px 16px;
@@ -185,12 +235,14 @@
     background-color: #f0f2f5;
     border-radius: 12px;
     box-sizing: border-box;
-    box-shadow: inset 0 1px 2px rgba(0,0,0,0.05);
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
 }
+
 .form-group textarea {
     height: 100px;
     resize: vertical;
 }
+
 .btn-primary {
     width: 100%;
     padding: 16px;
@@ -208,6 +260,7 @@
 .delete-confirmation {
     text-align: center;
 }
+
 .delete-info {
     margin-bottom: 30px;
     text-align: left;
@@ -215,6 +268,7 @@
     padding: 20px;
     border-radius: 12px;
 }
+
 .delete-info p {
     margin: 0 0 10px 0;
     font-size: 17px;
@@ -222,15 +276,20 @@
     overflow-wrap: break-word;
     word-break: break-all;
 }
+
 .delete-info p strong {
     display: inline-block;
-    width: 120px; /* เพิ่มความกว้าง */
+    width: 120px;
+    /* เพิ่มความกว้าง */
     color: #555;
-    vertical-align: top; /* จัดชิดบน */
+    vertical-align: top;
+    /* จัดชิดบน */
 }
+
 .delete-warning {
     display: flex;
-    align-items: flex-start; /* จัดชิดบน */
+    align-items: flex-start;
+    /* จัดชิดบน */
     background-color: #fffbe6;
     border: 1px solid #ffe58f;
     border-radius: 8px;
@@ -240,17 +299,24 @@
     margin-bottom: 30px;
     text-align: left;
 }
+
 .delete-warning span {
-    font-size: 20px; /* ลดขนาดไอคอน */
-    margin-right: 10px; /* ลดระยะห่าง */
-    line-height: 1.4; /* ให้ตรงกับข้อความ */
+    font-size: 20px;
+    /* ลดขนาดไอคอน */
+    margin-right: 10px;
+    /* ลดระยะห่าง */
+    line-height: 1.4;
+    /* ให้ตรงกับข้อความ */
 }
+
 .btn-group {
     display: flex;
     flex-direction: column;
     gap: 15px;
 }
-.btn-secondary, .btn-delete-confirm {
+
+.btn-secondary,
+.btn-delete-confirm {
     width: 100%;
     padding: 16px;
     font-size: 18px;
@@ -261,29 +327,38 @@
     text-decoration: none;
     box-sizing: border-box;
 }
+
 .btn-secondary {
     background-color: #e5e5ea;
     color: #000;
 }
+
 .btn-delete-confirm {
     background-color: #ff3b30;
     color: #ffffff;
 }
 
 /* --- 6. Desktop Adjustments --- */
-@media (min-width: 720px) { /* ใช้ breakpoint 720px ให้ตรงกัน */
+@media (min-width: 720px) {
+
+    /* ใช้ breakpoint 720px ให้ตรงกัน */
     .admin-container {
         padding: 0;
         margin-top: 30px;
         margin-bottom: 30px;
     }
+
     .btn-group {
         flex-direction: row;
     }
+
     .am-toolbar {
-        flex-wrap: nowrap; /* Desktop ไม่ต้องตกบรรทัด */
+        flex-wrap: nowrap;
+        /* Desktop ไม่ต้องตกบรรทัด */
     }
+
     .am-search-bar {
-        flex-basis: auto; /* ให้ความกว้างเป็นไปตาม flex-grow */
+        flex-basis: auto;
+        /* ให้ความกว้างเป็นไปตาม flex-grow */
     }
 }
