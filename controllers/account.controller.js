@@ -1,7 +1,6 @@
 // const db = require('../db');
 // const path = require('path');
 // const bcrypt = require('bcryptjs');
-// const { search } = require('../routes/account.route');
 
 // module.exports = {
 //     get: (req, res) => {
@@ -184,9 +183,9 @@ module.exports = {
             const adminId = req.params.id;
 
             if (!adminId) {
-                 return res.status(400).json({ message: 'Missing Admin ID' });
+                return res.status(400).json({ message: 'Missing Admin ID' });
             }
-            
+
             // ✅ FIX: เปลี่ยนเป็นคำสั่ง DELETE
             const [result] = await db.query(
                 'DELETE FROM Admin WHERE AdminID = ?',
@@ -199,13 +198,52 @@ module.exports = {
             }
 
             res.status(200).json({ message: 'Account deleted successfully', adminId });
-            
+
         } catch (error) {
             console.error('Delete error:', error);
             res.status(500).json({ message: 'Database error during deletion' });
         }
     },
+    // แสดงหน้า HTML (ไม่มี JSON)
     updatePage: (req, res) => {
-        res.sendFile(path.join(__dirname, '../views/account', 'account-update.html'));
+        return res.sendFile(path.join(__dirname, '../views/account', 'account-update.html'));
+    },
+    update: async (req, res) => {
+        try {
+            const { id } = req.params;
+            const { FName, LName, Email, Phone } = req.body;
+
+            if (!FName || !LName || !Email) {
+                return res.status(400).json({ message: 'FName, LName, Email are required' });
+            }
+
+            const [result] = await db.query(
+                `UPDATE Admin SET FName = ?, LName = ?, Email = ?, PhoneNumber = ? WHERE AdminID = ?`,
+                [FName, LName, Email, Phone || null, id]
+            );
+
+            if (result.affectedRows === 0) {
+                return res.status(404).json({ message: 'Admin not found' });
+            }
+            return res.json({ ok: true, updatedId: id });
+        } catch (error) {
+            console.error(error);
+            return res.status(500).json({ message: 'Database error' });
+        }
+    },
+    // API: อ่านข้อมูลแอดมินรายเดียวเป็น JSON
+    getOne: async (req, res) => {
+        try {
+            const { id } = req.params;
+            const [rows] = await db.query(
+                'SELECT AdminID, FName, LName, Email, PhoneNumber, Role FROM Admin WHERE AdminID = ?',
+                [id]
+            );
+            if (!rows.length) return res.status(404).json({ message: 'Not found' });
+            return res.json(rows[0]);
+        } catch (error) {
+            console.error(error);
+            return res.status(500).json({ message: 'Database error' });
+        }
     }
 };

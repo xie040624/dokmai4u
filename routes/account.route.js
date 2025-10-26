@@ -12,6 +12,12 @@ router.post('/search', accountController.search);
 router.get('/add', accountController.addPage);
 router.post('/add', accountController.add);
 router.get('/delete/:id', accountController.deletePage);
+
+// แสดงหน้า
 router.get('/update/:id', accountController.updatePage);
+
+// API สำหรับหน้า update นี้
+router.get('/api/admin/:id', accountController.getOne);
+router.post('/update/:id', accountController.update);
 
 module.exports = router;
