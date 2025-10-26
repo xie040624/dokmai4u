@@ -127,7 +127,7 @@
         // ดึงค่าตัวสุดท้ายของ array id = :id
         const id = pathParts[pathParts.length - 1];
 
-        const $ = (s) => document.querySelector(s);
+        const $ = (id) => document.querySelector(id);
         const resultDiv = $('#result');
 
         async function loadData() {

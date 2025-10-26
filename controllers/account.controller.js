@@ -8,7 +8,7 @@ module.exports = {
     addPage: (req, res) => res.sendFile(path.join(__dirname, '../views/account', 'account-add.html')),
     updatePage: (req, res) => res.sendFile(path.join(__dirname, '../views/account', 'account-update.html')),
     deletePage: (req, res) => res.sendFile(path.join(__dirname, '../views/account', 'account-delete.html')),
-    getOne: async (req, res) => {
+    get: async (req, res) => {
         try {
             const { id } = req.params;
             const [rows] = await db.query(
@@ -105,26 +105,13 @@ module.exports = {
     },
     delete: async (req, res) => {
         try {
-            // ✅ FIX: ดึงค่า AdminID จาก req.params.id
             const adminId = req.params.id;
+            if (!adminId) return res.status(400).json({ message: 'Missing Admin ID' });
 
-            if (!adminId) {
-                return res.status(400).json({ message: 'Missing Admin ID' });
-            }
-
-            // ✅ FIX: เปลี่ยนเป็นคำสั่ง DELETE
-            const [result] = await db.query(
-                'DELETE FROM Admin WHERE AdminID = ?',
-                [adminId]
-            );
-
-            if (result.affectedRows === 0) {
-                // หากไม่มีแถวถูกลบ หมายความว่าไม่พบ AdminID นั้น
-                return res.status(404).json({ message: 'Account not found' });
-            }
+            const [result] = await db.query('DELETE FROM Admin WHERE AdminID = ?', [adminId]);
+            if (result.affectedRows === 0) return res.status(404).json({ message: 'Account not found' });
 
             res.status(200).json({ message: 'Account deleted successfully', adminId });
-
         } catch (error) {
             console.error('Delete error:', error);
             res.status(500).json({ message: 'Database error during deletion' });

@@ -5,7 +5,7 @@ const requireAuth = require('../middleware/requireAuth');
 
 router.use(requireAuth);
 
-router.get('/api/admin/:id', ctrl.getOne);
+router.get('/api/admin/:id', ctrl.get);
 
 router.get('/', ctrl.root);
 router.get('/search', ctrl.searchPage);
@@ -16,6 +16,7 @@ router.get('/delete/:id', ctrl.deletePage);
 router.post('/search', ctrl.search);
 router.post('/add', ctrl.add);
 router.post('/update/:id', ctrl.update);
-router.post('/delete/:id', ctrl.delete);
+
+router.delete('/delete/:id', ctrl.delete);
 
 module.exports = router;

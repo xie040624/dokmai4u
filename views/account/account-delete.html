@@ -93,23 +93,24 @@
                     <div class="delete-confirmation">
                         <div class="account-icon-large">👨🏻‍💼</div>
                         <div id="deleteInfo" class="delete-info">
-                            <p><strong>Name:</strong> <span id="Name"></span></p>
-                            <p><strong>Email:</strong> <span id="Email"></span></p>
-                            <p><strong>Username:</strong> <span id="Username"></span></p>
-                            <p><strong>Role:</strong> <span id="role">-</span></p>
-                            <p><strong>Phone:</strong> <span id="phone">-</span></p>
+                            <p><strong>Name:</strong> <span id="Name">-</span></p>
+                            <p><strong>Email:</strong> <span id="Email">-</span></p>
+                            <p><strong>Username:</strong> <span id="Username">-</span></p>
+                            <p><strong>Role:</strong> <span id="Role">-</span></p>
+                            <p><strong>Phone:</strong> <span id="Phone">-</span></p>
                         </div>
                         <div class="delete-warning">
                             <span>⚠️</span>
                             <p>Are you sure you want to delete this user?</p>
                         </div>
+                        <div id="result" style="color: rgb(200, 0, 0);"></div>
                         <div class="btn-group">
                             <a href="javascript:void(0)" id="cancelBtn" class="btn-secondary">Cancel</a>
                             <a href="javascript:void(0)" id="deleteBtn" class="btn-delete-confirm">Delete</a>
                         </div>
-                        <div id="errorBox" class="error" style="display:none;"></div>
                     </div>
                 </form>
+
             </div>
         </main>
     </div>
@@ -133,59 +134,53 @@
     <script>
         (function () {
             const pathParts = location.pathname.split('/').filter(Boolean);
-            const adminId = pathParts[pathParts.length - 1];
-            const errorBox = document.getElementById('errorBox');
+            const AdminID = pathParts[pathParts.length - 1];
 
             const $ = (id) => document.getElementById(id);
+            const resultDiv = $('result');
 
-            async function loadDetail() {
+            async function loadData() {
                 try {
-                    const res = await fetch(`/account/${adminId}`);
-                    if (!res.ok) {
-                        const err = await res.json().catch(() => ({ message: res.statusText }));
-                        throw new Error(err.message || 'Load error');
-                    }
-                    const u = await res.json();
-                    $('name').textContent = `${u.FName ?? ''} ${u.LName ?? ''}`.trim() || '-';
-                    $('email').textContent = u.Email || '-';
-                    $('username').textContent = u.Username || '-';
-                    $('address').textContent = u.Address || '-';
-                    $('role').textContent = u.Role || '-';
-                    $('phone').textContent = u.PhoneNumber || '-';
+                    const res = await fetch(`/account/api/admin/${AdminID}`);
+                    const data = await res.json();
+
+                    if (!res.ok) throw new Error(data?.message || res.statusText);
+
+                    $('Name').textContent = `${data.FName ?? ''} ${data.LName ?? ''}`.trim() || '-';
+                    $('Email').textContent = data.Email || '-';
+                    $('Username').textContent = data.Username || '-';
+                    $('Role').textContent = data.Role || '-';
+                    $('Phone').textContent = data.PhoneNumber || '-';
                 } catch (e) {
-                    errorBox.style.display = 'block';
-                    errorBox.textContent = `Error: ${e.message}`;
+                    resultDiv.style.display = 'block';
+                    resultDiv.textContent = `Error: ${e.message}`;
                 }
             }
 
             async function doDelete() {
-                const confirmed = confirm('Are you sure you want to delete this user?');
-                if (!confirmed) return;
+                if (!confirm('Are you sure you want to delete this user?')) return;
 
                 try {
-                    const res = await fetch(`/api/account/${adminId}`, { method: 'DELETE' });
-                    if (!res.ok) {
-                        const err = await res.json().catch(() => ({ message: res.statusText }));
-                        throw new Error(err.message || 'Delete error');
-                    }
+                    const res = await fetch(`/account/delete/${AdminID}`, { method: 'DELETE' });
+                    const data = await res.json();
+                    if (!res.ok) throw new Error(data?.message || res.statusText);
                     location.href = '/account';
                 } catch (e) {
-                    errorBox.style.display = 'block';
-                    errorBox.textContent = `Error: ${e.message}`;
+                    resultDiv.style.display = 'block';
+                    resultDiv.textContent = `Error: ${e.message}`;
                 }
             }
 
             $('cancelBtn').addEventListener('click', () => {
-                // กลับหน้าก่อนหน้า ถ้าไม่มี history ให้ไปหน้า search
                 if (history.length > 1) history.back();
                 else location.href = '/account/search';
             });
-
             $('deleteBtn').addEventListener('click', doDelete);
 
-            loadDetail();
+            loadData();
         })();
     </script>
+
 </body>
 
 </html>
