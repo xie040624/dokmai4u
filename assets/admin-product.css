@@ -2,34 +2,41 @@
 /* (ตัวหุ้มเนื้อหาหลัก ให้มีขนาดพอดีบนจอ Desktop) */
 .admin-container {
     width: 100%;
-    max-width: 800px; /* จำกัดความกว้างเนื้อหา */
+    max-width: 800px;
+    /* จำกัดความกว้างเนื้อหา */
     margin: 0 auto;
-    margin-top: 30px; /* เว้นระยะจาก Navbar */
+    margin-top: 30px;
+    /* เว้นระยะจาก Navbar */
     margin-bottom: 30px;
-    padding: 0 25px; /* เว้นระยะข้างบน Mobile */
+    padding: 0 25px;
+    /* เว้นระยะข้างบน Mobile */
     box-sizing: border-box;
 }
+
 .app-header {
     display: flex;
     align-items: center;
-    justify-content: center; /* จัดให้ Title อยู่กลาง (ค่าเริ่มต้น) */
+    justify-content: center;
+    /* จัดให้ Title อยู่กลาง (ค่าเริ่มต้น) */
     position: relative;
-    padding: 60px 25px 20px 25px; 
+    padding: 60px 25px 20px 25px;
     border-bottom: 1px solid #f0f0f0;
 }
+
 .app-header .title {
-    font-size: 34px; 
+    font-size: 34px;
     font-weight: 700;
     margin: 0;
     color: #000;
 }
+
 .app-header .back-arrow {
     position: absolute;
     left: 25px;
     font-size: 24px;
     font-weight: 500;
-    
-    color: #000; 
+
+    color: #000;
     text-decoration: none;
 }
 
@@ -40,28 +47,34 @@
     align-items: center;
     margin-top: 90px;
     margin-bottom: 25px;
-    gap: 15px; /* เว้นวรรคระหว่างช่องค้นหากับปุ่ม */
+    gap: 15px;
+    /* เว้นวรรคระหว่างช่องค้นหากับปุ่ม */
 }
+
 .pm-search-bar {
-    flex-grow: 1; /* ยืดเต็มพื้นที่ที่เหลือ */
+    flex-grow: 1;
+    /* ยืดเต็มพื้นที่ที่เหลือ */
     padding: 12px 16px;
     font-size: 16px;
     border: none;
     background-color: #f0f2f5;
     border-radius: 10px;
-    box-shadow: inset 0 1px 2px rgba(0,0,0,0.05);
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
 }
+
 .pm-add-btn {
+    flex-shrink: 0;
     padding: 12px 20px;
     font-size: 16px;
-    font-weight: 600;
+    font-weight: 500;
+    font-family:Verdana;
     color: #ffffff;
-    background-color: #007aff; /* สีฟ้า */
+    background-color: #007aff;
     border: none;
     border-radius: 10px;
     cursor: pointer;
     text-decoration: none;
-    white-space: nowrap; /* กันคำว่า Add ตกบรรทัด */
+    white-space: nowrap;
 }
 
 /* (สำหรับตอนที่ยังไม่มีสินค้า) */
@@ -76,12 +89,14 @@
 .pm-product-list {
     border-top: 1px solid #f0f0f0;
 }
+
 .pm-product-item {
     display: flex;
     align-items: center;
     padding: 15px 0;
     border-bottom: 1px solid #f0f0f0;
 }
+
 .pm-product-icon {
     width: 50px;
     height: 50px;
@@ -95,25 +110,31 @@
     font-size: 24px;
     color: #aaa;
 }
+
 .pm-product-info {
     flex-grow: 1;
 }
+
 .pm-product-info h4 {
     margin: 0 0 4px 0;
     font-size: 17px;
     font-weight: 600;
     color: #000;
 }
+
 .pm-product-info p {
     margin: 0;
     font-size: 14px;
     color: #888;
 }
+
 .pm-product-actions {
     display: flex;
     gap: 10px;
 }
-.btn-edit, .btn-delete {
+
+.btn-edit,
+.btn-delete {
     padding: 8px 15px;
     font-size: 14px;
     font-weight: 600;
@@ -122,12 +143,16 @@
     cursor: pointer;
     text-decoration: none;
 }
+
 .btn-edit {
-    background-color: #f5a623; /* สีส้ม */
+    background-color: #f5a623;
+    /* สีส้ม */
     color: #ffffff;
 }
+
 .btn-delete {
-    background-color: #ff3b30; /* สีแดง */
+    background-color: #ff3b30;
+    /* สีแดง */
     color: #ffffff;
 }
 
@@ -145,9 +170,11 @@
     font-size: 50px;
     color: #aaa;
 }
+
 .form-group {
     margin-bottom: 25px;
 }
+
 .form-group label {
     display: block;
     font-size: 18px;
@@ -155,6 +182,7 @@
     color: #000;
     margin-bottom: 10px;
 }
+
 .form-group input[type="text"],
 .form-group input[type="date"],
 .form-group select,
@@ -167,15 +195,18 @@
     background-color: #f0f2f5;
     border-radius: 12px;
     box-sizing: border-box;
-    box-shadow: inset 0 1px 2px rgba(0,0,0,0.05);
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
 }
+
 .form-group textarea {
     height: 100px;
     resize: vertical;
 }
+
 .form-group .select-wrapper {
     position: relative;
 }
+
 .form-group .select-wrapper::after {
     content: '▼';
     font-size: 12px;
@@ -186,23 +217,30 @@
     transform: translateY(-50%);
     pointer-events: none;
 }
+
 .form-group select {
     appearance: none;
 }
+
 .form-group .date-range-inputs {
     display: flex;
     align-items: center;
-    justify-content: space-between; /* จัดให้มีช่องว่างตรงกลาง */
+    justify-content: space-between;
+    /* จัดให้มีช่องว่างตรงกลาง */
 }
+
 .form-group .date-range-inputs input {
-    width: 42%; /* แบ่งความกว้างสำหรับช่องวันที่ */
+    width: 42%;
+    /* แบ่งความกว้างสำหรับช่องวันที่ */
     box-sizing: border-box;
 }
+
 .form-group .date-range-inputs span {
     color: #888;
     font-size: 16px;
     font-weight: 500;
 }
+
 .btn-primary {
     width: 100%;
     padding: 16px;
@@ -220,6 +258,7 @@
 .delete-confirmation {
     text-align: center;
 }
+
 .delete-info {
     margin-bottom: 30px;
     text-align: left;
@@ -227,15 +266,19 @@
     padding: 20px;
     border-radius: 12px;
 }
+
 .delete-info p {
     margin: 0 0 10px 0;
     font-size: 17px;
 }
+
 .delete-info p strong {
     display: inline-block;
-    width: 100px; /* จัดให้หัวข้อตรงกัน */
+    width: 100px;
+    /* จัดให้หัวข้อตรงกัน */
     color: #555;
 }
+
 .delete-warning {
     display: flex;
     align-items: center;
@@ -248,16 +291,21 @@
     margin-bottom: 30px;
     text-align: left;
 }
-.delete-warning span { /* (ใช้ ⚠️ แทนไอคอนสามเหลี่ยม) */
+
+.delete-warning span {
+    /* (ใช้ ⚠️ แทนไอคอนสามเหลี่ยม) */
     font-size: 24px;
     margin-right: 15px;
 }
+
 .btn-group {
     display: flex;
     flex-direction: column;
     gap: 15px;
 }
-.btn-secondary, .btn-delete-confirm {
+
+.btn-secondary,
+.btn-delete-confirm {
     width: 100%;
     padding: 16px;
     font-size: 18px;
@@ -267,10 +315,12 @@
     cursor: pointer;
     text-decoration: none;
 }
+
 .btn-secondary {
     background-color: #e5e5ea;
     color: #000;
 }
+
 .btn-delete-confirm {
     background-color: #ff3b30;
     color: #ffffff;
@@ -279,11 +329,13 @@
 /* --- 5. Desktop Adjustments --- */
 @media (min-width: 720px) {
     .admin-container {
-        padding: 0; /* ลบ padding ข้างของ mobile */
-        margin-top: 30px; /* เว้นระยะจาก Navbar */
+        padding: 0;
+        /* ลบ padding ข้างของ mobile */
+        margin-top: 30px;
+        /* เว้นระยะจาก Navbar */
         margin-bottom: 30px;
     }
-    
+
     /* (ทำให้ปุ่ม Delete/Cancel วางข้างกันบนจอใหญ่) */
     .btn-group {
         flex-direction: row;
@@ -295,7 +347,6 @@
 
     .pm-toolbar {
         margin-top: 0px;
-    }    
+    }
 
 }
-
