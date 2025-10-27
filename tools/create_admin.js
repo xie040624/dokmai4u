@@ -2,7 +2,7 @@ require('dotenv').config();
 const bcrypt = require('bcryptjs');
 const db = require('../db');
 
-// const bcrypt = require('bcryptjs'); bcrypt.hash('admin123',10).then(console.log)
+bcrypt.hash('6787051',10).then(console.log)
 
 async function main() {
     try {

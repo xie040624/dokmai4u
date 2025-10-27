@@ -8,12 +8,13 @@ router.use(requireAuth);
 router.get('/api/admin/:id', ctrl.get);
 
 router.get('/', ctrl.root);
-router.get('/search', ctrl.searchPage);
+// router.get('/search', ctrl.searchPage);
 router.get('/add', ctrl.addPage);
 router.get('/update/:id', ctrl.updatePage);
 router.get('/delete/:id', ctrl.deletePage);
+router.get('/getall', ctrl.getall);
 
-router.post('/search', ctrl.search);
+// router.post('/search', ctrl.search);
 router.post('/add', ctrl.add);
 router.post('/update/:id', ctrl.update);
 

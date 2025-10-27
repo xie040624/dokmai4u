@@ -4,7 +4,7 @@ const bcrypt = require('bcryptjs');
 
 module.exports = {
     root: (req, res) => res.sendFile(path.join(__dirname, '../views/account', 'account-management.html')),
-    searchPage: (req, res) => res.sendFile(path.join(__dirname, '../views/account', 'account-search.html')),
+    // searchPage: (req, res) => res.sendFile(path.join(__dirname, '../views/account', 'account-search.html')),
     addPage: (req, res) => res.sendFile(path.join(__dirname, '../views/account', 'account-add.html')),
     updatePage: (req, res) => res.sendFile(path.join(__dirname, '../views/account', 'account-update.html')),
     deletePage: (req, res) => res.sendFile(path.join(__dirname, '../views/account', 'account-delete.html')),
@@ -22,19 +22,19 @@ module.exports = {
             return res.status(500).json({ message: 'Database error' });
         }
     },
-    search: async (req, res) => {
-        try {
-            const { searchKey } = req.body;
-            const [rows] = await db.query(
-                'SELECT AdminID, Role, Username FROM admin WHERE AdminID LIKE ? OR Username LIKE ?',
-                [`%${searchKey}%`, `%${searchKey}%`]
-            );
-            res.json(rows);
-        } catch (error) {
-            console.error(error);
-            res.status(500).json({ message: 'Database error' });
-        }
-    },
+    // search: async (req, res) => {
+    //     try {
+    //         const { searchKey } = req.body;
+    //         const [rows] = await db.query(
+    //             'SELECT AdminID, Role, Username FROM admin WHERE AdminID LIKE ? OR Username LIKE ?',
+    //             [`%${searchKey}%`, `%${searchKey}%`]
+    //         );
+    //         res.json(rows);
+    //     } catch (error) {
+    //         console.error(error);
+    //         res.status(500).json({ message: 'Database error' });
+    //     }
+    // },
     add: async (req, res) => {
         try {
             const { FName, LName, Email, PhoneNumber, Username, Password } = req.body ?? {};
@@ -115,6 +115,17 @@ module.exports = {
         } catch (error) {
             console.error('Delete error:', error);
             res.status(500).json({ message: 'Database error during deletion' });
+        }
+    },
+    getall: async (req, res) => {
+        try {
+            const [rows] = await db.query(
+                'SELECT AdminID, Role, Username FROM Admin'
+            );
+            res.json(rows);
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ message: 'Database error' });
         }
     }
 };
