@@ -1,70 +1,35 @@
 <!DOCTYPE html>
-<html lang="th">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>dokmai4u Shop</title>
-
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <link rel="stylesheet" href="/assets/desktop-shared.css">
     <link rel="stylesheet" href="/assets/moblie-nav.css">
-
     <style>
-        /* --- 1. การตั้งค่าหน้าเว็บโดยรวม (Mobile First) --- */
-        body,
-        html {
-            margin: 0;
-            padding: 0;
+        html,
+        body {
             height: 100%;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: #ffffff;
-        }
-
-        /* --- 2. Wrapper (สำหรับ Mobile Header และ Content) --- */
-        .page-wrapper {
-            width: 100%;
-            min-height: 100%;
+            margin: 0;
             display: flex;
             flex-direction: column;
-            background-color: #ffffff;
-            padding-top: 60px;
-            /* เว้นที่สำหรับ Mobile Nav */
-            box-sizing: border-box;
-            /* เพิ่มเพื่อให้ padding ไม่ขยายกล่อง */
         }
 
-        /* --- 3. ส่วนหัว (Header Mobile - ถูกซ่อนบน Desktop โดย desktop-shared.css) --- */
-        .app-header {
+        .page-wrapper {
+            flex: 1;
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 25px;
-            /* ลด padding บนลงเพราะมี mobile nav แล้ว */
-            border-bottom: 1px solid #f0f0f0;
+            flex-direction: column;
+            padding-top: 60px;
+            box-sizing: border-box;
         }
 
-        .app-header .shop-name {
-            font-size: 20px;
-            font-weight: 600;
-            color: #000;
-        }
-
-        .app-header .search-link {
-            font-size: 16px;
-            color: #000000;
-            text-decoration: none;
-            font-weight: 500;
-        }
-
-        /* เพิ่ม: ให้ Main Content ยืดเต็มพื้นที่ */
         .main-content {
             flex-grow: 1;
-            padding-top: 25px;
-            /* เพิ่มระยะห่างด้านบน */
+            padding: 25px 0;
         }
 
-        /* --- 4. CSS สำหรับ Swiper Slider --- */
         .slider-container {
             width: 100%;
             max-width: 600px;
@@ -109,14 +74,12 @@
             --swiper-navigation-size: 18px;
         }
 
-        /* --- 5. ส่วนข้อความ --- */
         .text-section {
             margin-bottom: 30px;
             max-width: 600px;
             margin-left: auto;
             margin-right: auto;
             padding: 0 25px;
-            /* เพิ่ม padding ข้างสำหรับ Mobile */
             box-sizing: border-box;
         }
 
@@ -134,7 +97,6 @@
             text-align: right;
         }
 
-        /* --- 6. ส่วนท้าย (Footer) (แสดงทั้ง Mobile และ Desktop) --- */
         .app-footer {
             background-color: #4a0072;
             color: #ffffff;
@@ -142,7 +104,6 @@
             display: flex;
             justify-content: space-between;
             flex-shrink: 0;
-            /* ป้องกัน Footer หด */
         }
 
         .app-footer .footer-column {
@@ -152,21 +113,19 @@
         .app-footer .footer-column h4 {
             font-size: 16px;
             font-weight: 600;
-            margin: 0 0 12px 0;
+            margin: 0 0 8px 0;
             color: #fff;
         }
 
         .app-footer .footer-column.right h4:nth-of-type(2),
-        /* Target About */
         .app-footer .footer-column.right h4:nth-of-type(3) {
-            /* Target Contact */
             margin-top: 15px;
         }
 
         .app-footer a,
         .app-footer p {
             display: block;
-            color: #ddd;
+            color: #c0c0c0;
             text-decoration: none;
             margin-bottom: 8px;
             font-size: 14px;
@@ -181,20 +140,16 @@
             margin-top: 0;
         }
 
-        /* --- 7. ส่วนสำหรับ Desktop --- */
         @media (min-width: 720px) {
-
-            /* desktop-shared.css จัดการซ่อน .app-header และปรับ padding .page-wrapper แล้ว */
-            .main-content {
-                padding: 25px 30px;
-            }
-
-            .text-section {
-                padding: 0;
-                /* เอา padding ข้างออก */
-            }
-
             .app-footer {
+                padding: 30px;
+            }
+
+            .page-wrapper {
+                padding-top: 0;
+            }
+
+            .main-content {
                 padding: 30px;
             }
         }
@@ -202,59 +157,55 @@
 </head>
 
 <body>
-
-    <!-- 1. Mobile Navigation Bar -->
+    <!-- Mobile Nav -->
     <nav class="mobile-nav">
         <a href="/" class="mobile-logo">dokmai4u Shop</a>
-        <div id="hamburger-icon" class="hamburger-icon"><span></span><span></span><span></span></div>
+        <div id="hamburger-icon" class="hamburger-icon">
+            <span></span><span></span><span></span>
+        </div>
     </nav>
+
     <div id="mobile-menu" class="mobile-menu">
-        <a href="/">Home</a>
         <a href="/search">Search</a>
+        <a href="/team">Team</a>
         <a href="/login">Login</a>
     </div>
-    <!-- (ลบ Overlay ออก) -->
 
-    <!-- 2. Desktop Navigation Bar -->
+    <!-- Desktop Nav -->
     <nav class="desktop-nav">
         <a href="/" class="logo">dokmai4u Shop</a>
         <div class="nav-links">
-            <a href="/">Home</a>
             <a href="/search">Search</a>
+            <a href="/team">Team</a>
             <a href="/login">Login</a>
         </div>
     </nav>
 
-    <!-- 3. Page Wrapper (สำหรับ Mobile Header และ Content) -->
+    <!-- Main Content -->
     <div class="page-wrapper">
-
-        <!-- Header (Mobile - ถูกซ่อนบน Desktop) -->
-        <header class="app-header">
-            <div class="shop-name">dokmai4u Shop</div>
-            <a href="/search" class="search-link">Search</a>
-        </header>
-
-        <!-- Main Content -->
         <main class="main-content">
-
             <div class="slider-container">
                 <div class="swiper mySwiper1">
                     <div class="swiper-wrapper">
+
                         <div class="swiper-slide">
-                            <a href="/html/detail-red-flower.html">
+                            <a href="/html/detail.html">
                                 <img src="/image/Flower.jpg" alt="Flower 1">
                             </a>
                         </div>
+
                         <div class="swiper-slide">
                             <a href="detail.html">
                                 <img src="/image/Flower2.jpg" alt="Flower 2">
                             </a>
                         </div>
+
                         <div class="swiper-slide">
                             <a href="detail.html">
                                 <img src="/image/Flower.jpg" alt="Flower 3">
                             </a>
                         </div>
+
                     </div>
                     <div class="swiper-button-next"></div>
                     <div class="swiper-button-prev"></div>
@@ -268,23 +219,27 @@
             </div>
 
             <div class="slider-container">
-                <div class="swiper mySwiper2">
+                <div class="swiper mySwiper1">
                     <div class="swiper-wrapper">
+
                         <div class="swiper-slide">
-                            <a href="detail.html">
-                                <img src="" alt="Gift Set B">
+                            <a href="/html/detail.html">
+                                <img src="/image/Flower.jpg" alt="Flower 1">
                             </a>
                         </div>
+
                         <div class="swiper-slide">
                             <a href="detail.html">
-                                <img src="" alt="Gift Set B">
+                                <img src="/image/Flower2.jpg" alt="Flower 2">
                             </a>
                         </div>
+
                         <div class="swiper-slide">
                             <a href="detail.html">
-                                <img src="" alt="Gift Set B">
+                                <img src="/image/Flower.jpg" alt="Flower 3">
                             </a>
                         </div>
+
                     </div>
                     <div class="swiper-button-next"></div>
                     <div class="swiper-button-prev"></div>
@@ -294,16 +249,16 @@
         </main>
     </div>
 
-    <!-- 4. Footer (แสดงทั้ง Mobile และ Desktop) -->
+    <!-- Footer -->
     <footer class="app-footer">
         <div class="footer-column left">
             <h4>For Admin</h4>
-            <a href="/login">Login</a>
             <a href="/product">Product Management</a>
+            <h4>For Super Admin</h4>
             <a href="/account">Account Management</a>
         </div>
         <div class="footer-column right">
-            <h4>About</h4>
+            <h4>About us</h4>
             <a href="/team">Team</a>
             <h4>Contact</h4>
             <p>contact@dokmai4u.com</p>
@@ -311,7 +266,8 @@
         </div>
     </footer>
 
-    <!-- JS Scripts -->
+    <!-- JS -->
+    <script src="/assets/moblie-nav.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
         var swiper1 = new Swiper(".mySwiper1", {
@@ -330,8 +286,6 @@
             loop: true,
         });
     </script>
-    <script src="/assets/moblie-nav.js" defer></script>
-
 </body>
 
 </html>

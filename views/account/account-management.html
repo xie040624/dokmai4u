@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Search Account</title>
+    <title>Account Management</title>
     <link rel="stylesheet" href="/assets/admin-users-account.css" />
     <link rel="stylesheet" href="/assets/desktop-shared.css" />
     <link rel="stylesheet" href="/assets/moblie-nav.css" />
@@ -62,7 +62,7 @@
     <div id="mobile-menu" class="mobile-menu">
         <a href="/">Home</a>
         <a href="/search">Search</a>
-        <a href="/login">Login</a>
+        <a href="/product">Product</a>
     </div>
 
     <!-- Desktop Nav -->
@@ -71,7 +71,7 @@
         <div class="nav-links">
             <a href="/">Home</a>
             <a href="/search">Search</a>
-            <a href="/login">Login</a>
+            <a href="/product">Product</a>
         </div>
     </nav>
 
@@ -116,8 +116,7 @@
                     </div>
                 </div>
             </div>
-    </div>
-    </main>
+        </main>
     </div>
 
     <!-- Footer -->
@@ -125,20 +124,20 @@
         <div class="footer-column left">
             <h4>For Admin</h4>
             <a href="/product">Product Management</a>
+            <h4>For Super Admin</h4>
             <a href="/account">Account Management</a>
+            <form action="/auth/logout" method="POST" class="am-toolbar">
+                <button type="submit">Logout</button>
+            </form>
         </div>
         <div class="footer-column right">
-            <h4>Contact</h4>
+            <h4>About us</h4>
             <a href="/team">Team</a>
+            <h4>Contact</h4>
             <p>contact@dokmai4u.com</p>
             <p>012-345-6789</p>
         </div>
     </footer>
-
-    <form action="/auth/logout" method="POST" style="display:inline">
-        <button type="submit">Logout</button>
-    </form>
-
 
     <script src="/assets/moblie-nav.js" defer></script>
     <script>

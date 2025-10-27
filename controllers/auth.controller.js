@@ -21,7 +21,7 @@ module.exports = {
             }
 
             req.session.user = { id: user.AdminID, username: user.username };
-            return res.redirect('/account');
+            return res.redirect('/product');
         } catch (e) {
             console.error(e);
             return res.status(500).send('Login error');
