@@ -77,7 +77,7 @@
 
             function render(list) {
                 if (!list || !list.length) {
-                    resultDiv.innerHTML = `<p>No results found.</p>`;
+                    resultDiv.innerHTML = '<p>No results found.</p>';
                     return;
                 }
 
@@ -107,6 +107,7 @@
 
             form.addEventListener('submit', async (e) => {
                 e.preventDefault();
+                
                 const keyword = (e.target.searchKey.value || '').trim().toLowerCase();
 
                 try {
@@ -125,7 +126,7 @@
 
             (async () => {
                 try { render(await fetchAll()); }
-                catch { resultDiv.innerHTML = `<p>Load error.</p>`; }
+                catch { resultDiv.innerHTML = '<p>Load error.</p>'; }
             })();
         })();
     </script>

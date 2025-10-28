@@ -54,7 +54,6 @@
                     <div class="form-group">
                         <label for="Category">Category</label>
                         <div class="select-wrapper">
-                            <!-- ให้ name="CID" ให้ตรงกับแบ็กเอนด์ -->
                             <select id="Category" name="CID" required>
                                 <option value="1">Bouquet</option>
                                 <option value="2">Gift Set</option>
@@ -91,21 +90,16 @@
 
     <script src="/assets/moblie-nav.js" defer></script>
     <script>
-        // ===== Helpers =====
-        const $ = (id) => document.getElementById(id);
-
-        // ตัดเวลาทิ้ง ให้เหลือ YYYY-MM-DD (สำหรับ input type=date)
-        const toDateInput = (v) => {
-            if (!v) return '';
-            // รองรับทั้ง 'YYYY-MM-DD' และ 'YYYY-MM-DDTHH:mm:ss'
-            return String(v).slice(0, 10);
-        };
-
-        // ===== Get :id จาก path /product/update/:id =====
         const parts = location.pathname.split('/').filter(Boolean);
         const id = parts[parts.length - 1];
 
+        const $ = (id) => document.getElementById(id);
         const resultDiv = $('result');
+
+        const toDateInput = (Date) => {
+            if (!Date) return '';
+            return String(Date).slice(0, 10);
+        };
 
         async function loadData() {
             try {
@@ -114,12 +108,12 @@
                     resultDiv.textContent = 'No results found!';
                     return;
                 }
+
                 const data = await res.json();
 
                 $('FlowerID').value = data.FlowerID ?? '';
                 $('Name').value = data.FlowerName ?? '';
-                // ใช้ CID (ตัวเลข) ให้ตรงกับ <option value="...">
-                $('Category').value = String(data.CID ?? '');
+                $('Category').value = data.CID ?? '';
                 $('Price').value = data.Price ?? '';
                 $('StartDate').value = toDateInput(data.StartDate);
                 $('EndDate').value = toDateInput(data.EndDate);
@@ -135,22 +129,21 @@
 
             const payload = {
                 FlowerName: $('Name').value.trim(),
-                CID: Number($('Category').value),         // ← number
-                Price: Number($('Price').value),          // ← number
-                StartDate: $('StartDate').value || null,  // ส่ง null ถ้าเว้นว่าง
+                CID: Number($('Category').value),
+                Price: Number($('Price').value),
+                StartDate: $('StartDate').value || null,
                 EndDate: $('EndDate').value || null,
                 Meaning: $('Meaning').value.trim(),
             };
 
-            // validate ง่ายๆ ฝั่งหน้า
             if (!payload.FlowerName || !payload.Price || !payload.Meaning) {
-                resultDiv.textContent = 'FlowerName, Price, Meaning are required';
+                resultDiv.textContent = 'Flower Name, Price, Meaning are required';
                 return;
             }
 
             try {
                 const res = await fetch(`/product/update/${id}`, {
-                    method: 'PUT', // ถ้าอยากเปลี่ยนเป็น PUT ก็ได้ แต่ให้ตรงกับ route ฝั่ง server
+                    method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload),
                 });

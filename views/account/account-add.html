@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="/assets/admin-users-account.css" />
     <link rel="stylesheet" href="/assets/desktop-shared.css" />
     <link rel="stylesheet" href="/assets/moblie-nav.css" />
+
     <style>
         html,
         body {
@@ -154,11 +155,16 @@
 
                 const data = await res.json();
 
-                if (!res.ok); resultDiv.textContent = data?.message || 'Add failed!';
+                if (!res.ok); {
+                    resultDiv.style.color = 'rgb(200,0,0)';
+                    resultDiv.textContent = data?.message || 'Add failed!';
+                    return;
+                }
 
-                location.href = '/account';
                 resultDiv.style.color = 'green';
                 resultDiv.textContent = 'Add Success!';
+                
+                location.href = '/account';
             } catch (e) {
                 console.error(e);
                 resultDiv.textContent = 'There was an error adding.';

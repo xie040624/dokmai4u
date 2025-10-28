@@ -12,6 +12,9 @@ router.get('/getall', ctrl.getall);
 router.get('/add', ctrl.addPage);
 router.get('/update/:id', ctrl.updatePage);
 router.get('/delete/:id', ctrl.deletePage);
+router.get('/search/:id', ctrl.search);
+
+router.post('/add', ctrl.add);
 
 router.put('/update/:id', ctrl.update);
 

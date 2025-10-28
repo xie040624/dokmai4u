@@ -82,44 +82,50 @@
         <main class="main-content">
             <div class="admin-container">
 
-                <form action="#" method="post" class="admin-form">
+                <form id="addForm" class="admin-form">
                     <div class="product-icon-large">💐</div>
 
                     <div class="form-group">
                         <label for="name">Name</label>
-                        <input type="text" id="name" name="name">
+                        <input type="text" id="name" placeholder="Enter flower name" required />
                     </div>
 
                     <div class="form-group">
                         <label for="category">Category</label>
                         <div class="select-wrapper">
-                            <select id="category" name="category">
+                            <select id="category" required>
                                 <option value="">Category</option>
-                                <option value="bouquet">Bouquet</option>
-                                <option value="gift">Gift Set</option>
+                                <option value="1">Bouquet</option>
+                                <option value="2">Gift Set</option>
                             </select>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="price">Price</label>
-                        <input type="text" id="price" name="price">
+                        <input type="number" id="price" placeholder="Enter flower price" min="0" step="1" required />
                     </div>
 
                     <div class="form-group">
-                        <label for="start-date">Available</label>
+                        <label for="startDate">Available</label>
                         <div class="date-range-inputs">
-                            <input type="date" id="start-date" name="start-date" title="Start Date">
+                            <input type="date" id="startDate" />
                             <span>to</span>
-                            <input type="date" id="end-date" name="end-date" title="End Date">
+                            <input type="date" id="endDate" />
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="description">Meaning / Description</label>
-                        <textarea id="description" name="description"></textarea>
+                        <label for="meaning">Meaning</label>
+                        <textarea id="meaning" placeholder="Enter flower meaning" required></textarea>
                     </div>
 
+                    <div class="form-group">
+                        <label for="srcImage">Image filename</label>
+                        <input type="text" id="srcImage" placeholder="e.g., rose.jpg" />
+                    </div>
+
+                    <div id="result" style="color: rgb(200, 0, 0);"></div>
                     <button type="submit" class="btn-primary">Add</button>
                 </form>
 
@@ -128,7 +134,53 @@
     </div>
 
     <script src="/assets/moblie-nav.js" defer></script>
+    <script>
+        const $ = (s) => document.querySelector(s);
+        const resultDiv = $('#result');
 
+        $('#addForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const payload = {
+                FlowerName: $('#name').value.trim(),
+                CID: Number($('#category').value),
+                Price: Number($('#price').value),
+                StartDate: $('#startDate').value || null,
+                EndDate: $('#endDate').value || null,
+                Meaning: $('#meaning').value.trim(),
+                srcImage: ($('#srcImage')?.value || '').trim() || null
+            };
+
+            if (!payload.FlowerName || !payload.Meaning || Number.isNaN(payload.CID) || Number.isNaN(payload.Price)) {
+                resultDiv.textContent = 'Name, Category, Price, Meaning are require.';
+                return;
+            }
+
+            try {
+                const res = await fetch('/product/add', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const data = await res.json().catch(() => ({}));
+
+                if (!res.ok) {
+                    resultDiv.style.color = 'rgb(200,0,0)';
+                    resultDiv.textContent = data?.message || 'Add failed!';
+                    return;
+                }
+
+                resultDiv.style.color = 'green';
+                resultDiv.textContent = 'Add Success!';
+
+                location.href = '/product';
+            } catch (err) {
+                console.error(err);
+                resultDiv.textContent = 'There was an error adding.';
+            }
+        });
+    </script>
 </body>
 
 </html>

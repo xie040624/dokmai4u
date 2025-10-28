@@ -24,15 +24,46 @@ module.exports = {
     },
     getall: async (req, res) => {
         try {
-            const [rows] = await db.query(
-                `SELECT FlowerID, FlowerName, Price, CName
-                FROM Flower JOIN Category
-                ON Flower.CID = Category.CID`
-            );
+            const [rows] = await db.query(`
+                SELECT * FROM Flower JOIN Category
+                ON Flower.CID = Category.CID
+            `);
             res.json(rows);
         } catch (error) {
             console.error(error);
             res.status(500).json({ message: 'Database error' });
+        }
+    },
+    add: async (req, res) => {
+        try {
+            let { FlowerName, CID, Price, StartDate = null, EndDate = null, Meaning, srcImage = null } = req.body || {};
+
+            FlowerName = (FlowerName || '').trim();
+            Meaning = (Meaning || '').trim();
+            const cidNum = Number(CID);
+            const priceNum = Number(Price);
+
+            if (!FlowerName || !Meaning || Number.isNaN(cidNum) || Number.isNaN(priceNum)) {
+                return res.status(400).json({ message: 'FlowerName, CID, Price, Meaning are required' });
+            }
+
+            StartDate = StartDate ? String(StartDate).slice(0, 10) : null;
+            EndDate = EndDate ? String(EndDate).slice(0, 10) : null;
+            srcImage = srcImage ? String(srcImage).trim() : null;
+
+            const [result] = await db.query(`
+                INSERT INTO Flower(FlowerName, CID, Price, StartDate, EndDate, Meaning, srcImage)
+                VALUES(?, ?, ?, ?, ?, ?, ?)`,
+                [FlowerName, cidNum, priceNum, StartDate, EndDate, Meaning, srcImage]
+            );
+
+            return res.status(201).json({
+                message: 'Inserted successfully',
+                insertId: result.insertId
+            });
+        } catch (error) {
+            console.error(error);
+            return res.status(500).json({ message: 'Database error' });
         }
     },
     update: async (req, res) => {
@@ -40,11 +71,10 @@ module.exports = {
             const { id } = req.params;
             let { FlowerName, CID, Price, StartDate, EndDate, Meaning } = req.body;
 
-            if (!FlowerName || Price == null || !Meaning) {
-                return res.status(400).json({ message: 'FlowerName, Price, Meaning are required' });
+            if (!FlowerName || !Price || !Meaning) {
+                return res.status(400).json({ message: 'Flower Name, Price, Meaning are required' });
             }
 
-            // แปลง type เผื่อฟรอนต์ส่ง string มาบางที
             CID = CID ? Number(CID) : null;
             Price = Number(Price);
 
@@ -78,20 +108,38 @@ module.exports = {
             res.status(500).json({ message: 'Database error during deletion' });
         }
     },
-    // search: async (req, res) => {
-    //     try {
-    //         const { searchKey } = req.body;
-    //         const [rows] = await db.query(
-    //             `SELECT FlowerName, Price, CName
-    //             FROM Flower JOIN Category
-    //             ON Flower.CID = Category.CID
-    //             WHERE FlowerName LIKE ?`,
-    //             [searchKey]
-    //         );
-    //         res.json(rows);
-    //     } catch (error) {
-    //         console.error(error);
-    //         res.status(500).json({ message: 'Database error' });
-    //     }
-    // }
+    search: async (req, res) => {
+        try {
+            const FlowerName = (req.query.FlowerName || '').trim();
+            const CIDraw = (req.query.CID ?? req.query.Category ?? '').toString().trim();
+            const MinPrice = (req.query.MinPrice ?? '').toString().trim();
+            const MaxPrice = (req.query.MaxPrice ?? '').toString().trim();
+
+            const where = [];
+            const params = [];
+
+            if (FlowerName) { where.push(`FlowerName LIKE ?`); params.push(`%${FlowerName}%`); }
+            if (CIDraw !== '') {
+                const cidNum = Number(CIDraw);
+                if (!Number.isNaN(cidNum)) { where.push(`CID = ?`); params.push(cidNum); }
+            }
+            if (MinPrice !== '') { where.push(`Price >= ?`); params.push(Number(MinPrice)); }
+            if (MaxPrice !== '') { where.push(`Price <= ?`); params.push(Number(MaxPrice)); }
+
+            const whereSql = where.length ? `WHERE ${where.join(' AND ')}` : '';
+
+            const [rows] = await db.query(`
+                SELECT FlowerID, FlowerName, Meaning, Price, srcImage, CID, CName
+                FROM flower f JOIN category c ON f.CID = c.CID
+                ${whereSql}
+                ORDER BY FlowerID DESC
+                LIMIT 100
+                `, params);
+
+            res.json(rows);
+        } catch (err) {
+            console.error('Search error:', err);
+            res.status(500).json({ message: 'Database error' });
+        }
+    }
 };
