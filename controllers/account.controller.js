@@ -61,8 +61,7 @@ module.exports = {
             const hashedPassword = await bcrypt.hash(password, 10);
 
             const [result] = await db.query(
-                `INSERT INTO Admin (FName, LName, Email, PhoneNumber, Username, Password)
-       VALUES (?, ?, ?, ?, ?, ?)`,
+                `INSERT INTO Admin(FName, LName, Email, PhoneNumber, Username, Password) VALUES(?, ?, ?, ?, ?, ?)`,
                 [fName, lName, email, phone, username, hashedPassword]
             );
 

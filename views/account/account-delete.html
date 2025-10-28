@@ -61,6 +61,7 @@
 </head>
 
 <body>
+
     <!-- Mobile Nav -->
     <nav class="mobile-nav">
         <a href="/" class="mobile-logo">dokmai4u Shop</a>
@@ -87,29 +88,36 @@
         </div>
     </nav>
 
-    <!-- Page Wrapper -->
+    <!-- Main content -->
     <div class="page-wrapper">
         <main class="main-content">
             <div class="admin-container">
+
                 <form id="delete" class="admin-form">
                     <div class="delete-confirmation">
+
                         <div class="account-icon-large">👨🏻‍💼</div>
+
                         <div id="deleteInfo" class="delete-info">
-                            <p><strong>Name:</strong> <span id="Name">-</span></p>
-                            <p><strong>Email:</strong> <span id="Email">-</span></p>
-                            <p><strong>Username:</strong> <span id="Username">-</span></p>
-                            <p><strong>Role:</strong> <span id="Role">-</span></p>
-                            <p><strong>Phone:</strong> <span id="Phone">-</span></p>
+                            <p><strong>Name:</strong> <span id="Name"></span></p>
+                            <p><strong>Email:</strong> <span id="Email"></span></p>
+                            <p><strong>Username:</strong> <span id="Username"></span></p>
+                            <p><strong>Role:</strong> <span id="Role"></span></p>
+                            <p><strong>Phone:</strong> <span id="Phone"></span></p>
                         </div>
+
                         <div class="delete-warning">
                             <span>⚠️</span>
                             <p>Are you sure you want to delete this user?</p>
                         </div>
+
                         <div id="result" style="color: rgb(200, 0, 0);"></div>
+
                         <div class="btn-group">
                             <a href="javascript:void(0)" id="cancelBtn" class="btn-secondary">Cancel</a>
                             <a href="javascript:void(0)" id="deleteBtn" class="btn-delete-confirm">Delete</a>
                         </div>
+
                     </div>
                 </form>
 
@@ -145,11 +153,12 @@
             }
 
             async function doDelete() {
-                if (!confirm('Are you sure you want to delete this user?')) return;
+                if (!confirm('⚠️ Are you sure you want to delete this user?')) return;
 
                 try {
                     const res = await fetch(`/account/delete/${AdminID}`, { method: 'DELETE' });
                     const data = await res.json();
+
                     if (!res.ok) throw new Error(data?.message || res.statusText);
                     location.href = '/account';
                 } catch (e) {
@@ -160,14 +169,13 @@
 
             $('cancelBtn').addEventListener('click', () => {
                 if (history.length > 1) history.back();
-                else location.href = '/account/search';
+                else location.href = '/account';
             });
             $('deleteBtn').addEventListener('click', doDelete);
 
             loadData();
         })();
     </script>
-
 </body>
 
 </html>

@@ -1,24 +1,36 @@
 <!DOCTYPE html>
-<html lang="th">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Search Page</title>
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <link rel="stylesheet" href="/assets/desktop-shared.css">
     <link rel="stylesheet" href="/assets/moblie-nav.css">
 
     <style>
-        /* --- 1. การตั้งค่าหน้าเว็บโดยรวม (Mobile First) --- */
-        body,
-        html {
-            margin: 0;
-            padding: 0;
+        :root {
+            --bg: #f5f7fb;
+            --card: #ffffff;
+            --text: #0b0f19;
+            --muted: #6b7280;
+            --brand: #007aff;
+            --brand-press: #005ec4;
+            --ring: rgba(0, 122, 255, .35);
+        }
+
+        html,
+        body {
             height: 100%;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: #ffffff;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: var(--bg);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
         .page-wrapper {
@@ -30,34 +42,6 @@
             transition: none;
         }
 
-        /* --- 2. ส่วนหัว (Header) --- */
-        .app-header {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            /* จัดกลาง */
-            position: relative;
-            padding: 20px 25px;
-            border-bottom: 1px solid #f0f0f0;
-        }
-
-        .app-header .back-arrow {
-            position: absolute;
-            left: 25px;
-            font-size: 24px;
-            font-weight: 500;
-            color: #000;
-            text-decoration: none;
-        }
-
-        .app-header .title {
-            font-size: 34px;
-            font-weight: 700;
-            margin: 0;
-            color: #000;
-        }
-
-        /* --- 3. ส่วนเนื้อหาหลัก (ฟอร์ม + ผลลัพธ์) --- */
         .main-content {
             flex-grow: 1;
             padding: 25px;
@@ -67,29 +51,18 @@
             font-size: 34px;
             font-weight: 700;
             color: #000;
-
-            /*จัดกลาง (ทำงานทั้ง Mobile & Desktop) */
             text-align: center;
-
-            /*เว้นระยะห่างด้านบน (ทำงานทั้ง Mobile & Desktop) */
             margin-top: 60px;
-
             margin-bottom: 30px;
-            /* เว้นระยะล่าง */
-
-            /* (จำกัดความกว้าง จัดกลาง ให้ตรงกับฟอร์ม) */
             max-width: 600px;
             margin-left: auto;
             margin-right: auto;
         }
 
-        /* --- 4. สไตล์ของฟอร์มค้นหา --- */
         .search-form-container {
             width: 100%;
             max-width: 600px;
-            /* 1. จำกัดความกว้าง ให้เท่ากับผลลัพธ์ */
             margin: 0 auto 40px auto;
-            /* 2. จัดกึ่งกลาง และเว้นระยะล่าง */
             box-sizing: border-box;
         }
 
@@ -105,7 +78,6 @@
             margin-bottom: 10px;
         }
 
-        /* สไตล์สำหรับช่อง Input, Select, Date */
         .form-group input[type="text"],
         .form-group input[type="date"],
         .form-group select {
@@ -117,11 +89,9 @@
             border-radius: 12px;
             box-sizing: border-box;
             box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
-            /* ทำให้ select box หน้าตาเหมือน input */
             appearance: none;
         }
 
-        /* เพิ่มลูกศร Dropdown ให้ Select */
         .select-wrapper {
             position: relative;
         }
@@ -135,10 +105,8 @@
             top: 50%;
             transform: translateY(-50%);
             pointer-events: none;
-            /* ทำให้คลิกทะลุได้ */
         }
 
-        /* สไตล์สำหรับช่อง Min-Max */
         .price-inputs {
             display: flex;
             align-items: center;
@@ -147,7 +115,6 @@
 
         .price-inputs input {
             width: 40%;
-            /* แบ่งครึ่งสำหรับ Min/Max */
         }
 
         .price-inputs span {
@@ -155,26 +122,52 @@
         }
 
         .search-button {
+            position: sticky;
+            bottom: calc(8px + env(safe-area-inset-bottom));
             width: 100%;
-            padding: 16px;
-            font-size: 18px;
-            font-weight: 600;
-            color: #ffffff;
-            background-color: #007aff;
+            height: 52px;
+            padding: 0 18px;
+            font-size: 17px;
+            font-weight: 700;
+            letter-spacing: .2px;
+            color: #fff;
+            background: linear-gradient(180deg, var(--brand) 0%, #0069e6 100%);
             border: none;
-            border-radius: 50px;
+            border-radius: 28px;
             cursor: pointer;
-            margin-top: 15px;
-            box-shadow: 0 4px 10px rgba(0, 122, 255, 0.3);
+            box-shadow: 0 10px 22px rgba(0, 122, 255, .35), 0 2px 6px rgba(0, 0, 0, .08);
+            transition: transform .05s ease, box-shadow .15s ease, filter .15s ease, background .15s ease;
+            will-change: transform;
         }
 
-        /* --- 5. สไตล์ของผลการค้นหา --- */
+        .search-button:hover {
+            filter: brightness(.98);
+            box-shadow: 0 12px 26px rgba(0, 122, 255, .4), 0 3px 8px rgba(0, 0, 0, .10);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-button:active {
+            transform: translateY(1px);
+            background: var(--brand-press);
+            box-shadow: 0 8px 16px rgba(0, 122, 255, .3), 0 2px 6px rgba(0, 0, 0, .10);
+        }
+
+        .search-button:focus-visible {
+            outline: none;
+            box-shadow: 0 0 0 4px var(--ring), 0 10px 22px rgba(0, 122, 255, .35);
+        }
+
+        .search-button:disabled {
+            opacity: .65;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
         .search-results-container h2 {
             font-size: 24px;
             font-weight: 600;
             margin-bottom: 20px;
-
-            /* จัดให้หัวข้อ "Results" อยู่กึ่งกลางด้วย */
             max-width: 600px;
             margin-left: auto;
             margin-right: auto;
@@ -192,46 +185,6 @@
             /* เว้นล่าง 15px */
         }
 
-        .swiper {
-            width: 100%;
-            height: 250px;
-            /* ความสูงสไลเดอร์ผลลัพธ์ */
-            border-radius: 18px;
-        }
-
-        .swiper-slide {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: #e9e9e9;
-        }
-
-        .swiper-slide a {
-            display: block;
-            /* 1. เปลี่ยน <a> ให้เป็นกล่อง (block) */
-            width: 100%;
-            /* 2. สั่งให้กล่อง <a> กว้าง 100% */
-            height: 100%;
-            /* 3. สั่งให้กล่อง <a> สูง 100% */
-            text-decoration: none;
-            /* (แถม) ลบขีดเส้นใต้ */
-        }
-
-        .swiper-slide img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .swiper-button-next,
-        .swiper-button-prev {
-            color: #ffffff;
-            background-color: rgba(0, 0, 0, 0.3);
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            --swiper-navigation-size: 18px;
-        }
 
         /* สไตล์ส่วนรายละเอียดสินค้า */
         .product-details {
@@ -263,11 +216,6 @@
             color: #000;
         }
 
-
-        /* * ========================================
-         * 6. ส่วนสำหรับ Desktop (หน้าจอรอง) 
-         * ========================================
-        */
         @media (min-width: 720px) {
             .app-header .back-arrow {
                 left: 30px;
@@ -285,196 +233,134 @@
 </head>
 
 <body>
+    <!-- Mobile Nav -->
     <nav class="mobile-nav">
         <a href="/" class="mobile-logo">dokmai4u Shop</a>
         <div id="hamburger-icon" class="hamburger-icon">
-            <span></span>
-            <span></span>
-            <span></span>
+            <span></span><span></span><span></span>
         </div>
     </nav>
+
     <div id="mobile-menu" class="mobile-menu">
         <a href="/">Home</a>
-        <a href="/search">Search</a>
-        <a href="/login">Login</a>
     </div>
 
+    <!-- Desktop Nav -->
     <nav class="desktop-nav">
         <a href="/" class="logo">dokmai4u Shop</a>
         <div class="nav-links">
             <a href="/">Home</a>
-            <a href="/search">Search</a>
-            <a href="/login">Login</a>
         </div>
     </nav>
 
+    <!-- Main content -->
     <div class="page-wrapper">
-
         <main class="main-content">
-
             <h1 class="page-title">Search</h1>
 
             <section class="search-form-container">
-                <form action="#" method="get" id="search-form">
+                <form id="searchForm">
+
                     <div class="form-group">
-                        <label for="keyword">Keyword</label>
-                        <input type="text" id="keyword" name="keyword">
+                        <label for="FlowerName">Search by keyword</label>
+                        <input type="text" id="FlowerName" name="FlowerName"
+                            placeholder="Enter flower name or flower id">
                     </div>
 
                     <div class="form-group">
-                        <label for="category">Category</label>
+                        <label for="Category">Category</label>
                         <div class="select-wrapper">
-                            <select id="category" name="category">
+                            <select id="Category" name="CID">
                                 <option value="">Category</option>
-                                <option value="bouquets">Bouquets</option>
-                                <option value="gifts">Gift Sets</option>
-                                <option value="single">Single Stems</option>
+                                <option value="1">Bouquet</option>
+                                <option value="2">Gift Set</option>
                             </select>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label>Price</label>
+                        <label for="Price">Price</label>
                         <div class="price-inputs">
-                            <input type="text" id="min-price" name="min-price" placeholder="Min">
-                            <span>—</span>
-                            <input type="text" id="max-price" name="max-price" placeholder="Max">
+                            <input type="text" id="MinPrice" name="MinPrice" placeholder="Min Price"><span>-</span>
+                            <input type="text" id="MaxPrice" name="MaxPrice" placeholder="Max Price">
                         </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="available">Available</label>
-                        <input type="date" id="available" name="available" value="2024-02-01">
                     </div>
 
                     <button type="submit" class="search-button">Search</button>
+
                 </form>
-            </section>
 
-            <section class="search-results-container">
-                <h2 id="search-results-heading">No criteria search</h2>
-                <div class="result-item">
-                    <div class="slider-container">
-                        <div class="swiper searchSwiper1">
-                            <div class="swiper-wrapper">
-                                <div class="swiper-slide">
-                                    <a href="">
-                                        <img src="" alt="Product 1">
-                                    </a>
-                                </div>
-                                <div class="swiper-slide">
-                                    <a href="">
-                                        <img src="" alt="Product 2">
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="swiper-button-next"></div>
-                            <div class="swiper-button-prev"></div>
-                        </div>
-                    </div>
-                    <div class="product-details">
-                        <div class="info">
-                            <h4>Product Name</h4>
-                            <p>Category</p>
-                        </div>
-                        <span class="price">Price</span>
-                    </div>
-                </div>
-
-                <div class="result-item">
-                    <div class="slider-container">
-                        <div class="swiper searchSwiper2">
-                            <div class="swiper-wrapper">
-                                <div class="swiper-slide">
-                                    <a href="">
-                                        <img src="" alt="Rose">
-                                    </a>
-                                </div>
-                                <div class="swiper-slide">
-                                    <a href="">
-                                        <img src="" alt="Sunflower">
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="swiper-button-next"></div>
-                            <div class="swiper-button-prev"></div>
-                        </div>
-                    </div>
-                    <div class="product-details">
-                        <div class="info">
-                            <h4>Rose</h4>
-                            <p>Category</p>
-                        </div>
-                        <span class="price">8 $</span>
-                    </div>
-                </div>
+                <div id="result" class="search-results"></div>
 
             </section>
 
         </main>
-
     </div>
 
-    <footer class="desktop-footer">
-        <div class="footer-column left">
-            <h4>For Admin</h4>
-            <a href="/login">Login</a>
-            <a href="/product">Product Management</a>
-            <a href="/account">Account Management</a>
-        </div>
-        <div class="footer-column right">
-            <h4>Contact</h4>
-            <p>contact@gmail.com</p>
-            <p>012-345-6789</p>
-        </div>
-    </footer>
-
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-
+    <script src="/assets/moblie-nav.js" defer></script>
     <script>
-        var swiper1 = new Swiper(".searchSwiper1", {
-            navigation: {
-                nextEl: ".searchSwiper1 .swiper-button-next",
-                prevEl: ".searchSwiper1 .swiper-button-prev",
-            },
-            loop: true,
-        });
+        (function () {
+            const form = document.getElementById('searchForm');
+            const resultDiv = document.getElementById('result');
 
-        var swiper2 = new Swiper(".searchSwiper2", {
-            navigation: {
-                nextEl: ".searchSwiper2 .swiper-button-next",
-                prevEl: ".searchSwiper2 .swiper-button-prev",
-            },
-            loop: true,
-        });
+            function render(list) {
+                if (!list || !list.length) { resultDiv.innerHTML = `<p>No results found.</p>`; return; }
+                resultDiv.innerHTML = list.map(product => `
+                    <div class="product-list">
+                        <div class="product-item">
+                            <div class="product-info">
+                                <img src="/image/${product.srcImage ?? 'no-image.png'}" class="product-image" alt="${product.FlowerName ?? ''}">
+                                    <h4>${product.FlowerName ?? '-'}</h4>
+                                    <p>${product.CName ?? '-'}</p>
+                                    <p>${Number(product.Price).toLocaleString()} THB</p>
+                            </div>
+                            <div class="pm-product-actions">
+                                <a href="/product/detail/${product.FlowerID}" class="view-btn">View</a>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            }
 
-        // 1. เลือกฟอร์มและหัวข้อที่เราตั้ง id ไว้
-        var searchForm = document.getElementById('search-form');
-        var resultsHeading = document.getElementById('search-results-heading');
+            async function search(paramsObj) {
+                const params = new URLSearchParams();
+                Object.entries(paramsObj).forEach(([k, v]) => {
+                    if (v !== undefined && v !== null && String(v).trim() !== '') params.append(k, v);
+                });
+                const res = await fetch(`/product/getAll/${params.toString()}`, { method: 'GET' });
+                if (!res.ok) throw new Error('Search error: ' + res.status);
+                return res.json();
+            }
 
-        // 2. สั่งให้ดักฟังเหตุการณ์ 'submit' (เมื่อกดยืนยันฟอร์ม)
-        if (searchForm && resultsHeading) {
-            searchForm.addEventListener('submit', function (event) {
-                event.preventDefault();
-                resultsHeading.textContent = 'Search Result';
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const FlowerName = (e.target.FlowerName.value || '').trim();
+                const CID = (e.target.CID.value || '').trim();
+                const MinPrice = (e.target.MinPrice.value || '').trim();
+                const MaxPrice = (e.target.MaxPrice.value || '').trim();
+
+                if ((MinPrice && isNaN(Number(MinPrice))) || (MaxPrice && isNaN(Number(MaxPrice)))) {
+                    resultDiv.innerHTML = `<p>Price ต้องเป็นตัวเลข</p>`; return;
+                }
+                if (MinPrice && MaxPrice && Number(MinPrice) > Number(MaxPrice)) {
+                    resultDiv.innerHTML = `<p>Min Price ต้องไม่มากกว่า Max Price</p>`; return;
+                }
+
+                try {
+                    const list = await search({ FlowerName, CID, MinPrice, MaxPrice });
+                    render(list);
+                } catch (err) {
+                    console.error(err);
+                    resultDiv.innerHTML = `<p>Search error.</p>`;
+                }
             });
-        }
-    </script>
 
-    <script src="/assets/moblie-nav.js" defer>
-        document.getElementById('searchForm').addEventListener('submit', async e => {
-            e.preventDefault();
-            const AdminID = e.target.AdminID.value;
-
-            const res = await fetch('/admin/account/search', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ AdminID })
-            });
-
-            const data = await res.json();
-            document.getElementById('result').textContent = JSON.stringify(data, null, 2);
-        });
+            // โหลดครั้งแรก
+            (async () => {
+                try { render(await search({})); }
+                catch { resultDiv.innerHTML = `<p>Load error.</p>`; }
+            })();
+        })();
     </script>
 
 </body>

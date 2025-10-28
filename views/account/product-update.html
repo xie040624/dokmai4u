@@ -38,74 +38,139 @@
     </nav>
 
     <div class="page-wrapper">
-        <header class="app-header">
-            <a href="/product" class="back-arrow">&lt;</a>
-            <h1 class="title">Update Product</h1>
-        </header>
-
         <main class="main-content">
             <div class="admin-container">
 
-                <form action="#" method="post" class="admin-form">
-                    <div class="product-icon-large">✿</div>
+                <form id="updateForm" class="admin-form">
+                    <div class="product-icon-large">💐</div>
+
+                    <input type="hidden" id="FlowerID" name="FlowerID" />
 
                     <div class="form-group">
-                        <label for="name">Name</label>
-                        <input type="text" id="name" name="name" value="Rose Bouquet">
+                        <label for="Name">Name</label>
+                        <input type="text" id="Name" name="FlowerName" placeholder="Enter flower name" required />
                     </div>
 
                     <div class="form-group">
-                        <label for="category">Category</label>
+                        <label for="Category">Category</label>
                         <div class="select-wrapper">
-                            <select id="category" name="category">
-                                <option value="">Category</option>
-                                <option value="bouquet" selected>Bouquet</option>
-                                <option value="gift">Gift Set</option>
+                            <!-- ให้ name="CID" ให้ตรงกับแบ็กเอนด์ -->
+                            <select id="Category" name="CID" required>
+                                <option value="1">Bouquet</option>
+                                <option value="2">Gift Set</option>
                             </select>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="price">Price</label>
-                        <input type="text" id="price" name="price" value="1,200 $">
+                        <label for="Price">Price</label>
+                        <input type="number" id="Price" name="Price" placeholder="Enter flower price" min="0" step="1"
+                            required />
                     </div>
 
                     <div class="form-group">
-                        <label for="start-date">Available</label>
+                        <label for="StartDate">Available</label>
                         <div class="date-range-inputs">
-                            <input type="date" id="start-date" name="start-date" value="2025-10-20"> <span>to</span>
-                            <input type="date" id="end-date" name="end-date" value="2025-11-20">
+                            <input type="date" id="StartDate" name="StartDate" />
+                            <span>to</span>
+                            <input type="date" id="EndDate" name="EndDate" />
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="description">Meaning / Description</label>
-                        <textarea id="description" name="description">A beautiful bouquet of red roses.</textarea>
+                        <label for="Meaning">Meaning</label>
+                        <textarea id="Meaning" name="Meaning" placeholder="Enter flower meaning" required></textarea>
                     </div>
 
+                    <div id="result" style="color: rgb(200, 0, 0);"></div>
                     <button type="submit" class="btn-primary">Update</button>
                 </form>
-
             </div>
         </main>
     </div>
 
-    <footer class="desktop-footer">
-        <div class="footer-column left">
-            <h4>For Admin</h4>
-            <a href="/login">Login</a>
-            <a href="/product">Product Management</a>
-            <a href="/account">Account Management</a>
-        </div>
-        <div class="footer-column right">
-            <h4>Contact</h4>
-            <p>contact@gmail.com</p>
-            <p>012-345-6789</p>
-        </div>
-    </footer>
-
     <script src="/assets/moblie-nav.js" defer></script>
+    <script>
+        // ===== Helpers =====
+        const $ = (id) => document.getElementById(id);
 
+        // ตัดเวลาทิ้ง ให้เหลือ YYYY-MM-DD (สำหรับ input type=date)
+        const toDateInput = (v) => {
+            if (!v) return '';
+            // รองรับทั้ง 'YYYY-MM-DD' และ 'YYYY-MM-DDTHH:mm:ss'
+            return String(v).slice(0, 10);
+        };
+
+        // ===== Get :id จาก path /product/update/:id =====
+        const parts = location.pathname.split('/').filter(Boolean);
+        const id = parts[parts.length - 1];
+
+        const resultDiv = $('result');
+
+        async function loadData() {
+            try {
+                const res = await fetch(`/product/api/product/${id}`);
+                if (!res.ok) {
+                    resultDiv.textContent = 'No results found!';
+                    return;
+                }
+                const data = await res.json();
+
+                $('FlowerID').value = data.FlowerID ?? '';
+                $('Name').value = data.FlowerName ?? '';
+                // ใช้ CID (ตัวเลข) ให้ตรงกับ <option value="...">
+                $('Category').value = String(data.CID ?? '');
+                $('Price').value = data.Price ?? '';
+                $('StartDate').value = toDateInput(data.StartDate);
+                $('EndDate').value = toDateInput(data.EndDate);
+                $('Meaning').value = data.Meaning ?? '';
+            } catch (e) {
+                console.error(e);
+                resultDiv.textContent = 'Load data error!';
+            }
+        }
+
+        $('updateForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const payload = {
+                FlowerName: $('Name').value.trim(),
+                CID: Number($('Category').value),         // ← number
+                Price: Number($('Price').value),          // ← number
+                StartDate: $('StartDate').value || null,  // ส่ง null ถ้าเว้นว่าง
+                EndDate: $('EndDate').value || null,
+                Meaning: $('Meaning').value.trim(),
+            };
+
+            // validate ง่ายๆ ฝั่งหน้า
+            if (!payload.FlowerName || !payload.Price || !payload.Meaning) {
+                resultDiv.textContent = 'FlowerName, Price, Meaning are required';
+                return;
+            }
+
+            try {
+                const res = await fetch(`/product/update/${id}`, {
+                    method: 'PUT', // ถ้าอยากเปลี่ยนเป็น PUT ก็ได้ แต่ให้ตรงกับ route ฝั่ง server
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload),
+                });
+
+                const data = await res.json().catch(() => ({}));
+                if (!res.ok) {
+                    resultDiv.textContent = data?.message || 'Update failed!';
+                    return;
+                }
+
+                resultDiv.style.color = 'green';
+                resultDiv.textContent = 'Update Success!';
+            } catch (e) {
+                console.error(e);
+                resultDiv.textContent = 'There was an error updating.';
+            }
+        });
+
+        loadData();
+    </script>
 </body>
 
 </html>

@@ -51,6 +51,7 @@
 </head>
 
 <body>
+
   <!-- Mobile Nav -->
   <nav class="mobile-nav">
     <a href="/" class="mobile-logo">dokmai4u Shop</a>
@@ -81,11 +82,14 @@
   <div class="page-wrapper">
     <main class="main-content">
       <div class="admin-container">
+
         <form id="searchForm" class="am-toolbar">
           <input type="text" class="am-search-bar" placeholder="Enter Admin ID or Username" name="searchKey" required />
           <button type="submit" class="am-search-btn">Search</button>
         </form>
+
         <div id="result" class="search-results"></div>
+
       </div>
     </main>
   </div>
@@ -94,7 +98,9 @@
   <script>
     document.getElementById("searchForm").addEventListener("submit", async (e) => {
       e.preventDefault();
+
       const searchKey = e.target.searchKey.value;
+
       const res = await fetch("/account/search", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -112,20 +118,20 @@
       resultDiv.innerHTML = data
         .map(
           (user) => `
-          <div class="search-result-item">
-            <div class="search-result-header">
-              <div class="am-account-icon">👨🏻‍💼</div>
-              <div class="am-account-info">
-                <h4>${user.Username}</h4>
-                <p>Role: ${user.Role}</p>
+            <div class="search-result-item">
+              <div class="search-result-header">
+                <div class="am-account-icon">👨🏻‍💼</div>
+                <div class="am-account-info">
+                  <h4>${user.Username}</h4>
+                  <p>Role: ${user.Role}</p>
+                </div>
+              </div>
+              <div class="search-result-actions">
+                <a href="/account/update/${user.AdminID}" class="btn-update">Update</a>
+                <a href="/account/delete/${user.AdminID}" class="btn-delete">Delete</a>
               </div>
             </div>
-            <div class="search-result-actions">
-              <a href="/account/update/${user.AdminID}" class="btn-update">Update</a>
-              <a href="/account/delete/${user.AdminID}" class="btn-delete">Delete</a>
-            </div>
-          </div>`
-        )
+        `)
         .join("");
     });
   </script>

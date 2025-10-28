@@ -51,6 +51,7 @@
 </head>
 
 <body>
+
     <!-- Mobile Nav -->
     <nav class="mobile-nav">
         <a href="/" class="mobile-logo">dokmai4u Shop</a>
@@ -81,36 +82,48 @@
     <div class="page-wrapper">
         <main class="main-content">
             <div class="admin-container">
+
                 <form id="addForm" method="post" class="admin-form">
+
                     <div class="account-icon-large">👨🏻‍💼</div>
+
                     <div class="form-group">
                         <label for="FName">First Name</label>
                         <input type="text" id="FName" name="FName" placeholder="Enter your first name" required />
                     </div>
+
                     <div class="form-group">
                         <label for="LName">Last Name</label>
                         <input type="text" id="LName" name="LName" placeholder="Enter your last name" required />
                     </div>
+
                     <div class="form-group">
                         <label for="Email">Email</label>
                         <input type="email" id="Email" name="Email" placeholder="Enter your email" required />
                     </div>
+
                     <div class="form-group">
                         <label for="PhoneNumber">Phone number</label>
                         <input type="tel" id="PhoneNumber" name="PhoneNumber" placeholder="Enter your phone number"
                             required />
                     </div>
+
                     <div class="form-group">
                         <label for="Username">Username</label>
                         <input type="text" id="Username" name="Username" placeholder="Enter your username" required>
                     </div>
+
                     <div class="form-group">
                         <label for="Password">Password</label>
                         <input type="password" id="Password" name="Password" placeholder="Enter your password" required>
                     </div>
+
                     <div id="result" style="color: rgb(200, 0, 0);"></div>
+
                     <button type="submit" class="btn-primary">Add</button>
+
                 </form>
+
             </div>
         </main>
     </div>
@@ -122,6 +135,7 @@
 
         $('#addForm').addEventListener('submit', async (e) => {
             e.preventDefault();
+
             const payload = {
                 FName: $('#FName').value.trim(),
                 LName: $('#LName').value.trim(),
@@ -139,11 +153,11 @@
                 });
 
                 const data = await res.json();
-                if (!res.ok) {
-                    resultDiv.textContent = data?.message || 'Add failed!';
-                    return;
-                }
 
+                if (!res.ok); resultDiv.textContent = data?.message || 'Add failed!';
+
+                location.href = '/account';
+                resultDiv.style.color = 'green';
                 resultDiv.textContent = 'Add Success!';
             } catch (e) {
                 console.error(e);

@@ -8,11 +8,13 @@ router.use(requireAuth);
 router.get('/api/product/:id', ctrl.get);
 
 router.get('/', ctrl.root);
+router.get('/getall', ctrl.getall);
+router.get('/add', ctrl.addPage);
+router.get('/update/:id', ctrl.updatePage);
+router.get('/delete/:id', ctrl.deletePage);
 
-router.post('/', ctrl.search);
+router.put('/update/:id', ctrl.update);
 
-router.get('/add', ctrl.add);
-router.get('/update', ctrl.update);
-router.get('/delete', ctrl.delete);
+router.delete('/delete/:id', ctrl.delete); // Handle deleting an product
 
 module.exports = router;

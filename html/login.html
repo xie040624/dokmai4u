@@ -213,6 +213,7 @@
 </head>
 
 <body>
+
     <!-- Mobile Nav -->
     <nav class="mobile-nav">
         <a href="/" class="mobile-logo">dokmai4u Shop</a>
@@ -224,8 +225,6 @@
     <div id="mobile-menu" class="mobile-menu">
         <a href="/">Home</a>
         <a href="/search">Search</a>
-        <a href="/account">Account</a>
-        <a href="/product">Product</a>
     </div>
 
     <!-- Desktop Nav -->
@@ -234,26 +233,31 @@
         <div class="nav-links">
             <a href="/">Home</a>
             <a href="/search">Search</a>
-            <a href="/account">Account</a>
-            <a href="/product">Product</a>
         </div>
     </nav>
 
     <!-- Main Content -->
     <div class="login-wrapper">
         <main class="login-container">
+
             <h1 class="page-title">Login</h1>
+
             <form action="/auth/login" method="post">
+
                 <div class="form-group">
                     <label for="username">Username</label>
                     <input type="text" id="username" name="username" required>
                 </div>
+
                 <div class="form-group">
                     <label for="password">Password</label>
                     <input type="password" id="password" name="password" required>
                 </div>
+
                 <button type="submit" class="login-button">Login</button>
+
             </form>
+
         </main>
     </div>
 
