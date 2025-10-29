@@ -45,12 +45,12 @@
         }
 
         .page-title {
+            font-family: Cambria;
             font-size: 28px;
-            font-weight: 700;
+            font-weight: 600;
             text-align: center;
-            margin-top: 20px;
-            margin-bottom: 30px;
-            color: #000;
+            margin: 0 0 30px;
+            color: #ffffff;
         }
 
         .team-grid {
@@ -60,11 +60,22 @@
         }
 
         .team-member-card {
+            font-family: Cambria;
             background-color: #f9f9f9;
             border-radius: 15px;
             padding: 20px;
             text-align: center;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .page-title:hover {
+            transform: translateY(-2px);
+        }
+
+        .team-member-card:hover {
+            filter: brightness(.98);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgb(255, 255, 255);
         }
 
         .team-member-photo {
@@ -89,7 +100,7 @@
 
         .team-member-card h3 {
             margin: 0 0 5px 0;
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 600;
             color: #000;
         }
@@ -108,6 +119,15 @@
             height: 20px;
             margin-top: 5px;
             fill: #888;
+        }
+
+        .team-member-card h3:hover {
+            color: #c800ff;
+        }
+
+        .page-wrapper,
+        .main-content {
+            background: linear-gradient(300deg, #ff7ba7 0%, #e4beff 50%, #3b004b 100%);
         }
 
         @media (min-width: 720px) {

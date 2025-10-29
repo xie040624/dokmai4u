@@ -15,5 +15,8 @@ router.get('/login', indexController.login);
 // Search page
 router.get('/search', indexController.search);
 
+// Detail page
+router.get('/detail', indexController.detail);
+
 // Export the router module
 module.exports = router;

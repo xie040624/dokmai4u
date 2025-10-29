@@ -1,85 +1,86 @@
-/* --- 1. สไตล์สำหรับ Mobile (ซ่อนไว้ก่อน) --- */
-
 .desktop-nav,
 .desktop-footer {
-    display: none; /* ซ่อนเป็นค่าเริ่มต้น (Mobile First) */
+    display: none;
 }
 
-
-/* * ========================================
- * 2. สไตล์สำหรับ Desktop 
- * (เมื่อหน้าจอกว้าง 720px ขึ้นไป)
- * ========================================
-*/
 @media (min-width: 720px) {
 
-    /* --- (เพิ่ม 1) ซ่อน Nav มือถือ และ Overlay --- */
-    .mobile-nav, .overlay {
+    .mobile-nav,
+    .overlay {
         display: none !important;
     }
-    
-    /* --- (เพิ่ม 2) เอา padding-top ของ mobile ออก --- */
+
     .page-wrapper {
         padding-top: 0 !important;
     }
-    
-    /* --- (ของเดิม 3) ซ่อน Header เก่าของ Mobile --- */
-    .app-header {
-        display: none !important; 
-    }
-    /* ------------------------ */
 
-    /* --- (ของเดิม 4) สไตล์ Navbar (Desktop) --- */
+    .app-header {
+        display: none !important;
+    }
+
     .desktop-nav {
+        background: #fff;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 15px 30px;
-        background-color: #ffffff;
-        border-bottom: 1px solid #f0f0f0;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        padding: 16px 30px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        position: sticky;
+        top: 0;
+        z-index: 100;
     }
+
     .desktop-nav .logo {
-        font-size: 20px;
-        font-weight: 600;
-        color: #000;
+        font-family: Cambria;
+        font-size: 22px;
+        font-weight: 500;
+        color: #000000;
         text-decoration: none;
     }
+
     .desktop-nav .nav-links a {
+        font-family: Cambria;
         font-size: 16px;
         font-weight: 500;
-        color: #555;
+        color: #000000;
         text-decoration: none;
         margin-left: 20px;
-        transition: color 0.2s;
+        transition: color .2s ease;
     }
+
+    .desktop-nav .logo:hover,
     .desktop-nav .nav-links a:hover {
-        color: #007aff;
+        color: #c800ff;
+        filter: brightness(.98);
+        transform: translateY(-2px);
     }
 
-
-    /* --- (ของเดิม 5) สไตล์ Footer (Desktop) --- */
-    .desktop-footer {
-        display: flex; /* แสดงผลบน Desktop */
+    .footer {
+        display: flex;
         justify-content: space-between;
-        background-color: #4a0072;
+        padding: 26px 18px;
+        flex-shrink: 0;
+        background: #3b004b;
         color: #ffffff;
-        padding: 30px;
     }
-    .desktop-footer .footer-column {
+
+    .footer .footer-column {
         font-size: 14px;
     }
-    .desktop-footer .footer-column h4 {
+
+    .footer .footer-column h4 {
         font-size: 16px;
         font-weight: 600;
         margin: 0 0 12px 0;
         color: #fff;
     }
-    .desktop-footer .footer-column.right h4:nth-of-type(2) {
-         margin-top: 15px;
+
+    .footer .footer-column.right h4:nth-of-type(2) {
+        margin-top: 15px;
     }
-    .desktop-footer a, 
-    .desktop-footer p {
+
+    .footer a,
+    .footer p {
         display: block;
         color: #ddd;
         text-decoration: none;
@@ -87,10 +88,12 @@
         font-size: 14px;
         line-height: 1.4;
     }
-    .desktop-footer a:hover {
+
+    .footer a:hover {
         color: #fff;
     }
-    .desktop-footer p {
+
+    .footer p {
         margin-top: 0;
     }
 }
