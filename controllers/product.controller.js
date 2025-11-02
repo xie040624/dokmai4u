@@ -3,10 +3,10 @@ const path = require('path');
 
 module.exports = {
     root: (req, res) => res.sendFile(path.join(__dirname, '../views/account', 'product-management.html')),
-    addPage: (req, res, next) => res.sendFile(path.join(__dirname, '../views/account', 'product-add.html')),
-    updatePage: (req, res, next) => res.sendFile(path.join(__dirname, '../views/account', 'product-update.html')),
-    deletePage: (req, res, next) => res.sendFile(path.join(__dirname, '../views/account', 'product-delete.html')),
-    get: async (req, res) => {
+    addPage: (req, res) => res.sendFile(path.join(__dirname, '../views/account', 'product-add.html')),
+    updatePage: (req, res) => res.sendFile(path.join(__dirname, '../views/account', 'product-update.html')),
+    deletePage: (req, res) => res.sendFile(path.join(__dirname, '../views/account', 'product-delete.html')),
+    getOne: async (req, res) => {
         try {
             const { id } = req.params;
             const [rows] = await db.query(`
@@ -22,7 +22,7 @@ module.exports = {
             return res.status(500).json({ message: 'Database error' });
         }
     },
-    getall: async (req, res) => {
+    getAll: async (req, res) => {
         try {
             const [rows] = await db.query(`
                 SELECT * FROM Flower JOIN Category
@@ -110,33 +110,40 @@ module.exports = {
     },
     search: async (req, res) => {
         try {
-            const FlowerName = (req.query.FlowerName || '').trim();
+            const FlowerNameRaw = (req.query.FlowerName ?? req.query.PName ?? '').toString().trim();
             const CIDraw = (req.query.CID ?? req.query.Category ?? '').toString().trim();
-            const MinPrice = (req.query.MinPrice ?? '').toString().trim();
-            const MaxPrice = (req.query.MaxPrice ?? '').toString().trim();
+            const MinPriceRaw = (req.query.MinPrice ?? '').toString().trim();
+            const MaxPriceRaw = (req.query.MaxPrice ?? '').toString().trim();
 
             const where = [];
             const params = [];
 
-            if (FlowerName) { where.push(`FlowerName LIKE ?`); params.push(`%${FlowerName}%`); }
+            if (FlowerNameRaw) { where.push('f.FlowerName LIKE ?'); params.push(`%${FlowerNameRaw}%`); }
             if (CIDraw !== '') {
-                const cidNum = Number(CIDraw);
-                if (!Number.isNaN(cidNum)) { where.push(`CID = ?`); params.push(cidNum); }
+                const cid = Number(CIDraw);
+                if (!Number.isNaN(cid)) { where.push('f.CID = ?'); params.push(cid); }
             }
-            if (MinPrice !== '') { where.push(`Price >= ?`); params.push(Number(MinPrice)); }
-            if (MaxPrice !== '') { where.push(`Price <= ?`); params.push(Number(MaxPrice)); }
+            if (MinPriceRaw !== '') {
+                const min = Number(MinPriceRaw);
+                if (!Number.isNaN(min)) { where.push('f.Price >= ?'); params.push(min); }
+            }
+            if (MaxPriceRaw !== '') {
+                const max = Number(MaxPriceRaw);
+                if (!Number.isNaN(max)) { where.push('f.Price <= ?'); params.push(max); }
+            }
 
             const whereSql = where.length ? `WHERE ${where.join(' AND ')}` : '';
 
             const [rows] = await db.query(`
-                SELECT FlowerID, FlowerName, Meaning, Price, srcImage, CID, CName
-                FROM flower f JOIN category c ON f.CID = c.CID
-                ${whereSql}
-                ORDER BY FlowerID DESC
-                LIMIT 100
-                `, params);
+        SELECT
+          f.FlowerID, f.FlowerName, f.Meaning, f.Price, f.srcImage, f.CID,
+          c.CName
+        FROM Flower AS f
+        JOIN Category AS c ON f.CID = c.CID
+        ${whereSql}
+      `, params);
 
-            res.json(rows);
+            res.type('application/json').status(200).send(JSON.stringify(rows));
         } catch (err) {
             console.error('Search error:', err);
             res.status(500).json({ message: 'Database error' });

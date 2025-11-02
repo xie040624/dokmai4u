@@ -334,18 +334,16 @@
             <h1 class="page-title">Search</h1>
 
             <section class="search-form-container">
-                <form id="searchForm">
-
+                <form id="searchForm" method="GET">
                     <div class="form-group">
                         <label for="FlowerName">Search by keyword</label>
-                        <input type="text" id="FlowerName" name="FlowerName"
-                            placeholder="Enter flower name or flower id">
+                        <input type="text" id="FlowerName" name="FlowerName" placeholder="Enter flower name">
                     </div>
 
                     <div class="form-group">
-                        <label for="Category">Category</label>
+                        <label for="CID">Category</label>
                         <div class="select-wrapper">
-                            <select id="Category" name="CID">
+                            <select id="CID" name="CID">
                                 <option value="">Category</option>
                                 <option value="1">Bouquet</option>
                                 <option value="2">Gift Set</option>
@@ -356,17 +354,16 @@
                     <div class="form-group">
                         <label for="Price">Price</label>
                         <div class="price-inputs">
-                            <input type="number" id="MinPrice" name="MinPrice" placeholder="Min Price"><span>-</span>
+                            <input type="number" id="MinPrice" name="MinPrice" placeholder="Min Price">
+                            <span>-</span>
                             <input type="number" id="MaxPrice" name="MaxPrice" placeholder="Max Price">
                         </div>
                     </div>
 
                     <button type="submit" class="search-button">Search</button>
-
                 </form>
 
                 <div id="result" class="search-results"></div>
-
             </section>
 
         </main>
@@ -378,41 +375,76 @@
             const form = document.getElementById('searchForm');
             const resultDiv = document.getElementById('result');
 
+            const fmtTHB = v => {
+                const n = Number(v);
+                return Number.isFinite(n) ? n.toLocaleString() + ' THB' : '-';
+            };
+
             function render(list) {
-                if (!list || !list.length) { resultDiv.innerHTML = `<p>No results found.</p>`; return; }
-                resultDiv.innerHTML = list.map(product => `
-                    <div class="product-list">
-                        <div class="product-item">
-                            <div class="product-info">
-                                <img src="/image/${flower.srcImage ?? 'no-image.png'}" class="product-image" alt="${flower.FlowerName ?? ''}">
-                                    <h4>${flower.FlowerName ?? '-'}</h4>
-                                    <p>${flower.CName ?? '-'}</p>
-                                    <p>${Number(flower.Price).toLocaleString()} THB</p>
-                            </div>
-                            <div class="pm-product-actions">
-                                <a href="/product/detail/${flower.FlowerID}" class="view-btn">View</a>
-                            </div>
-                        </div>
-                    </div>
-                    `).join('');
+                if (!list || !list.length) {
+                    resultDiv.innerHTML = `<p>No results found.</p>`;
+                    return;
+                }
+                const html = `
+      <div class="product-list">
+        ${list.map(p => `
+          <div class="product-item">
+            <img src="/image/${p.srcImage ?? 'no-image.png'}" class="product-image" alt="${p.FlowerName ?? ''}">
+            <div class="product-info">
+              <h4>${p.FlowerName ?? '-'}</h4>
+              <p>${p.CName ?? '-'}</p>
+              <p class="price">${fmtTHB(p.Price)}</p>
+            </div>
+            <div class="product-actions">
+              <a href="/product/detail/${p.FlowerID}" class="view-btn">View</a>
+            </div>
+          </div>
+        `).join('')}
+      </div>`;
+                resultDiv.innerHTML = html;
             }
 
             async function search(paramsObj) {
-                const params = new URLSearchParams();
+                const parts = location.pathname.split('/').filter(Boolean);
+                const id = parts[parts.length - 1];
+                const q = new URLSearchParams();
                 Object.entries(paramsObj).forEach(([k, v]) => {
-                    if (v !== undefined && v !== null && String(v).trim() !== '') params.append(k, v);
+                    if (v !== undefined && v !== null && String(v).trim() !== '') q.append(k, v);
                 });
-                const res = await fetch(`/product/search?${params.toString()}`, { method: 'GET' });
-                if (!res.ok) throw new Error('Search error: ' + res.status);
-                return res.json();
+
+                const url = `/product/search?${id}`;
+                resultDiv.innerHTML = `<p>Loading...</p>`;
+
+                const res = await fetch(url, { method: 'GET', redirect: 'follow', credentials: 'same-origin' });
+                const raw = await res.text();
+                const ctype = (res.headers.get('content-type') || '').toLowerCase();
+
+                // ถ้าโดน redirect ไปหน้า login หรือ server ส่ง HTML error page
+                if (res.redirected || /text\/html/.test(ctype) || /<html|<!doctype/i.test(raw)) {
+                    console.error('[search] redirected?', res.redirected, 'status', res.status, 'ctype', ctype, 'body:', raw.slice(0, 500));
+                    throw new Error('Server returned HTML (maybe a redirect/login or error page)');
+                }
+
+                if (!res.ok) {
+                    console.error('[search] HTTP error', res.status, raw.slice(0, 500));
+                    throw new Error(`HTTP ${res.status}`);
+                }
+
+                // บาง server ลืมตั้ง content-type เป็น JSON แต่ body เป็น JSON จริง
+                try {
+                    return JSON.parse(raw);
+                } catch (e) {
+                    console.error('[search] JSON parse failed. ctype=', ctype, 'raw=', raw.slice(0, 500));
+                    throw new Error('Response is not JSON');
+                }
             }
 
             form.addEventListener('submit', async (e) => {
                 e.preventDefault();
-                const FlowerName = (e.target.FlowerName.value || '').trim();
-                const CID = (e.target.CID.value || '').trim();
-                const MinPrice = (e.target.MinPrice.value || '').trim();
-                const MaxPrice = (e.target.MaxPrice.value || '').trim();
+                const FlowerName = (e.target.FlowerName?.value || e.target.PName?.value || '').trim(); // รองรับชื่อเดิมด้วย
+                const CID = (e.target.CID?.value || '').trim();
+                const MinPrice = (e.target.MinPrice?.value || '').trim();
+                const MaxPrice = (e.target.MaxPrice?.value || '').trim();
 
                 if ((MinPrice && isNaN(Number(MinPrice))) || (MaxPrice && isNaN(Number(MaxPrice)))) {
                     resultDiv.innerHTML = `<p>Price ต้องเป็นตัวเลข</p>`; return;
@@ -430,12 +462,14 @@
                 }
             });
 
+            // โหลดครั้งแรก
             (async () => {
                 try { render(await search({})); }
-                catch { resultDiv.innerHTML = `<p>Load error.</p>`; }
+                catch (e) { console.error(e); resultDiv.innerHTML = `<p>Load error.</p>`; }
             })();
         })();
     </script>
+
 </body>
 
 </html>

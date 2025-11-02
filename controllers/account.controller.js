@@ -112,5 +112,18 @@ module.exports = {
             console.error('Delete error:', error);
             res.status(500).json({ message: 'Database error during deletion' });
         }
+    },
+    search: async (req, res) => {
+        try {
+            const { searchKey } = req.body;
+            const [rows] = await db.query(
+                'SELECT AdminID, Role, Username FROM admin WHERE AdminID LIKE ? OR Username LIKE ?',
+                [`%${searchKey}%`, `%${searchKey}%`]
+            );
+            res.json(rows);
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ message: 'Database error' });
+        }
     }
 };

@@ -101,11 +101,7 @@
 
       const searchKey = e.target.searchKey.value;
 
-      const res = await fetch("/account/search", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ searchKey }),
-      });
+      const res = await fetch("/account/search", { method: "GET" });
 
       const data = await res.json();
       const resultDiv = document.getElementById("result");

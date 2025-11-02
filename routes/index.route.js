@@ -1,22 +1,22 @@
 // Required Modules
 const express = require('express');
 const router = express.Router();
-const indexController = require('../controllers/index.controller'); // Controller for handling public pages
+const ctrl = require('../controllers/index.controller'); // Controller for handling public pages
 
 // Root page
-router.get('/', indexController.root);
+router.get('/', ctrl.root);
 
 // Team page
-router.get('/team', indexController.team);
+router.get('/team', ctrl.team);
 
 // Login page
-router.get('/login', indexController.login);
+router.get('/login', ctrl.login);
 
 // Search page
-router.get('/search', indexController.search);
+router.get('/search', ctrl.search);
 
-// Detail page
-router.get('/detail', indexController.detail);
+router.get('/api/getdetail/:id', ctrl.get);
+router.get('/detail/:id', ctrl.detailPage);
 
 // Export the router module
 module.exports = router;
