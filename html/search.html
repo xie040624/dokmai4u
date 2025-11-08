@@ -396,7 +396,7 @@
               <p class="price">${fmtTHB(p.Price)}</p>
             </div>
             <div class="product-actions">
-              <a href="/product/detail/${p.FlowerID}" class="view-btn">View</a>
+              <a href="/detail/${p.FlowerID}" class="view-btn">View</a>
             </div>
           </div>
         `).join('')}
@@ -404,53 +404,59 @@
                 resultDiv.innerHTML = html;
             }
 
-            async function search(paramsObj) {
-                const parts = location.pathname.split('/').filter(Boolean);
-                const id = parts[parts.length - 1];
+            // ฟังก์ชันยิงค้นหา
+            async function search(paramsObj = {}) {
                 const q = new URLSearchParams();
+
                 Object.entries(paramsObj).forEach(([k, v]) => {
-                    if (v !== undefined && v !== null && String(v).trim() !== '') q.append(k, v);
+                    if (v !== undefined && v !== null && String(v).trim() !== '') {
+                        q.append(k, v);
+                    }
                 });
 
-                const url = `/product/search?${id}`;
+                // 🔥 อันที่ถูกต้องต้องเป็นแบบนี้
+                const url = q.toString()
+                    ? `/searchs?${q.toString()}`
+                    : `/searchs`;
+
                 resultDiv.innerHTML = `<p>Loading...</p>`;
 
-                const res = await fetch(url, { method: 'GET', redirect: 'follow', credentials: 'same-origin' });
+                const res = await fetch(url, {
+                    method: 'GET',
+                    credentials: 'same-origin'
+                });
+
                 const raw = await res.text();
                 const ctype = (res.headers.get('content-type') || '').toLowerCase();
 
-                // ถ้าโดน redirect ไปหน้า login หรือ server ส่ง HTML error page
-                if (res.redirected || /text\/html/.test(ctype) || /<html|<!doctype/i.test(raw)) {
-                    console.error('[search] redirected?', res.redirected, 'status', res.status, 'ctype', ctype, 'body:', raw.slice(0, 500));
-                    throw new Error('Server returned HTML (maybe a redirect/login or error page)');
+                // กันกรณีโดน redirect ไปหน้า login
+                if (res.redirected || /text\/html/.test(ctype)) {
+                    throw new Error('Server returned HTML (maybe redirect/login).');
                 }
 
                 if (!res.ok) {
-                    console.error('[search] HTTP error', res.status, raw.slice(0, 500));
                     throw new Error(`HTTP ${res.status}`);
                 }
 
-                // บาง server ลืมตั้ง content-type เป็น JSON แต่ body เป็น JSON จริง
-                try {
-                    return JSON.parse(raw);
-                } catch (e) {
-                    console.error('[search] JSON parse failed. ctype=', ctype, 'raw=', raw.slice(0, 500));
-                    throw new Error('Response is not JSON');
-                }
+                return JSON.parse(raw);
             }
 
+            // ตอนกดปุ่ม Search
             form.addEventListener('submit', async (e) => {
                 e.preventDefault();
-                const FlowerName = (e.target.FlowerName?.value || e.target.PName?.value || '').trim(); // รองรับชื่อเดิมด้วย
+
+                const FlowerName = (e.target.FlowerName?.value || '').trim();
                 const CID = (e.target.CID?.value || '').trim();
                 const MinPrice = (e.target.MinPrice?.value || '').trim();
                 const MaxPrice = (e.target.MaxPrice?.value || '').trim();
 
                 if ((MinPrice && isNaN(Number(MinPrice))) || (MaxPrice && isNaN(Number(MaxPrice)))) {
-                    resultDiv.innerHTML = `<p>Price ต้องเป็นตัวเลข</p>`; return;
+                    resultDiv.innerHTML = `<p>Price ต้องเป็นตัวเลข</p>`;
+                    return;
                 }
                 if (MinPrice && MaxPrice && Number(MinPrice) > Number(MaxPrice)) {
-                    resultDiv.innerHTML = `<p>Min Price ต้องไม่มากกว่า Max Price</p>`; return;
+                    resultDiv.innerHTML = `<p>Min Price ต้องไม่มากกว่า Max Price</p>`;
+                    return;
                 }
 
                 try {
@@ -458,17 +464,23 @@
                     render(list);
                 } catch (err) {
                     console.error(err);
-                    resultDiv.innerHTML = `<p>Search error.</p>`;
+                    resultDiv.innerHTML = `<p>Search error.${err}</p>`;
                 }
             });
 
-            // โหลดครั้งแรก
+            // โหลดครั้งแรกให้โชว์ทั้งหมด
             (async () => {
-                try { render(await search({})); }
-                catch (e) { console.error(e); resultDiv.innerHTML = `<p>Load error.</p>`; }
+                try {
+                    const list = await search({});
+                    render(list);
+                } catch (e) {
+                    console.error(e);
+                    resultDiv.innerHTML = `<p>Load error.</p>`;
+                }
             })();
         })();
     </script>
+
 
 </body>
 

@@ -118,35 +118,56 @@ module.exports = {
             const where = [];
             const params = [];
 
-            if (FlowerNameRaw) { where.push('f.FlowerName LIKE ?'); params.push(`%${FlowerNameRaw}%`); }
+            if (FlowerNameRaw) {
+                where.push('f.FlowerName LIKE ?');
+                params.push(`%${FlowerNameRaw}%`);
+            }
             if (CIDraw !== '') {
                 const cid = Number(CIDraw);
-                if (!Number.isNaN(cid)) { where.push('f.CID = ?'); params.push(cid); }
+                if (!Number.isNaN(cid)) {
+                    where.push('f.CID = ?');
+                    params.push(cid);
+                }
             }
             if (MinPriceRaw !== '') {
                 const min = Number(MinPriceRaw);
-                if (!Number.isNaN(min)) { where.push('f.Price >= ?'); params.push(min); }
+                if (!Number.isNaN(min)) {
+                    where.push('f.Price >= ?');
+                    params.push(min);
+                }
             }
             if (MaxPriceRaw !== '') {
                 const max = Number(MaxPriceRaw);
-                if (!Number.isNaN(max)) { where.push('f.Price <= ?'); params.push(max); }
+                if (!Number.isNaN(max)) {
+                    where.push('f.Price <= ?');
+                    params.push(max);
+                }
             }
 
             const whereSql = where.length ? `WHERE ${where.join(' AND ')}` : '';
 
             const [rows] = await db.query(`
-        SELECT
-          f.FlowerID, f.FlowerName, f.Meaning, f.Price, f.srcImage, f.CID,
-          c.CName
-        FROM Flower AS f
-        JOIN Category AS c ON f.CID = c.CID
-        ${whereSql}
-      `, params);
+      SELECT
+        f.FlowerID,
+        f.FlowerName,
+        f.Meaning,
+        f.Price,
+        f.srcImage,
+        f.CID,
+        c.CName
+      FROM Flower AS f
+      JOIN Category AS c ON f.CID = c.CID
+      ${whereSql}
+    `, params);
 
-            res.type('application/json').status(200).send(JSON.stringify(rows));
+            res
+                .type('application/json')
+                .status(200)
+                .send(JSON.stringify(rows));
         } catch (err) {
             console.error('Search error:', err);
             res.status(500).json({ message: 'Database error' });
         }
     }
+
 };

@@ -1,86 +1,81 @@
-/* --- 1. แถบ Nav มือถือ (แถบบนสุด) --- */
 .mobile-nav {
-    display: flex; 
-    justify-content: space-between;
     align-items: center;
+    background: #fff;
+    display: flex;
+    height: 60px;
+    inset: 0 0 auto 0;
+    justify-content: space-between;
     padding: 0 20px;
-    height: 60px; 
-    background-color: #ffffff;
-    border-bottom: 1px solid #f0f0f0;
-    
-    position: fixed; 
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 100; 
+    position: fixed;
+    z-index: 100;
 }
 
 .mobile-logo {
+    color: #333;
+    font-family: Cambria;
     font-size: 18px;
-    font-weight: 600;
-    color: #000;
+    font-weight: 500;
     text-decoration: none;
 }
 
-/* --- 2. ปุ่ม Hamburger (สามขีด) --- */
 .hamburger-icon {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    width: 24px;
-    height: 18px;
-    background: transparent;
+    background: none;
     border: none;
     cursor: pointer;
-    padding: 0;
-    z-index: 102; 
+    display: flex;
+    flex-direction: column;
+    height: 18px;
+    justify-content: space-between;
+    width: 24px;
+    z-index: 102;
 }
 
 .hamburger-icon span {
-    width: 24px;
-    height: 2px;
-    background-color: #333;
+    background: #333;
     border-radius: 10px;
-    transition: all 0.3s linear;
+    height: 2px;
+    transition: .3s;
+    width: 24px;
 }
 
-/* --- 3. เมนู Dropdown (แก้ไข) --- */
+/* Drop Down */
 .mobile-menu {
+    align-items: center;
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, .1);
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    gap: 15px; /* ลดระยะห่าง */
-    
-    position: absolute; /* เปลี่ยนเป็น absolute */
-    top: 65px; /* ให้เริ่มใต้ Nav Bar เล็กน้อย */
-    right: 20px; /* ให้ชิดขวา */
-    
-    min-width: 180px; /* กำหนดความกว้างขั้นต่ำ */
+    gap: 15px;
+    min-width: 180px;
     padding: 20px;
-    box-sizing: border-box;
-    
-    background-color: #ffffff;
-    border: 1px solid #eee;
-    border-radius: 8px; /* เพิ่มขอบมน */
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1); /* เพิ่มเงา */
-    
+    position: absolute;
+    right: 20px;
+    top: 65px;
+    transform: scaleY(0);
+    transform-origin: top right;
+    transition: transform .2s ease-in-out;
     z-index: 101;
-    
-    /* (ซ่อนไว้โดยการย่อแกน Y) */
-    transform: scaleY(0); 
-    transform-origin: top right; /* ให้ขยายจากมุมบนขวา */
-    transition: transform 0.2s ease-in-out;
 }
 
-/* (สถานะตอนเปิด) */
 .mobile-menu.open {
-    transform: scaleY(1); /* ขยายเต็ม */
+    transform: scaleY(1);
 }
 
 .mobile-menu a {
-    font-size: 18px; /* ลดขนาดฟอนต์ */
-    font-weight: 500;
     color: #333;
+    font-size: 18px;
+    font-weight: 500;
+    padding: 5px 0;
     text-decoration: none;
-    padding: 5px 0; /* เพิ่ม padding บน-ล่าง */
 }
 
+.mobile-logo:hover,
+.mobile-menu a:hover {
+    color: #c800ff;
+    filter: brightness(.98);
+    transform: translateY(-2px);
+    transition: all .2s ease;
+}
