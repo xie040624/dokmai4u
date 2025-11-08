@@ -9,216 +9,283 @@
     <link rel="stylesheet" href="/assets/moblie-nav.css">
 
     <style>
-        /* --- 1. การตั้งค่าหน้าเว็บโดยรวม (Mobile First) --- */
-        body,
-        html {
+        :root {
+            --bg: #f5f7fb;
+            --surface: #ffffff;
+            --text: #0f172a;
+            --muted: #6b7280;
+            --accent: #f97316;
+            /* สีปุ่ม/ไฮไลต์ */
+            --accent-soft: rgba(249, 115, 22, .1);
+            --radius-lg: 20px;
+            --radius-md: 14px;
+        }
+
+        html,
+        body {
             margin: 0;
             padding: 0;
             height: 100%;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             background-color: #ffffff;
+            color: var(--text);
         }
 
         .page-wrapper {
-            width: 100%;
-            min-height: 100%;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             padding-top: 60px;
-            box-sizing: border-box;
+            /* กันชนเมนูบน */
+            background: #fff;
         }
 
-        /* --- 2. ส่วนหัว (Header) --- */
-        .app-header {
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
-            /* จัดชิดซ้าย (สำหรับลูกศร) */
-            padding: 20px 25px;
-        }
-
-        .app-header .back-arrow {
-            font-size: 24px;
-            font-weight: 500;
-            color: #000;
-            text-decoration: none;
-        }
-
-        /* --- 3. ส่วนเนื้อหาหลัก --- */
         .main-content {
-            flex-grow: 1;
-            /* เว้นที่ว่างด้านล่าง ให้เนื้อหาไม่ถูกปุ่ม "Order" บัง
-                  ค่า 120px = ความสูงปุ่ม (80px) + ระยะห่าง (40px) 
-                */
-            padding-bottom: 120px;
+            flex: 1;
+            padding-bottom: 110px;
+            /* เผื่อปุ่ม order ที่ลอย */
         }
 
-        /* --- 4. สไลเดอร์ --- */
+        /* ========== ส่วนสไลด์รูป ========== */
         .slider-container {
             width: 100%;
-            max-width: 800px;
-            /* จำกัดความกว้างบนจอใหญ่ */
-            margin: 0 auto;
-            margin-top: 50px;
-            /* จัดกึ่งกลาง */
-            padding: 0 25px;
-            /* เว้นข้างบนมือถือ */
+            max-width: 900px;
+            margin: 40px auto 0;
+            padding: 0 20px;
             box-sizing: border-box;
         }
 
-        .swiper {
+        .swiper.detailSwiper {
             width: 100%;
-            height: 350px;
-            /* ทำให้สไลเดอร์สูงกว่าหน้า Home */
-            border-radius: 18px;
-            background-color: #f0f2f5;
+            height: 340px;
+            border-radius: var(--radius-lg);
+            background: #eceff3;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(15, 23, 42, 0.08);
         }
 
         .swiper-slide img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            display: block;
         }
 
         .swiper-button-next,
         .swiper-button-prev {
-            color: #ffffff;
-            background-color: rgba(0, 0, 0, 0.3);
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
+            color: #fff;
+            background: rgba(15, 23, 42, 0.35);
+            width: 42px;
+            height: 42px;
+            border-radius: 999px;
             --swiper-navigation-size: 18px;
         }
 
-        /* --- 5. รายละเอียดสินค้า --- */
+        /* ========== กล่องรายละเอียดสินค้า ========== */
         .product-info {
             width: 100%;
-            max-width: 800px;
-            /* จำกัดความกว้างบนจอใหญ่ */
-            margin: 0 auto;
-            /* จัดกึ่งกลาง */
-            padding: 25px;
+            max-width: 900px;
+            margin: 24px auto 0;
+            padding: 0 20px 24px;
             box-sizing: border-box;
         }
 
-        .product-info .product-name {
-            font-size: 34px;
+        /* ทำให้เป็นการ์ดนุ่มๆ แยกจากพื้น */
+        .product-info>*:not(#result) {
+            max-width: 100%;
+        }
+
+        .product-info-card {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            padding: 20px 20px 16px;
+            box-shadow: 0 12px 40px rgba(15, 23, 42, 0.04);
+        }
+
+        /* ตั้งค่ากรณีเราไม่ได้ wrap ด้วย .product-info-card ก็ยังดูดี */
+        .product-info h1,
+        .product-info h3,
+        .product-info p {
+            margin-top: 0;
+        }
+
+        /* ชื่อสินค้า */
+        #name {
+            font-size: clamp(1.5rem, 3.8vw, 2.35rem);
             font-weight: 700;
-            margin: 0 0 8px 0;
-            color: #000;
+            letter-spacing: -.01em;
+            margin-bottom: 6px;
+            line-height: 1.12;
         }
 
-        .product-info .product-price {
-            font-size: 24px;
-            font-weight: 600;
-            margin: 0 0 25px 0;
-            color: #333;
-        }
-
-        .product-info .section-title {
-            font-size: 22px;
-            font-weight: 600;
-            margin: 0 0 10px 0;
-            color: #000;
-        }
-
-        .product-info .product-description {
-            font-size: 16px;
-            color: #555;
-            line-height: 1.5;
-            margin-bottom: 30px;
-        }
-
-        .product-info .delivery-info,
-        .product-info .contact-info {
-            font-size: 14px;
-            color: #888;
-            line-height: 1.4;
+        /* Category */
+        #category {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #f3f4f6;
+            color: #374151;
+            font-size: 0.75rem;
+            font-weight: 500;
+            padding: 4px 14px 5px;
+            border-radius: 999px;
             margin-bottom: 10px;
         }
 
-        /* --- 6. ปุ่ม "Order" (Sticky Footer) --- */
+        /* ราคา */
+        #price {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 14px;
+        }
+
+        /* ความหมาย/คำอธิบาย */
+        #meaning {
+            background: #fff8f2;
+            border: 1px solid rgba(249, 115, 22, .15);
+            border-radius: 14px;
+            padding: 14px 14px 12px;
+            line-height: 1.5;
+            color: #6b7280;
+            font-size: 0.92rem;
+            margin-bottom: 16px;
+        }
+
+        /* ข้อมูลจัดส่ง ติดต่อ */
+        .delivery-info,
+        .contact-info {
+            font-size: 0.8rem;
+            color: #94a3b8;
+            margin-bottom: 4px;
+        }
+
+        .delivery-info {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: #ecfdf3;
+            color: #166534;
+            border: 1px solid rgba(22, 101, 52, .08);
+            padding: 6px 12px 6px;
+            border-radius: 999px;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+
+        .contact-info {
+            margin-top: 6px;
+        }
+
+        /* พื้นที่ result ที่จะ fetch มา */
+        #result {
+            margin-top: 18px;
+        }
+
+        /* ========== ปุ่มสั่งซื้อแบบลอย ========== */
         .order-footer {
             position: fixed;
-            /* (Mobile) ยึดไว้ด้านล่างจอ */
             bottom: 0;
             left: 0;
             right: 0;
-            background-color: #ffffff;
-            padding: 20px 25px 30px 25px;
-            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.08);
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(8px);
+            padding: 16px 18px 24px;
+            box-shadow: 0 -4px 24px rgba(15, 23, 42, 0.08);
         }
 
         .footer-content {
-            width: 100%;
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
         }
 
         .order-button {
             width: 100%;
-            padding: 16px;
-            font-size: 18px;
-            font-weight: 600;
-            color: #ffffff;
-            background-color: #f5a623;
             border: none;
-            border-radius: 50px;
+            outline: none;
+            background: linear-gradient(135deg, #f97316 0%, #f97316 65%, #f4a63c 100%);
+            color: #fff;
+            font-weight: 600;
+            font-size: 1rem;
+            padding: 14px 0 14px;
+            border-radius: 999px;
             cursor: pointer;
-            box-shadow: 0 4px 10px rgba(245, 166, 35, 0.4);
+            box-shadow: 0 12px 30px rgba(249, 115, 22, .45);
+            transition: transform .1s ease-out;
         }
 
-        .order-button:hover {
-            background-color: #e09311;
+        .order-button:active {
+            transform: translateY(1px);
         }
 
-        /* * ========================================
-         * 7. ส่วนสำหรับ Desktop 
-         * ========================================
-        */
+        /* ========== Desktop ปรับ layout ========== */
         @media (min-width: 720px) {
-            .app-header .back-arrow {
-                left: 30px;
-                /* ขยับลูกศรให้สัมพันธ์กัน */
+            .page-wrapper {
+                padding-top: 70px;
+            }
+
+            .main-content {
+                padding-bottom: 40px;
             }
 
             .slider-container {
                 padding: 0;
-                /* เอา padding ข้างออกบนจอใหญ่ */
+                margin-top: 40px;
             }
 
-            .swiper {
-                height: 450px;
-                /* ทำให้สไลเดอร์สูงขึ้นอีกบนจอใหญ่ */
+            .swiper.detailSwiper {
+                height: 420px;
             }
 
             .product-info {
-                padding: 25px 0;
-                /* เอา padding ข้างออก */
+                padding: 0;
+                margin-top: 26px;
             }
 
-            /* 1. เปลี่ยนปุ่มส้มให้เป็นปุ่มธรรมดา (ไม่ลอย) */
+            /* ลบปุ่มลอย เปลี่ยนเป็นปุ่มปกติ */
             .order-footer {
                 position: static;
-                /* <-- ทำให้ไม่ลอย */
+                background: transparent;
                 box-shadow: none;
-                /* <-- เอาเงาออก */
                 padding: 0;
-                /* <-- เอา padding ของ mobile ออก */
-                margin-top: 30px;
-                /* (เพิ่ม) เว้นระยะห่างจากเนื้อหา */
+                margin-top: 12px;
             }
 
-            /* 2. เอาที่ว่างที่เว้นไว้ให้ปุ่มส้ม (บน mobile) ออก */
-            .main-content {
-                padding-bottom: 40px;
+            .footer-content {
+                display: flex;
+                justify-content: flex-start;
+            }
+
+            .order-button {
+                width: auto;
+                padding: 12px 28px 12px;
+            }
+
+            /* ทำให้รายละเอียดเป็นกล่องสวย */
+            .product-info {
+                background: #fff;
+            }
+
+            .product-info>* {
+                background: none;
+            }
+        }
+
+        /* จอใหญ่มากๆ ให้กึ่งกลาง */
+        @media (min-width: 720px) {
+
+            .slider-container,
+            .product-info,
+            .footer-content {
+                max-width: 1000px;
             }
         }
     </style>
+
 </head>
 
 <body>
-
+    <!-- Mobile Nav -->
     <nav class="mobile-nav">
         <a href="/" class="mobile-logo">dokmai4u Shop</a>
         <div id="hamburger-icon" class="hamburger-icon">
@@ -228,14 +295,18 @@
     <div id="mobile-menu" class="mobile-menu">
         <a href="/">Home</a>
         <a href="/search">Search</a>
+        <a href="/team">Team</a>
         <a href="/login">Login</a>
     </div>
 
+    <!-- Desktop Nav -->
     <nav class="desktop-nav">
         <a href="/" class="logo">dokmai4u Shop</a>
         <div class="nav-links">
             <a href="/">Home</a>
             <a href="/search">Search</a>
+            <a href="/team">Team</a>
+            <a href="/login">Login</a>
         </div>
     </nav>
 
@@ -255,9 +326,9 @@
             <section class="product-info">
                 <h1 id="name">Name</h1>
                 <h3 id="price">Price</h3>
-                <p id="category"></p>
+                <p id="category">Category</p>
                 <p id="meaning">Meaning</p>
-                <p class="delivery-info">Free delivery in Salaya area.</p>
+                <p class="delivery-info">Free delivery in Mahidol Salaya campus.</p>
                 <p class="contact-info">More information please contact us by E-mail inquiry.</p>
                 <div id="result"></div>
             </section>
@@ -291,7 +362,7 @@
                 $('image').src = `/image/${data.srcImage}`;
                 $('name').textContent = data.FlowerName ?? '';
                 $('category').textContent = data.CName ?? '';
-                $('price').textContent = data.Price ?? '';
+                $('price').textContent = data.Price + ' THB' ?? '';
                 $('meaning').textContent = data.Meaning ?? '';
             } catch (e) {
                 console.error(e);
