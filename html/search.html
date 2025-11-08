@@ -11,7 +11,7 @@
     <style>
         :root {
             --bg: #f5f7fb;
-            --card: #ffffff;
+            --card: #fff;
             --text: #0b0f19;
             --muted: #6b7280;
             --brand: #007aff;
@@ -19,6 +19,7 @@
             --ring: rgba(0, 122, 255, .35);
         }
 
+        /* Global */
         html,
         body {
             height: 100%;
@@ -33,13 +34,13 @@
             -moz-osx-font-smoothing: grayscale;
         }
 
+        /* Layout */
         .page-wrapper {
             width: 100%;
             min-height: 100%;
             display: flex;
             flex-direction: column;
-            background-color: #ffffff;
-            transition: none;
+            background: #fff;
         }
 
         .main-content {
@@ -47,22 +48,21 @@
             padding: 25px;
         }
 
+        /* Title */
         .page-title {
             font-size: 34px;
             font-weight: 700;
             color: #000;
             text-align: center;
-            margin-top: 60px;
-            margin-bottom: 30px;
+            margin: 60px auto 30px;
             max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
         }
 
+        /* Search Form */
         .search-form-container {
             width: 100%;
             max-width: 600px;
-            margin: 0 auto 40px auto;
+            margin: 0 auto 40px;
             box-sizing: border-box;
         }
 
@@ -85,13 +85,13 @@
             padding: 15px 16px;
             font-size: 16px;
             border: none;
-            background-color: #f0f2f5;
+            background: #f0f2f5;
             border-radius: 12px;
-            box-sizing: border-box;
-            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, .05);
             appearance: none;
         }
 
+        /* Select */
         .select-wrapper {
             position: relative;
         }
@@ -107,6 +107,7 @@
             pointer-events: none;
         }
 
+        /* Price Range */
         .price-inputs {
             display: flex;
             align-items: center;
@@ -121,6 +122,7 @@
             color: #888;
         }
 
+        /* Search Button */
         .search-button {
             position: sticky;
             bottom: calc(8px + env(safe-area-inset-bottom));
@@ -136,21 +138,19 @@
             border-radius: 28px;
             cursor: pointer;
             box-shadow: 0 10px 22px rgba(0, 122, 255, .35), 0 2px 6px rgba(0, 0, 0, .08);
-            transition: transform .05s ease, box-shadow .15s ease, filter .15s ease, background .15s ease;
-            will-change: transform;
+            transition: transform .05s, box-shadow .15s, filter .15s, background .15s;
         }
 
         .search-button:hover {
             filter: brightness(.98);
-            box-shadow: 0 12px 26px rgba(0, 122, 255, .4), 0 3px 8px rgba(0, 0, 0, .10);
             transform: translateY(-2px);
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, .1), 0 12px 26px rgba(0, 122, 255, .4);
         }
 
         .search-button:active {
             transform: translateY(1px);
             background: var(--brand-press);
-            box-shadow: 0 8px 16px rgba(0, 122, 255, .3), 0 2px 6px rgba(0, 0, 0, .10);
+            box-shadow: 0 8px 16px rgba(0, 122, 255, .3), 0 2px 6px rgba(0, 0, 0, .1);
         }
 
         .search-button:focus-visible {
@@ -164,38 +164,33 @@
             box-shadow: none;
         }
 
+        /* Result */
         .search-results-container h2 {
             font-size: 24px;
             font-weight: 600;
-            margin-bottom: 20px;
+            margin: 0 auto 20px;
             max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
         }
 
         .result-item {
             margin-bottom: 30px;
         }
 
-        /* (ใช้ CSS เดิมของ Swiper) */
+        /* Slider */
         .slider-container {
             width: 100%;
             max-width: 600px;
-            margin: 0 auto 15px auto;
-            /* เว้นล่าง 15px */
+            margin: 0 auto 15px;
         }
 
-
-        /* สไตล์ส่วนรายละเอียดสินค้า */
+        /* Product Detail */
         .product-details {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
             max-width: 600px;
-            /* จัดให้ตรงกับสไลเดอร์ */
             margin: 0 auto;
             padding: 0 5px;
-            /* เว้นข้างเล็กน้อย */
         }
 
         .product-details h4 {
@@ -205,7 +200,7 @@
         }
 
         .product-details p {
-            margin: 4px 0 0 0;
+            margin: 4px 0 0;
             font-size: 14px;
             color: #888;
         }
@@ -216,7 +211,8 @@
             color: #000;
         }
 
-        @media (min-width: 720px) {
+        /* Responsive */
+        @media (min-width:720px) {
             .app-header .back-arrow {
                 left: 30px;
             }
@@ -230,7 +226,7 @@
             }
         }
 
-        /* ===== Product List Layout ===== */
+        /* Product List */
         .product-list {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -238,13 +234,13 @@
             margin-top: 20px;
         }
 
-        /* ===== Product Card ===== */
+        /* Product Card */
         .product-item {
-            background: #ffffff;
+            background: #fff;
             border: 1px solid #e5e7eb;
             border-radius: 12px;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, .05);
+            transition: transform .2s, box-shadow .2s;
             overflow: hidden;
             display: flex;
             flex-direction: column;
@@ -253,10 +249,10 @@
 
         .product-item:hover {
             transform: translateY(-4px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, .1);
         }
 
-        /* ===== Image ===== */
+        /* Product Image */
         .product-image {
             width: 100%;
             height: 180px;
@@ -265,7 +261,7 @@
             background: #f9f9f9;
         }
 
-        /* ===== Product Info ===== */
+        /* Product Info */
         .product-info {
             padding: 15px;
             text-align: center;
@@ -283,7 +279,7 @@
             margin: 3px 0;
         }
 
-        /* ===== Action Button ===== */
+        /* Product Button */
         .product-actions {
             display: flex;
             justify-content: center;
@@ -298,7 +294,7 @@
             border-radius: 8px;
             font-weight: 500;
             text-decoration: none;
-            transition: background 0.2s ease;
+            transition: background .2s;
         }
 
         .view-btn:hover {
@@ -315,9 +311,11 @@
             <span></span><span></span><span></span>
         </div>
     </nav>
-
     <div id="mobile-menu" class="mobile-menu">
         <a href="/">Home</a>
+        <a style="color: #c800ff;" href="/search">Search</a>
+        <a href="/team">Team</a>
+        <a href="/login">Login</a>
     </div>
 
     <!-- Desktop Nav -->
@@ -325,6 +323,9 @@
         <a href="/" class="logo">dokmai4u Shop</a>
         <div class="nav-links">
             <a href="/">Home</a>
+            <a style="color: #c800ff;" href="/search">Search</a>
+            <a href="/team">Team</a>
+            <a href="/login">Login</a>
         </div>
     </nav>
 
@@ -336,7 +337,7 @@
             <section class="search-form-container">
                 <form id="searchForm" method="GET">
                     <div class="form-group">
-                        <label for="FlowerName">Search by keyword</label>
+                        <label for="FlowerName">Keyword</label>
                         <input type="text" id="FlowerName" name="FlowerName" placeholder="Enter flower name">
                     </div>
 
@@ -382,29 +383,28 @@
 
             function render(list) {
                 if (!list || !list.length) {
-                    resultDiv.innerHTML = `<p>No results found.</p>`;
+                    resultDiv.innerHTML = '<p>No results found.</p>';
                     return;
                 }
                 const html = `
-      <div class="product-list">
-        ${list.map(p => `
-          <div class="product-item">
-            <img src="/image/${p.srcImage ?? 'no-image.png'}" class="product-image" alt="${p.FlowerName ?? ''}">
-            <div class="product-info">
-              <h4>${p.FlowerName ?? '-'}</h4>
-              <p>${p.CName ?? '-'}</p>
-              <p class="price">${fmtTHB(p.Price)}</p>
-            </div>
-            <div class="product-actions">
-              <a href="/detail/${p.FlowerID}" class="view-btn">View</a>
-            </div>
-          </div>
-        `).join('')}
-      </div>`;
+                    <div class="product-list">
+                        ${list.map(p => `
+                            <div class="product-item">
+                                <img src="/image/${p.srcImage ?? 'no-image.png'}" class="product-image" alt="${p.FlowerName ?? ''}">
+                                    <div class="product-info">
+                                        <h4>${p.FlowerName ?? '-'}</h4>
+                                        <p>${p.CName ?? '-'}</p>
+                                        <p class="price">${fmtTHB(p.Price)}</p>
+                                    </div>
+                                    <div class="product-actions">
+                                        <a href="/detail/${p.FlowerID}" class="view-btn">View</a>
+                                    </div>
+                            </div>
+                        `).join('')}
+                    </div>`;
                 resultDiv.innerHTML = html;
             }
 
-            // ฟังก์ชันยิงค้นหา
             async function search(paramsObj = {}) {
                 const q = new URLSearchParams();
 
@@ -414,7 +414,6 @@
                     }
                 });
 
-                // 🔥 อันที่ถูกต้องต้องเป็นแบบนี้
                 const url = q.toString()
                     ? `/searchs?${q.toString()}`
                     : `/searchs`;
@@ -429,7 +428,6 @@
                 const raw = await res.text();
                 const ctype = (res.headers.get('content-type') || '').toLowerCase();
 
-                // กันกรณีโดน redirect ไปหน้า login
                 if (res.redirected || /text\/html/.test(ctype)) {
                     throw new Error('Server returned HTML (maybe redirect/login).');
                 }
@@ -441,7 +439,6 @@
                 return JSON.parse(raw);
             }
 
-            // ตอนกดปุ่ม Search
             form.addEventListener('submit', async (e) => {
                 e.preventDefault();
 
@@ -468,7 +465,6 @@
                 }
             });
 
-            // โหลดครั้งแรกให้โชว์ทั้งหมด
             (async () => {
                 try {
                     const list = await search({});
@@ -480,8 +476,6 @@
             })();
         })();
     </script>
-
-
 </body>
 
 </html>

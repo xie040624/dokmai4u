@@ -30,7 +30,7 @@
         z-index: 100;
     }
 
-    .desktop-logo {
+    .logo {
         font-family: Cambria;
         font-size: 22px;
         font-weight: 500;
@@ -48,7 +48,7 @@
         transition: color .2s ease;
     }
 
-    .desktop-logo:hover,
+    .logo:hover,
     .nav-links a:hover {
         color: #c800ff;
         filter: brightness(.98);
