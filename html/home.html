@@ -12,8 +12,6 @@
     <style>
         html,
         body {
-            -moz-osx-font-smoothing: grayscale;
-            -webkit-font-smoothing: antialiased;
             color: #000;
             display: flex;
             flex-direction: column;
@@ -28,10 +26,10 @@
             display: flex;
             flex: 1;
             flex-direction: column;
-            padding-top: 70px;
+            padding-top: 60px;
         }
 
-        .main-content {
+        main {
             flex-grow: 1;
             padding: 16px 0 28px;
         }
@@ -44,13 +42,13 @@
             width: 100%;
         }
 
-        .text-section {
+        article {
             box-sizing: border-box;
             margin: 24px 0;
             padding: 0 20px;
         }
 
-        .text-section .main-heading {
+        article h1 {
             color: #000;
             font-family: Georgia;
             font-size: 26px;
@@ -60,8 +58,8 @@
             margin: 0;
         }
 
-        .text-section .sub-heading {
-            color: #131313;
+        article p {
+            color: #1b1b1b;
             font-family: Georgia;
             font-size: 14px;
             letter-spacing: .1px;
@@ -86,7 +84,7 @@
 
         .swiper-slide {
             align-items: center;
-            background: #f1f2f6;
+            background: #fff;
             display: flex;
             justify-content: center;
         }
@@ -119,7 +117,7 @@
             background: rgba(0, 0, 0, .45);
         }
 
-        .footer {
+        footer {
             background: #3b004b;
             color: #fff;
             display: flex;
@@ -128,14 +126,14 @@
             padding: 0 20px 10px;
         }
 
-        .footer .footer-column h4 {
+        #h2IDSelector {
             font-size: 16px;
             font-weight: 500;
             margin: 2px 0;
         }
 
-        .footer a,
-        .footer p {
+        footer a,
+        footer p {
             color: #cbcbcb;
             display: block;
             font-size: 14px;
@@ -145,16 +143,16 @@
             text-decoration: none;
         }
 
-        .footer a:hover {
+        footer a:hover {
             color: #fff;
         }
 
         @media (min-width: 720px) {
-            .footer {
+            footer {
                 padding: 30px;
             }
 
-            .main-content {
+            main {
                 padding: 30px 0;
             }
 
@@ -166,38 +164,41 @@
 </head>
 
 <body>
-    <!-- Mobile Nav -->
-    <nav class="mobile-nav">
-        <a href="/" class="mobile-logo">dokmai4u Shop</a>
-        <div id="hamburger-icon" class="hamburger-icon">
-            <span></span><span></span><span></span>
-        </div>
-    </nav>
-    <div id="mobile-menu" class="mobile-menu">
-        <a style="color: #c800ff;" href="/">Home</a>
-        <a href="/search">Search</a>
-        <a href="/team">Team</a>
-        <a href="/login">Login</a>
-    </div>
-
-    <!-- Desktop Nav -->
-    <nav class="desktop-nav">
-        <a href="/" class="logo">dokmai4u Shop</a>
-        <div class="nav-links">
+    <!-- Header with Mobile & Desktop Nav -->
+    <header>
+        <!-- Mobile Nav -->
+        <nav class="mobile-nav">
+            <a href="/" class="mobile-logo">dokmai4u Shop</a>
+            <div id="hamburger-icon" class="hamburger-icon">
+                <span></span><span></span><span></span>
+            </div>
+        </nav>
+        <div id="mobile-menu" class="mobile-menu">
             <a style="color: #c800ff;" href="/">Home</a>
             <a href="/search">Search</a>
             <a href="/team">Team</a>
             <a href="/login">Login</a>
         </div>
-    </nav>
 
-    <!-- Main -->
+        <!-- Desktop Nav -->
+        <nav class="desktop-nav">
+            <a href="/" class="logo">dokmai4u Shop</a>
+            <div class="nav-links">
+                <a style="color: #c800ff;" href="/">Home</a>
+                <a href="/search">Search</a>
+                <a href="/team">Team</a>
+                <a href="/login">Login</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
     <div class="page-wrapper">
-        <main class="main-content">
+        <main>
             <!-- Slider 1 -->
-            <div class="section">
+            <section class="section">
                 <div class="slider-container">
-                    <div class="swiper mySwiper1">
+                    <figure class="swiper mySwiper1">
                         <div class="swiper-wrapper">
                             <div class="swiper-slide">
                                 <a href="/detail/1"><img src="/image/Flower.jpg" alt="Flower 1" /></a>
@@ -211,22 +212,22 @@
                         </div>
                         <div class="swiper-button-next"></div>
                         <div class="swiper-button-prev"></div>
-                    </div>
+                    </figure>
                 </div>
-            </div>
+            </section>
 
-            <!-- Text -->
-            <div class="section">
-                <div class="text-section">
-                    <h1 class="main-heading">Beautiful Flowers for Every Occasion</h1>
-                    <p class="sub-heading">Free delivery in Salaya area.</p>
-                </div>
-            </div>
+            <!-- Article Section -->
+            <section class="section">
+                <article>
+                    <h1>Beautiful Flowers for Every Occasion</h1>
+                    <p>Free delivery in Salaya area.</p>
+                </article>
+            </section>
 
             <!-- Slider 2 -->
-            <div class="section">
+            <section class="section">
                 <div class="slider-container">
-                    <div class="swiper mySwiper2">
+                    <figure class="swiper mySwiper2">
                         <div class="swiper-wrapper">
                             <div class="swiper-slide">
                                 <a href="/detail/3"><img src="/image/Tulips.jpg" alt="Flower 1" /></a>
@@ -240,27 +241,27 @@
                         </div>
                         <div class="swiper-button-next"></div>
                         <div class="swiper-button-prev"></div>
-                    </div>
+                    </figure>
                 </div>
-            </div>
+            </section>
         </main>
     </div>
 
     <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-column">
-            <h4>For Admin</h4>
+    <footer>
+        <section>
+            <h2 id="h2IDSelector">For Admin</h2>
             <a href="/product">Product Mgmt.</a>
-            <h4>For Super Admin</h4>
+            <h2 id="h2IDSelector">For Super Admin</h2>
             <a href="/account">Account Mgmt.</a>
-        </div>
-        <div class="footer-column">
-            <h4>About us</h4>
+        </section>
+        <section>
+            <h2 id="h2IDSelector">About us</h2>
             <a href="/team">Team</a>
-            <h4>Contact</h4>
+            <h2 id="h2IDSelector">Contact</h2>
             <p>contact@dokmai4u.com</p>
             <p>012-345-6789</p>
-        </div>
+        </section>
     </footer>
 
     <!-- JS -->
