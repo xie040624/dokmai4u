@@ -1,16 +1,15 @@
+// This script creates a super admin user in the database.
 require('dotenv').config();
 const bcrypt = require('bcryptjs');
 const db = require('../db');
-
-bcrypt.hash('6787051',10).then(console.log)
 
 async function main() {
     try {
         const FName = 'Thanakorn';
         const LName = 'Kansorn';
-        const Email = 'admin@example.com';
+        const Email = 'superadmin@dokmai4u.com';
         const PhoneNumber = '0123456789';
-        const Role = 'SuperAdmin';
+        const Role = 'SuperAdmin'; // SuperAdmin, Admin
         const Username = 'root';
         const plain = '6787104';
 

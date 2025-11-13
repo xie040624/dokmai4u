@@ -6,21 +6,43 @@ module.exports = {
     loginPage: (req, res) => {
         res.sendFile(path.join(__dirname, '../html', 'login.html'));
     },
+
     login: async (req, res) => {
         try {
             const { username, password } = req.body;
-            const [rows] = await db.query('SELECT * FROM Admin WHERE Username = ?', [username]);
+
+            // หา user จาก database
+            const [rows] = await db.query(
+                'SELECT * FROM Admin WHERE Username = ?',
+                [username]
+            );
+
+            // ถ้าไม่เจอ user ใน database ส่งกลับไปที่หน้า login
             if (!rows.length) {
                 return res.redirect('/login?error=Invalid%20username%20or%20password');
             }
+
             const user = rows[0];
 
+            // ตรวจสอบรหัสผ่าน
             const ok = await bcrypt.compare(password, user.Password);
             if (!ok) {
                 return res.redirect('/login?error=Invalid%20username%20or%20password');
             }
 
-            req.session.user = { id: user.AdminID, username: user.username };
+            // เก็บ session
+            req.session.user = {
+                id: user.AdminID,
+                username: user.Username,
+                role: user.Role
+            };
+
+            // บันทึกเวลาที่ login
+            await db.query(
+                'INSERT INTO Login (AdminID) VALUES (?)',
+                [user.AdminID]
+            );
+
             return res.redirect('/product');
         } catch (e) {
             console.error(e);

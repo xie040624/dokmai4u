@@ -19,7 +19,6 @@
             --ring: rgba(0, 122, 255, .35);
         }
 
-        /* Global */
         html,
         body {
             height: 100%;
@@ -34,7 +33,6 @@
             -moz-osx-font-smoothing: grayscale;
         }
 
-        /* Layout */
         .page-wrapper {
             width: 100%;
             min-height: 100%;
@@ -48,7 +46,6 @@
             padding: 25px;
         }
 
-        /* Title */
         .page-title {
             font-size: 34px;
             font-weight: 700;
@@ -58,7 +55,6 @@
             max-width: 600px;
         }
 
-        /* Search Form */
         .search-form-container {
             width: 100%;
             max-width: 600px;
@@ -91,7 +87,6 @@
             appearance: none;
         }
 
-        /* Select */
         .select-wrapper {
             position: relative;
         }
@@ -107,7 +102,6 @@
             pointer-events: none;
         }
 
-        /* Price Range */
         .price-inputs {
             display: flex;
             align-items: center;
@@ -122,7 +116,6 @@
             color: #888;
         }
 
-        /* Search Button */
         .search-button {
             position: sticky;
             bottom: calc(8px + env(safe-area-inset-bottom));
@@ -164,7 +157,12 @@
             box-shadow: none;
         }
 
-        /* Result */
+        .search-results {
+            width: 100%;
+            min-height: 100px;
+            box-sizing: border-box;
+        }
+
         .search-results-container h2 {
             font-size: 24px;
             font-weight: 600;
@@ -176,14 +174,12 @@
             margin-bottom: 30px;
         }
 
-        /* Slider */
         .slider-container {
             width: 100%;
             max-width: 600px;
             margin: 0 auto 15px;
         }
 
-        /* Product Detail */
         .product-details {
             display: flex;
             justify-content: space-between;
@@ -211,7 +207,6 @@
             color: #000;
         }
 
-        /* Responsive */
         @media (min-width:720px) {
             .app-header .back-arrow {
                 left: 30px;
@@ -226,7 +221,6 @@
             }
         }
 
-        /* Product List */
         .product-list {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -234,7 +228,6 @@
             margin-top: 20px;
         }
 
-        /* Product Card */
         .product-item {
             background: #fff;
             border: 1px solid #e5e7eb;
@@ -252,7 +245,6 @@
             box-shadow: 0 6px 12px rgba(0, 0, 0, .1);
         }
 
-        /* Product Image */
         .product-image {
             width: 100%;
             height: 180px;
@@ -261,7 +253,6 @@
             background: #f9f9f9;
         }
 
-        /* Product Info */
         .product-info {
             padding: 15px;
             text-align: center;
@@ -279,7 +270,6 @@
             margin: 3px 0;
         }
 
-        /* Product Button */
         .product-actions {
             display: flex;
             justify-content: center;
@@ -304,30 +294,33 @@
 </head>
 
 <body>
-    <!-- Mobile Nav -->
-    <nav class="mobile-nav">
-        <a href="/" class="mobile-logo">dokmai4u Shop</a>
-        <div id="hamburger-icon" class="hamburger-icon">
-            <span></span><span></span><span></span>
-        </div>
-    </nav>
-    <div id="mobile-menu" class="mobile-menu">
-        <a href="/">Home</a>
-        <a style="color: #c800ff;" href="/search">Search</a>
-        <a href="/team">Team</a>
-        <a href="/login">Login</a>
-    </div>
-
-    <!-- Desktop Nav -->
-    <nav class="desktop-nav">
-        <a href="/" class="logo">dokmai4u Shop</a>
-        <div class="nav-links">
+    <!-- Header with Mobile & Desktop Nav -->
+    <header>
+        <!-- Mobile Nav -->
+        <nav class="mobile-nav">
+            <a href="/" class="mobile-logo">dokmai4u Shop</a>
+            <div id="hamburger-icon" class="hamburger-icon">
+                <span></span><span></span><span></span>
+            </div>
+        </nav>
+        <div id="mobile-menu" class="mobile-menu">
             <a href="/">Home</a>
             <a style="color: #c800ff;" href="/search">Search</a>
             <a href="/team">Team</a>
             <a href="/login">Login</a>
         </div>
-    </nav>
+
+        <!-- Desktop Nav -->
+        <nav class="desktop-nav">
+            <a href="/" class="logo">dokmai4u Shop</a>
+            <div class="nav-links">
+                <a href="/">Home</a>
+                <a style="color: #c800ff;" href="/search">Search</a>
+                <a href="/team">Team</a>
+                <a href="/login">Login</a>
+            </div>
+        </nav>
+    </header>
 
     <!-- Main content -->
     <div class="page-wrapper">
@@ -376,11 +369,13 @@
             const form = document.getElementById('searchForm');
             const resultDiv = document.getElementById('result');
 
+            // Format number to THB currency
             const fmtTHB = v => {
-                const n = Number(v);
-                return Number.isFinite(n) ? n.toLocaleString() + ' THB' : '-';
+                const num = Number(v);
+                return Number.isFinite(num) ? num.toLocaleString() + ' THB' : '-';
             };
 
+            // Render product list
             function render(list) {
                 if (!list || !list.length) {
                     resultDiv.innerHTML = '<p>No results found.</p>';
@@ -389,31 +384,34 @@
                 const html = `
                     <div class="product-list">
                         ${list.map(p => `
-                            <div class="product-item">
-                                <img src="/image/${p.srcImage ?? 'no-image.png'}" class="product-image" alt="${p.FlowerName ?? ''}">
-                                    <div class="product-info">
-                                        <h4>${p.FlowerName ?? '-'}</h4>
-                                        <p>${p.CName ?? '-'}</p>
-                                        <p class="price">${fmtTHB(p.Price)}</p>
-                                    </div>
-                                    <div class="product-actions">
-                                        <a href="/detail/${p.FlowerID}" class="view-btn">View</a>
-                                    </div>
+                    <div class="product-item">
+                        <img src="/image/${p.srcImage ?? 'no-image.png'}" class="product-image" alt="${p.FlowerName ?? ''}">
+                            <div class="product-info">
+                                <h4>${p.FlowerName ?? '-'}</h4>
+                                <p>${p.CName ?? '-'}</p>
+                                <p class="price">${fmtTHB(p.Price)}</p>
                             </div>
-                        `).join('')}
+                            <div class="product-actions">
+                                <a href="/detail/${p.FlowerID}" class="view-btn">View</a>
+                            </div>
+                    </div>
+                `).join('')}
                     </div>`;
                 resultDiv.innerHTML = html;
             }
 
+            // Perform search request
             async function search(paramsObj = {}) {
                 const q = new URLSearchParams();
 
+                // Append only non-empty parameters
                 Object.entries(paramsObj).forEach(([k, v]) => {
                     if (v !== undefined && v !== null && String(v).trim() !== '') {
                         q.append(k, v);
                     }
                 });
 
+                // Construct URL
                 const url = q.toString()
                     ? `/searchs?${q.toString()}`
                     : `/searchs`;
@@ -421,7 +419,6 @@
                 resultDiv.innerHTML = `<p>Loading...</p>`;
 
                 const res = await fetch(url, {
-                    method: 'GET',
                     credentials: 'same-origin'
                 });
 
@@ -448,11 +445,11 @@
                 const MaxPrice = (e.target.MaxPrice?.value || '').trim();
 
                 if ((MinPrice && isNaN(Number(MinPrice))) || (MaxPrice && isNaN(Number(MaxPrice)))) {
-                    resultDiv.innerHTML = `<p>Price ต้องเป็นตัวเลข</p>`;
+                    resultDiv.innerHTML = `<p>Price must be a number.</p>`;
                     return;
                 }
                 if (MinPrice && MaxPrice && Number(MinPrice) > Number(MaxPrice)) {
-                    resultDiv.innerHTML = `<p>Min Price ต้องไม่มากกว่า Max Price</p>`;
+                    resultDiv.innerHTML = `<p>Min Price must not be greater than Max Price.</p>`;
                     return;
                 }
 

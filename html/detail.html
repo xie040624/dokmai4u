@@ -10,12 +10,11 @@
 
     <style>
         :root {
-            --bg: #f5f7fb;
-            --surface: #ffffff;
-            --text: #0f172a;
+            --bg: #fff;
+            --surface: #fff;
+            --text: #000;
             --muted: #6b7280;
             --accent: #f97316;
-            /* สีปุ่ม/ไฮไลต์ */
             --accent-soft: rgba(249, 115, 22, .1);
             --radius-lg: 20px;
             --radius-md: 14px;
@@ -26,7 +25,7 @@
             margin: 0;
             padding: 0;
             height: 100%;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-family: 'Inter', sans-serif;
             background-color: #ffffff;
             color: var(--text);
         }
@@ -36,17 +35,15 @@
             display: flex;
             flex-direction: column;
             padding-top: 60px;
-            /* กันชนเมนูบน */
             background: #fff;
         }
 
         .main-content {
             flex: 1;
             padding-bottom: 110px;
-            /* เผื่อปุ่ม order ที่ลอย */
         }
 
-        /* ========== ส่วนสไลด์รูป ========== */
+        /* style for image slider */
         .slider-container {
             width: 100%;
             max-width: 900px;
@@ -71,17 +68,6 @@
             display: block;
         }
 
-        .swiper-button-next,
-        .swiper-button-prev {
-            color: #fff;
-            background: rgba(15, 23, 42, 0.35);
-            width: 42px;
-            height: 42px;
-            border-radius: 999px;
-            --swiper-navigation-size: 18px;
-        }
-
-        /* ========== กล่องรายละเอียดสินค้า ========== */
         .product-info {
             width: 100%;
             max-width: 900px;
@@ -90,7 +76,6 @@
             box-sizing: border-box;
         }
 
-        /* ทำให้เป็นการ์ดนุ่มๆ แยกจากพื้น */
         .product-info>*:not(#result) {
             max-width: 100%;
         }
@@ -100,16 +85,15 @@
             border-radius: var(--radius-lg);
             padding: 20px 20px 16px;
             box-shadow: 0 12px 40px rgba(15, 23, 42, 0.04);
+            margin-bottom: 16px;
         }
 
-        /* ตั้งค่ากรณีเราไม่ได้ wrap ด้วย .product-info-card ก็ยังดูดี */
         .product-info h1,
         .product-info h3,
         .product-info p {
             margin-top: 0;
         }
 
-        /* ชื่อสินค้า */
         #name {
             font-size: clamp(1.5rem, 3.8vw, 2.35rem);
             font-weight: 700;
@@ -132,7 +116,7 @@
             margin-bottom: 10px;
         }
 
-        /* ราคา */
+        /* Price */
         #price {
             font-size: 1.75rem;
             font-weight: 700;
@@ -140,7 +124,7 @@
             margin-bottom: 14px;
         }
 
-        /* ความหมาย/คำอธิบาย */
+        /* Meaning/Description */
         #meaning {
             background: #fff8f2;
             border: 1px solid rgba(249, 115, 22, .15);
@@ -152,7 +136,7 @@
             margin-bottom: 16px;
         }
 
-        /* ข้อมูลจัดส่ง ติดต่อ */
+        /* Delivery and Contact Information */
         .delivery-info,
         .contact-info {
             font-size: 0.8rem;
@@ -177,12 +161,12 @@
             margin-top: 6px;
         }
 
-        /* พื้นที่ result ที่จะ fetch มา */
+        /* Result area to be fetched */
         #result {
             margin-top: 18px;
         }
 
-        /* ========== ปุ่มสั่งซื้อแบบลอย ========== */
+        /* Floating order button */
         .order-footer {
             position: fixed;
             bottom: 0;
@@ -218,7 +202,7 @@
             transform: translateY(1px);
         }
 
-        /* ========== Desktop ปรับ layout ========== */
+        /* Desktop layout adjustments */
         @media (min-width: 720px) {
             .page-wrapper {
                 padding-top: 70px;
@@ -242,7 +226,7 @@
                 margin-top: 26px;
             }
 
-            /* ลบปุ่มลอย เปลี่ยนเป็นปุ่มปกติ */
+            /* Remove floating button, change to normal button */
             .order-footer {
                 position: static;
                 background: transparent;
@@ -261,7 +245,7 @@
                 padding: 12px 28px 12px;
             }
 
-            /* ทำให้รายละเอียดเป็นกล่องสวย */
+            /* Make product details a nice box */
             .product-info {
                 background: #fff;
             }
@@ -271,7 +255,7 @@
             }
         }
 
-        /* จอใหญ่มากๆ ให้กึ่งกลาง */
+        /* Very large screens, center content */
         @media (min-width: 720px) {
 
             .slider-container,
@@ -285,30 +269,33 @@
 </head>
 
 <body>
-    <!-- Mobile Nav -->
-    <nav class="mobile-nav">
-        <a href="/" class="mobile-logo">dokmai4u Shop</a>
-        <div id="hamburger-icon" class="hamburger-icon">
-            <span></span><span></span><span></span>
-        </div>
-    </nav>
-    <div id="mobile-menu" class="mobile-menu">
-        <a href="/">Home</a>
-        <a href="/search">Search</a>
-        <a href="/team">Team</a>
-        <a href="/login">Login</a>
-    </div>
-
-    <!-- Desktop Nav -->
-    <nav class="desktop-nav">
-        <a href="/" class="logo">dokmai4u Shop</a>
-        <div class="nav-links">
+    <!-- Header with Mobile & Desktop Nav -->
+    <header>
+        <!-- Mobile Nav -->
+        <nav class="mobile-nav">
+            <a href="/" class="mobile-logo">dokmai4u Shop</a>
+            <div id="hamburger-icon" class="hamburger-icon">
+                <span></span><span></span><span></span>
+            </div>
+        </nav>
+        <div id="mobile-menu" class="mobile-menu">
             <a href="/">Home</a>
             <a href="/search">Search</a>
             <a href="/team">Team</a>
             <a href="/login">Login</a>
         </div>
-    </nav>
+
+        <!-- Desktop Nav -->
+        <nav class="desktop-nav">
+            <a href="/" class="logo">dokmai4u Shop</a>
+            <div class="nav-links">
+                <a href="/">Home</a>
+                <a href="/search">Search</a>
+                <a href="/team">Team</a>
+                <a href="/login">Login</a>
+            </div>
+        </nav>
+    </header>
 
     <div class="page-wrapper">
         <main class="main-content">
@@ -342,12 +329,12 @@
         </main>
     </div>
 
-    <script src="/html/moblie-nav.js" defer></script>
+    <script src="/assets/moblie-nav.js" defer></script>
     <script>
         const parts = location.pathname.split('/').filter(Boolean);
         const id = parts[parts.length - 1];
 
-        const $ = (id) => document.getElementById(id);
+        const $ = (id) => document.getElementById(id); // Shortcut function
         const resultDiv = $('result');
 
         async function loadData() {

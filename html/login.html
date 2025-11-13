@@ -16,23 +16,7 @@
             --card: #111827;
             --muted: #9ca3af;
             --ring: rgba(56, 189, 248, .35);
-            --text: #e5e7eb;
-        }
-
-        @media (min-width: 720px) {
-            .login-wrapper {
-                padding: 64px 24px;
-            }
-
-            .login-container {
-                padding: 32px 28px 28px;
-                border-radius: 18px;
-                box-shadow: 0 14px 36px rgba(14, 21, 47, .12);
-            }
-
-            .page-title {
-                font-size: 30px;
-            }
+            --text: #fff;
         }
 
         html,
@@ -40,17 +24,13 @@
             height: 100%;
         }
 
-        /* พื้นหลังมืด เรียงคอลัมน์ ลบน้ำหนักฟอนต์ */
         body {
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             background: var(--bg);
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
         }
 
-        /* กลุ่มฟอร์มเว้นบรรทัดแนวตั้ง */
         .form-group {
             display: flex;
             flex-direction: column;
@@ -60,7 +40,6 @@
             margin: 0;
         }
 
-        /* ป้ายฟิลด์ตัวเล็ก หนา สีสว่าง */
         .form-group label {
             font-family: Georgia;
             font-size: 14px;
@@ -68,14 +47,13 @@
             color: var(--text);
         }
 
-        /* อินพุตมุมโค้ง พื้นมืด เส้นขอบอ่อน */
         .form-group input {
             width: auto;
             height: 48px;
             padding: 0 14px;
             font-family: Georgia;
             font-size: 16px;
-            color: var(--text);
+            color: #000;
             background: #161b22;
             border: 1px solid #1f2937;
             border-radius: 12px;
@@ -84,24 +62,20 @@
             transition: box-shadow .15s, border-color .15s, background-color .15s;
         }
 
-        /* โฮเวอร์อินพุตให้สว่างนิดๆ */
         .form-group input:hover {
             background: #1a2130;
         }
 
-        /* โฟกัสอินพุตให้มี ring และเส้นสีฟ้า */
         .form-group input:focus {
             border-color: var(--brand);
             box-shadow: 0 0 0 4px var(--ring);
             background: #fff;
         }
 
-        /* สี placeholder เทาอ่อน */
         .form-group input::placeholder {
             color: #9ca3af;
         }
 
-        /* ปุ่ม login แบบ iOS ลอยล่าง */
         .login-button {
             position: sticky;
             bottom: calc(8px + env(safe-area-inset-bottom));
@@ -122,7 +96,6 @@
             will-change: transform;
         }
 
-        /* ปุ่มโฮเวอร์ให้ลอยและคมขึ้น */
         .login-button:hover {
             filter: brightness(.98);
             transform: translateY(-2px);
@@ -130,27 +103,23 @@
             box-shadow: 0 10px 22px rgba(0, 122, 255, .35), 0 2px 6px rgba(0, 0, 0, .08);
         }
 
-        /* ปุ่มกดให้จมลง และเปลี่ยนสี */
         .login-button:active {
             transform: translateY(1px);
             background: var(--brand-press);
             box-shadow: 0 8px 16px rgba(0, 122, 255, .3), 0 2px 6px rgba(0, 0, 0, .1);
         }
 
-        /* ปุ่มโฟกัสให้มีวงแหวน */
         .login-button:focus-visible {
             outline: none;
             box-shadow: 0 0 0 4px var(--ring), 0 10px 22px rgba(0, 122, 255, .35);
         }
 
-        /* ปุ่ม disabled ให้จางและคลิกไม่ได้ */
         .login-button:disabled {
             opacity: .65;
             cursor: not-allowed;
             box-shadow: none;
         }
 
-        /* กล่องฟอร์ม login กลางจอ แนวตั้ง */
         .login-container {
             width: 100%;
             max-width: 420px;
@@ -164,7 +133,6 @@
             gap: 18px;
         }
 
-        /* ฟอร์มด้านในจัดแนวตั้งห่าง 18px */
         .login-container form {
             display: flex;
             flex-direction: column;
@@ -175,7 +143,6 @@
             box-sizing: border-box;
         }
 
-        /* พื้นที่ login ครอบจอ จัดกลาง มี safe-area ล่าง */
         .login-wrapper {
             width: 100%;
             flex: 1 0 auto;
@@ -187,7 +154,6 @@
             background: var(--bg);
         }
 
-        /* ชื่อหน้าใหญ่ ตัวหนา สีอ่อน */
         .page-title {
             margin: 0 0 6px;
             font-family: Georgia;
@@ -197,35 +163,54 @@
             color: var(--text);
             letter-spacing: .2px;
         }
+
+        @media (min-width: 720px) {
+            .login-wrapper {
+                padding: 64px 24px;
+            }
+
+            .login-container {
+                padding: 32px 28px 28px;
+                border-radius: 18px;
+                box-shadow: 0 14px 36px rgba(14, 21, 47, .12);
+            }
+
+            .page-title {
+                font-size: 30px;
+            }
+        }
     </style>
 
 </head>
 
 <body>
-    <!-- Mobile Nav -->
-    <nav class="mobile-nav">
-        <a href="/" class="mobile-logo">dokmai4u Shop</a>
-        <div id="hamburger-icon" class="hamburger-icon">
-            <span></span><span></span><span></span>
-        </div>
-    </nav>
-    <div id="mobile-menu" class="mobile-menu">
-        <a href="/">Home</a>
-        <a href="/search">Search</a>
-        <a href="/team">Team</a>
-        <a style="color: #c800ff;" href="/login">Login</a>
-    </div>
-
-    <!-- Desktop Nav -->
-    <nav class="desktop-nav">
-        <a href="/" class="logo">dokmai4u Shop</a>
-        <div class="nav-links">
+    <!-- Header with Mobile & Desktop Nav -->
+    <header>
+        <!-- Mobile Nav -->
+        <nav class="mobile-nav">
+            <a href="/" class="mobile-logo">dokmai4u Shop</a>
+            <div id="hamburger-icon" class="hamburger-icon">
+                <span></span><span></span><span></span>
+            </div>
+        </nav>
+        <div id="mobile-menu" class="mobile-menu">
             <a href="/">Home</a>
             <a href="/search">Search</a>
             <a href="/team">Team</a>
             <a style="color: #c800ff;" href="/login">Login</a>
         </div>
-    </nav>
+
+        <!-- Desktop Nav -->
+        <nav class="desktop-nav">
+            <a href="/" class="logo">dokmai4u Shop</a>
+            <div class="nav-links">
+                <a href="/">Home</a>
+                <a href="/search">Search</a>
+                <a href="/team">Team</a>
+                <a style="color: #c800ff;" href="/login">Login</a>
+            </div>
+        </nav>
+    </header>
 
     <!-- Main Content -->
     <div class="login-wrapper">
@@ -251,7 +236,7 @@
 
     <script src="/assets/moblie-nav.js" defer></script>
     <script>
-        const params = new URLSearchParams(location.search);
+        const params = new URLSearchParams(location.search); // get query params
         if (params.get('error')) alert(params.get('error'));
     </script>
 </body>

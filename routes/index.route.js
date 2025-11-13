@@ -1,10 +1,8 @@
-// Required Modules
-const express = require('express');
-const router = express.Router();
-const indexCtrl = require('../controllers/index.controller'); // Controller for handling public pages
+const router = require('express').Router();
+const indexCtrl = require('../controllers/index.controller');
 const productCtrl = require('../controllers/product.controller');
 
-// Root page
+// Home page
 router.get('/', indexCtrl.root);
 
 // Team page
@@ -16,10 +14,13 @@ router.get('/login', indexCtrl.login);
 // Search page
 router.get('/search', indexCtrl.search);
 
+// API to get detail of a product
 router.get('/api/getdetail/:id', indexCtrl.get);
+
+// Detail page for a product
 router.get('/detail/:id', indexCtrl.detailPage);
 
+// Search functionality
 router.get('/searchs', productCtrl.search);
 
-// Export the router module
 module.exports = router;

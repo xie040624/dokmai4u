@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Team</title>
+    <title>About us</title>
     <link rel="stylesheet" href="/assets/desktop-shared.css" />
     <link rel="stylesheet" href="/assets/moblie-nav.css" />
 
@@ -20,11 +20,11 @@
         }
 
         .page-title {
-            color: #ffffff;
+            color: #fff;
             font-family: Cambria;
             font-size: 28px;
             font-weight: 600;
-            margin: 0 0 30px;
+            margin-bottom: 30px;
             text-align: center;
         }
 
@@ -67,7 +67,9 @@
             color: #000;
             font-size: 16px;
             font-weight: 600;
-            margin: 0 0 5px 0;
+            line-height: 1.2;
+            margin: 0 0 8px 0;
+            transition: color 0.3s;
         }
 
         .team-member-card h3:hover {
@@ -106,6 +108,10 @@
             width: 100%;
         }
 
+        #Active {
+            color: #c800ff;
+        }
+
         @media (min-width: 720px) {
             .main-content {
                 padding: 30px;
@@ -140,30 +146,33 @@
 </head>
 
 <body>
-    <!-- Mobile Nav -->
-    <nav class="mobile-nav">
-        <a href="/" class="mobile-logo">dokmai4u Shop</a>
-        <div id="hamburger-icon" class="hamburger-icon">
-            <span></span><span></span><span></span>
-        </div>
-    </nav>
-    <div id="mobile-menu" class="mobile-menu">
-        <a href="/">Home</a>
-        <a href="/search">Search</a>
-        <a style="color: #c800ff;" href="/team">Team</a>
-        <a href="/login">Login</a>
-    </div>
-
-    <!-- Desktop Nav -->
-    <nav class="desktop-nav">
-        <a href="/" class="logo">dokmai4u Shop</a>
-        <div class="nav-links">
-            <a href="/">Home</a>
+    <!-- Header with Mobile & Desktop Nav -->
+    <header>
+        <!-- Mobile Nav -->
+        <nav class="mobile-nav">
+            <a href="/" class="mobile-logo">dokmai4u Shop</a>
+            <div id="hamburger-icon" class="hamburger-icon">
+                <span></span><span></span><span></span>
+            </div>
+        </nav>
+        <div id="mobile-menu" class="mobile-menu">
+            <a id="Active" href="/">Home</a>
             <a href="/search">Search</a>
-            <a style="color: #c800ff;" href="/team">Team</a>
+            <a href="/team">Team</a>
             <a href="/login">Login</a>
         </div>
-    </nav>
+
+        <!-- Desktop Nav -->
+        <nav class="desktop-nav">
+            <a href="/" class="logo">dokmai4u Shop</a>
+            <div class="nav-links">
+                <a href="/">Home</a>
+                <a href="/search">Search</a>
+                <a id="Active" href="/team">Team</a>
+                <a href="/login">Login</a>
+            </div>
+        </nav>
+    </header>
 
     <!-- Main Content -->
     <div class="page-wrapper">
@@ -243,6 +252,7 @@
         </main>
     </div>
 
+    <!-- JS -->
     <script src="/assets/moblie-nav.js" defer></script>
 </body>
 

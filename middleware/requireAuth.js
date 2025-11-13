@@ -1,10 +1,10 @@
-// Checks if the user is logged in before allowing access to the next route.
+// Middleware to ensure that a user is authenticated before accessing certain routes.
 module.exports = function requireAuth(req, res, next) {
-    // Check if a session exists AND if the session contains user data (meaning the user is logged in).
+    // Check if the user is logged in by verifying the session.
     if (req.session && req.session.user) {
-        return next(); // If logged in, proceed to the next route.
+        return next(); // User is authenticated, proceed to the next middleware or route handler.
     }
 
-    // If not, redirect the user to the login page with an error message.
+    // User is not authenticated, redirect to the login page with an error message.
     return res.redirect('/login?error=Please%20login');
 };
