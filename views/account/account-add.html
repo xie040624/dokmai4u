@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="/assets/admin-users-account.css" />
     <link rel="stylesheet" href="/assets/desktop-shared.css" />
     <link rel="stylesheet" href="/assets/moblie-nav.css" />
-
     <style>
         html,
         body {
@@ -52,39 +51,40 @@
 </head>
 
 <body>
+    <header>
+        <nav class="mobile-nav">
+            <a href="/" class="mobile-logo">dokmai4u Shop</a>
+            <div id="hamburger-icon" class="hamburger-icon">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
 
-    <!-- Mobile Nav -->
-    <nav class="mobile-nav">
-        <a href="/" class="mobile-logo">dokmai4u Shop</a>
-        <div id="hamburger-icon" class="hamburger-icon">
-            <span></span><span></span><span></span>
-        </div>
-    </nav>
-
-    <div id="mobile-menu" class="mobile-menu">
-        <a href="/">Home</a>
-        <a href="/search">Search</a>
-        <a href="/account">Account</a>
-        <a href="/product">Product</a>
-    </div>
-
-    <!-- Desktop Nav -->
-    <nav class="desktop-nav">
-        <a href="/" class="logo">dokmai4u Shop</a>
-        <div class="nav-links">
+        <div id="mobile-menu" class="mobile-menu">
             <a href="/">Home</a>
             <a href="/search">Search</a>
-            <a href="/account">Account</a>
+            <a style="color: #c800ff;" href="/account">Account</a>
             <a href="/product">Product</a>
         </div>
-    </nav>
+
+        <nav class="desktop-nav">
+            <a href="/" class="logo">dokmai4u Shop</a>
+            <div class="nav-links">
+                <a href="/">Home</a>
+                <a href="/search">Search</a>
+                <a style="color: #c800ff;" href="/account">Account</a>
+                <a href="/product">Product</a>
+            </div>
+        </nav>
+    </header>
 
     <!-- Main Content -->
     <div class="page-wrapper">
         <main class="main-content">
             <div class="admin-container">
 
-                <form id="addForm" method="post" class="admin-form">
+                <form id="addForm" class="admin-form">
 
                     <div class="account-icon-large">👨🏻‍💼</div>
 
@@ -163,7 +163,7 @@
 
                 resultDiv.style.color = 'green';
                 resultDiv.textContent = 'Add Success!';
-                
+
                 location.href = '/account';
             } catch (e) {
                 console.error(e);

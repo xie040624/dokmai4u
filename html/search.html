@@ -7,7 +7,6 @@
     <title>Search Page</title>
     <link rel="stylesheet" href="/assets/desktop-shared.css">
     <link rel="stylesheet" href="/assets/moblie-nav.css">
-
     <style>
         :root {
             --bg: #f5f7fb;
@@ -294,15 +293,16 @@
 </head>
 
 <body>
-    <!-- Header with Mobile & Desktop Nav -->
     <header>
-        <!-- Mobile Nav -->
         <nav class="mobile-nav">
             <a href="/" class="mobile-logo">dokmai4u Shop</a>
             <div id="hamburger-icon" class="hamburger-icon">
-                <span></span><span></span><span></span>
+                <span></span>
+                <span></span>
+                <span></span>
             </div>
         </nav>
+
         <div id="mobile-menu" class="mobile-menu">
             <a href="/">Home</a>
             <a style="color: #c800ff;" href="/search">Search</a>
@@ -310,7 +310,6 @@
             <a href="/login">Login</a>
         </div>
 
-        <!-- Desktop Nav -->
         <nav class="desktop-nav">
             <a href="/" class="logo">dokmai4u Shop</a>
             <div class="nav-links">
@@ -325,10 +324,11 @@
     <!-- Main content -->
     <div class="page-wrapper">
         <main class="main-content">
+
             <h1 class="page-title">Search</h1>
 
             <section class="search-form-container">
-                <form id="searchForm" method="GET">
+                <form id="searchForm">
                     <div class="form-group">
                         <label for="FlowerName">Keyword</label>
                         <input type="text" id="FlowerName" name="FlowerName" placeholder="Enter flower name">
@@ -370,9 +370,9 @@
             const resultDiv = document.getElementById('result');
 
             // Format number to THB currency
-            const fmtTHB = v => {
-                const num = Number(v);
-                return Number.isFinite(num) ? num.toLocaleString() + ' THB' : '-';
+            const fmtTHB = value => {
+                const num = Number(value);
+                return Number.isFinite(num) ? num.toLocaleString() + ' THB' : '-'; // Return '-' if not a valid number
             };
 
             // Render product list
@@ -381,53 +381,44 @@
                     resultDiv.innerHTML = '<p>No results found.</p>';
                     return;
                 }
-                const html = `
+
+                resultDiv.innerHTML = `
                     <div class="product-list">
                         ${list.map(p => `
-                    <div class="product-item">
-                        <img src="/image/${p.srcImage ?? 'no-image.png'}" class="product-image" alt="${p.FlowerName ?? ''}">
-                            <div class="product-info">
-                                <h4>${p.FlowerName ?? '-'}</h4>
-                                <p>${p.CName ?? '-'}</p>
-                                <p class="price">${fmtTHB(p.Price)}</p>
+                            <div class="product-item">
+                                <img src="/image/${p.srcImage}" class="product-image" alt="${p.FlowerName}">
+                                    <div class="product-info">
+                                        <h4>${p.FlowerName}</h4>
+                                        <p>${p.CName}</p>
+                                        <p class="price">${fmtTHB(p.Price)}</p>
+                                    </div>
+                                    <div class="product-actions">
+                                        <a href="/detail/${p.FlowerID}" class="view-btn">View</a>
+                                    </div>
                             </div>
-                            <div class="product-actions">
-                                <a href="/detail/${p.FlowerID}" class="view-btn">View</a>
-                            </div>
-                    </div>
-                `).join('')}
+                        `).join('')}
                     </div>`;
-                resultDiv.innerHTML = html;
             }
 
             // Perform search request
             async function search(paramsObj = {}) {
-                const q = new URLSearchParams();
+                const query = new URLSearchParams();
 
                 // Append only non-empty parameters
                 Object.entries(paramsObj).forEach(([k, v]) => {
                     if (v !== undefined && v !== null && String(v).trim() !== '') {
-                        q.append(k, v);
+                        query.append(k, v);
                     }
                 });
 
                 // Construct URL
-                const url = q.toString()
-                    ? `/searchs?${q.toString()}`
-                    : `/searchs`;
+                const url = query.toString()
+                    ? `/searchs?${query.toString()}` // With parameters
+                    : `/searchs`; // No parameters
 
-                resultDiv.innerHTML = `<p>Loading...</p>`;
-
-                const res = await fetch(url, {
-                    credentials: 'same-origin'
-                });
-
-                const raw = await res.text();
-                const ctype = (res.headers.get('content-type') || '').toLowerCase();
-
-                if (res.redirected || /text\/html/.test(ctype)) {
-                    throw new Error('Server returned HTML (maybe redirect/login).');
-                }
+                const res = await fetch(url, { credentials: 'same-origin' }); // Include cookies
+                const raw = await res.text(); // Get raw text response
+                const ctype = (res.headers.get('content-type') || '').toLowerCase(); // Get content-type
 
                 if (!res.ok) {
                     throw new Error(`HTTP ${res.status}`);
@@ -444,10 +435,13 @@
                 const MinPrice = (e.target.MinPrice?.value || '').trim();
                 const MaxPrice = (e.target.MaxPrice?.value || '').trim();
 
+                // Validate price inputs
                 if ((MinPrice && isNaN(Number(MinPrice))) || (MaxPrice && isNaN(Number(MaxPrice)))) {
                     resultDiv.innerHTML = `<p>Price must be a number.</p>`;
                     return;
                 }
+
+                // Validate MinPrice <= MaxPrice
                 if (MinPrice && MaxPrice && Number(MinPrice) > Number(MaxPrice)) {
                     resultDiv.innerHTML = `<p>Min Price must not be greater than Max Price.</p>`;
                     return;

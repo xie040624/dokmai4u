@@ -93,29 +93,33 @@
 </head>
 
 <body>
-    <!-- Mobile Nav -->
-    <nav class="mobile-nav">
-        <a href="/" class="mobile-logo">dokmai4u Shop</a>
-        <div id="hamburger-icon" class="hamburger-icon">
-            <span></span><span></span><span></span>
-        </div>
-    </nav>
+    <header>
+        <nav class="mobile-nav">
+            <a href="/" class="mobile-logo">dokmai4u Shop</a>
+            <div id="hamburger-icon" class="hamburger-icon">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
 
-    <div id="mobile-menu" class="mobile-menu">
-        <a href="/">Home</a>
-        <a href="/search">Search</a>
-        <a href="/product">Product</a>
-    </div>
-
-    <!-- Desktop Nav -->
-    <nav class="desktop-nav">
-        <a href="/" class="logo">dokmai4u Shop</a>
-        <div class="nav-links">
+        <div id="mobile-menu" class="mobile-menu">
             <a href="/">Home</a>
             <a href="/search">Search</a>
+            <a style="color: #c800ff;" href="/account">Account</a>
             <a href="/product">Product</a>
         </div>
-    </nav>
+
+        <nav class="desktop-nav">
+            <a href="/" class="logo">dokmai4u Shop</a>
+            <div class="nav-links">
+                <a href="/">Home</a>
+                <a href="/search">Search</a>
+                <a style="color: #c800ff;" href="/account">Account</a>
+                <a href="/product">Product</a>
+            </div>
+        </nav>
+    </header>
 
     <!-- Main Content -->
     <div class="page-wrapper">
@@ -147,6 +151,7 @@
                     resultDiv.innerHTML = `<p>No results found.</p>`;
                     return;
                 }
+
                 resultDiv.innerHTML = list.map(user => `
                     <div class="search-result-item">
                         <div class="search-result-header">
@@ -165,7 +170,8 @@
             }
 
             async function fetchAll() {
-                const res = await fetch('/account/getall', { method: 'GET' });
+                const res = await fetch('/account/getall');
+
                 if (!res.ok) throw new Error('Fetch error: ' + res.status);
                 return res.json();
             }

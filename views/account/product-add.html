@@ -51,32 +51,33 @@
 </head>
 
 <body>
-    <!-- Mobile Nav -->
-    <nav class="mobile-nav">
-        <a href="/" class="mobile-logo">dokmai4u Shop</a>
-        <div id="hamburger-icon" class="hamburger-icon">
-            <span></span><span></span><span></span>
-        </div>
-    </nav>
+    <header>
+        <nav class="mobile-nav">
+            <a href="/" class="mobile-logo">dokmai4u Shop</a>
+            <div id="hamburger-icon" class="hamburger-icon">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
 
-    <div id="mobile-menu" class="mobile-menu">
-        <a href="/">Home</a>
-        <a href="/search">Search</a>
-        <a href="/account">Account</a>
-        <a href="/product">Product</a>
-    </div>
-
-    <!-- Desktop Nav -->
-    <nav class="desktop-nav">
-        <a href="/" class="logo">dokmai4u Shop</a>
-        <div class="nav-links">
+        <div id="mobile-menu" class="mobile-menu">
             <a href="/">Home</a>
             <a href="/search">Search</a>
             <a href="/account">Account</a>
-            <a href="/product">Product</a>
+            <a style="color: #c800ff;" href="/product">Product</a>
         </div>
-    </nav>
 
+        <nav class="desktop-nav">
+            <a href="/" class="logo">dokmai4u Shop</a>
+            <div class="nav-links">
+                <a href="/">Home</a>
+                <a href="/search">Search</a>
+                <a href="/account">Account</a>
+                <a style="color: #c800ff;" href="/product">Product</a>
+            </div>
+        </nav>
+    </header>
 
     <div class="page-wrapper">
         <main class="main-content">
@@ -166,7 +167,7 @@
                 const data = await res.json().catch(() => ({}));
 
                 if (!res.ok) {
-                    resultDiv.style.color = 'rgb(200,0,0)';
+                    resultDiv.style.color = 'red';
                     resultDiv.textContent = data?.message || 'Add failed!';
                     return;
                 }

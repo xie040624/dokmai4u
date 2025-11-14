@@ -4,10 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detail Page</title>
+    <title>Product Detail</title>
     <link rel="stylesheet" href="/assets/desktop-shared.css" />
     <link rel="stylesheet" href="/assets/moblie-nav.css">
-
     <style>
         :root {
             --bg: #fff;
@@ -43,7 +42,7 @@
             padding-bottom: 110px;
         }
 
-        /* style for image slider */
+        /* image slider */
         .slider-container {
             width: 100%;
             max-width: 900px;
@@ -102,7 +101,6 @@
             line-height: 1.12;
         }
 
-        /* Category */
         #category {
             display: inline-flex;
             align-items: center;
@@ -116,7 +114,6 @@
             margin-bottom: 10px;
         }
 
-        /* Price */
         #price {
             font-size: 1.75rem;
             font-weight: 700;
@@ -124,7 +121,6 @@
             margin-bottom: 14px;
         }
 
-        /* Meaning/Description */
         #meaning {
             background: #fff8f2;
             border: 1px solid rgba(249, 115, 22, .15);
@@ -136,7 +132,6 @@
             margin-bottom: 16px;
         }
 
-        /* Delivery and Contact Information */
         .delivery-info,
         .contact-info {
             font-size: 0.8rem;
@@ -161,7 +156,6 @@
             margin-top: 6px;
         }
 
-        /* Result area to be fetched */
         #result {
             margin-top: 18px;
         }
@@ -202,8 +196,14 @@
             transform: translateY(1px);
         }
 
-        /* Desktop layout adjustments */
         @media (min-width: 720px) {
+
+            .slider-container,
+            .product-info,
+            .footer-content {
+                max-width: 1000px;
+            }
+
             .page-wrapper {
                 padding-top: 70px;
             }
@@ -245,7 +245,6 @@
                 padding: 12px 28px 12px;
             }
 
-            /* Make product details a nice box */
             .product-info {
                 background: #fff;
             }
@@ -254,30 +253,20 @@
                 background: none;
             }
         }
-
-        /* Very large screens, center content */
-        @media (min-width: 720px) {
-
-            .slider-container,
-            .product-info,
-            .footer-content {
-                max-width: 1000px;
-            }
-        }
     </style>
-
 </head>
 
 <body>
-    <!-- Header with Mobile & Desktop Nav -->
     <header>
-        <!-- Mobile Nav -->
         <nav class="mobile-nav">
             <a href="/" class="mobile-logo">dokmai4u Shop</a>
             <div id="hamburger-icon" class="hamburger-icon">
-                <span></span><span></span><span></span>
+                <span></span>
+                <span></span>
+                <span></span>
             </div>
         </nav>
+
         <div id="mobile-menu" class="mobile-menu">
             <a href="/">Home</a>
             <a href="/search">Search</a>
@@ -285,7 +274,6 @@
             <a href="/login">Login</a>
         </div>
 
-        <!-- Desktop Nav -->
         <nav class="desktop-nav">
             <a href="/" class="logo">dokmai4u Shop</a>
             <div class="nav-links">
@@ -299,12 +287,11 @@
 
     <div class="page-wrapper">
         <main class="main-content">
-
             <div class="slider-container">
                 <div class="swiper detailSwiper">
                     <div class="swiper-wrapper">
                         <div class="swiper-slide">
-                            <img id="image" src="/image/Flower.jpg">
+                            <img id="image" src="" alt="Product Image">
                         </div>
                     </div>
                 </div>
@@ -331,8 +318,8 @@
 
     <script src="/assets/moblie-nav.js" defer></script>
     <script>
-        const parts = location.pathname.split('/').filter(Boolean);
-        const id = parts[parts.length - 1];
+        const parts = location.pathname.split('/').filter(Boolean); // Split and filter empty parts
+        const id = parts[parts.length - 1]; // Get the last part as ID
 
         const $ = (id) => document.getElementById(id); // Shortcut function
         const resultDiv = $('result');
@@ -340,6 +327,7 @@
         async function loadData() {
             try {
                 const res = await fetch(`/api/getdetail/${id}`);
+
                 if (!res.ok) {
                     resultDiv.textContent = 'No results found!';
                     return;

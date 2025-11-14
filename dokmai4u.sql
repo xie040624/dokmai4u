@@ -63,6 +63,6 @@ VALUES
 -- Insert Flowers
 INSERT INTO Flower (FlowerName, Meaning, Price, srcImage, StartDate, EndDate, CID)
 VALUES
-('Rose', 'Symbol of love and passion', 199.00, 'rose.jpg', '2025-01-01', '2025-12-31', 1),
-('Tulip', 'Perfect love and happiness', 249.00, 'tulip.jpg', '2025-04-01', '2025-06-30', 1),
-('Sunflower', 'Warmth, positivity, and loyalty', 299.00, 'sunflower.jpg', '2025-04-01', '2025-04-30', 2);
+('Rose', 'Symbol of love and passion', 199.00, 'rose.jpg', '2024-01-01', '2025-12-31', 1),
+('Tulip', 'Perfect love and happiness', 249.00, 'tulip.jpg', '2024-01-01', '2024-02-14', 1),
+('Sunflower', 'Warmth, positivity, and loyalty', 299.00, 'sunflower.jpg', '2024-04-01', '2024-04-30', 2);
