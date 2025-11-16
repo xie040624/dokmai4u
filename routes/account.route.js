@@ -2,7 +2,7 @@ const router = require('express').Router();
 const ctrl = require('../controllers/account.controller');
 const requireAuth = require('../middleware/requireAuth');
 
-router.use(requireAuth);
+// router.use(requireAuth);
 
 // API endpoint to get account details by ID
 router.get('/api/admin/:id', ctrl.get);
@@ -16,5 +16,7 @@ router.get('/delete/:id', ctrl.deletePage); // Delete Confirmation page
 router.post('/add', ctrl.add); // Handle new account creation
 router.put('/update/:id', ctrl.update); // Handle updating an existing account
 router.delete('/delete/:id', ctrl.delete); // Handle deleting an account
+
+router.post('/search', ctrl.search); // Handle searching for accounts
 
 module.exports = router;

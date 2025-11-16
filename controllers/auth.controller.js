@@ -6,7 +6,14 @@ module.exports = {
     loginPage: (req, res) => {
         res.sendFile(path.join(__dirname, '../html', 'login.html'));
     },
-
+    // Test login API
+    // method: post
+    // URL: http://localhost:3000/login
+    // body: raw JSON
+    // {
+    //   "username": "",
+    //   "password": ""
+    // }
     login: async (req, res) => {
         try {
             const { username, password } = req.body;

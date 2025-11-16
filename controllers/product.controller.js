@@ -6,15 +6,23 @@ module.exports = {
     addPage: (req, res) => res.sendFile(path.join(__dirname, '../views/account', 'product-add.html')),
     updatePage: (req, res) => res.sendFile(path.join(__dirname, '../views/account', 'product-update.html')),
     deletePage: (req, res) => res.sendFile(path.join(__dirname, '../views/account', 'product-delete.html')),
+    // Testing getOne API
+    // method: get
+    // URL: http://localhost:3000/product/api/product/:id
+    // params: id (FlowerID)
     getOne: async (req, res) => {
         try {
             const { id } = req.params;
-            const [rows] = await db.query(`
-                SELECT * FROM Flower JOIN Category
+
+            const sql = `
+                SELECT * FROM Flower
+                JOIN Category
                 ON Flower.CID = Category.CID
-                WHERE FlowerID = ?`,
-                [id]
-            );
+                WHERE FlowerID = ?`;
+
+            const params = [id];
+
+            const [rows] = await db.query(sql, params);
             if (!rows.length) return res.status(404).json({ message: 'Not found' });
             return res.json(rows[0]);
         } catch (error) {
@@ -22,40 +30,54 @@ module.exports = {
             return res.status(500).json({ message: 'Database error' });
         }
     },
+    // Testing getAll API
+    // method: get
+    // URL: http://localhost:3000/product/getall  
     getAll: async (req, res) => {
         try {
             const [rows] = await db.query(`
-                SELECT * FROM Flower JOIN Category
-                ON Flower.CID = Category.CID
-            `);
+                SELECT * FROM Flower
+                JOIN Category ON Flower.CID = Category.CID`);
             res.json(rows);
         } catch (error) {
             console.error(error);
             res.status(500).json({ message: 'Database error' });
         }
     },
+    // Testing add API
+    // method: post
+    // URL: http://localhost:3000/product/add
+    // body: raw JSON
+    // {
+    //   "FlowerName": "",
+    //   "CID": "",
+    //   "Price": "",
+    //   "StartDate": "",
+    //   "EndDate": "",
+    //   "Meaning": "",
+    //   "srcImage": ""
+    // }
     add: async (req, res) => {
         try {
-            let { FlowerName, CID, Price, StartDate = null, EndDate = null, Meaning, srcImage = null } = req.body || {};
+            const FlowerName = (req.body.FlowerName || '').trim();
+            const CID = Number(req.body.CID || 3);
+            const Price = Number(req.body.Price || 0);
+            const StartDate = req.body.StartDate ? String(req.body.StartDate).slice(0, 10) : null;
+            const EndDate = req.body.EndDate ? String(req.body.EndDate).slice(0, 10) : null;
+            const Meaning = (req.body.Meaning || '').trim();
+            const srcImage = req.body.srcImage ? String(req.body.srcImage).trim() : null;
 
-            FlowerName = (FlowerName || '').trim();
-            Meaning = (Meaning || '').trim();
-            const cidNum = Number(CID);
-            const priceNum = Number(Price);
-
-            if (!FlowerName || !Meaning || Number.isNaN(cidNum) || Number.isNaN(priceNum)) {
-                return res.status(400).json({ message: 'FlowerName, CID, Price, Meaning are required' });
+            if (!FlowerName || isNaN(Price) || !Meaning) {
+                return res.status(400).json({ message: 'Flower Name, Price, Meaning are required' });
             }
 
-            StartDate = StartDate ? String(StartDate).slice(0, 10) : null;
-            EndDate = EndDate ? String(EndDate).slice(0, 10) : null;
-            srcImage = srcImage ? String(srcImage).trim() : null;
-
-            const [result] = await db.query(`
+            const sql = `
                 INSERT INTO Flower(FlowerName, CID, Price, StartDate, EndDate, Meaning, srcImage)
-                VALUES(?, ?, ?, ?, ?, ?, ?)`,
-                [FlowerName, cidNum, priceNum, StartDate, EndDate, Meaning, srcImage]
-            );
+                VALUES(?, ?, ?, ?, ?, ?, ?)`;
+
+            const params = [FlowerName, CID, Price, StartDate, EndDate, Meaning, srcImage];
+
+            const [result] = await db.query(sql, params);
 
             return res.status(201).json({
                 message: 'Inserted successfully',
@@ -66,34 +88,51 @@ module.exports = {
             return res.status(500).json({ message: 'Database error' });
         }
     },
+    // Testing update API
+    // method: put
+    // URL: http://localhost:3000/product/update/:id
+    // params: id (FlowerID)
+    // body: raw JSON
+    // {
+    //   "FlowerName": "",
+    //   "CID": "",
+    //   "Price": "",
+    //   "StartDate": "",
+    //   "EndDate": "",
+    //   "Meaning": ""
+    // }
     update: async (req, res) => {
         try {
             const { id } = req.params;
             let { FlowerName, CID, Price, StartDate, EndDate, Meaning } = req.body;
 
-            if (!FlowerName || !Price || !Meaning) {
-                return res.status(400).json({ message: 'Flower Name, Price, Meaning are required' });
-            }
-
-            CID = CID ? Number(CID) : null;
+            CID = CID ? Number(CID) : 3;
             Price = Number(Price);
 
-            const [result] = await db.query(
-                `UPDATE Flower
-       SET FlowerName = ?, CID = ?, Price = ?, StartDate = ?, EndDate = ?, Meaning = ?
-       WHERE FlowerID = ?`,
-                [FlowerName, CID, Price, StartDate || null, EndDate || null, Meaning, id]
-            );
+            if (!FlowerName || isNaN(Price) || !Meaning) {
+                return res.status(400).json({ message: 'Flower Name, Price, and Meaning are required' });
+            }
 
+            const sql = `
+                UPDATE Flower SET FlowerName = ?, CID = ?, Price = ?, StartDate = ?, EndDate = ?, Meaning = ?
+                WHERE FlowerID = ?`;
+
+            const params = [FlowerName, CID, Price, StartDate || null, EndDate || null, Meaning, id];
+
+            const [result] = await db.query(sql, params);
             if (result.affectedRows === 0) {
                 return res.status(404).json({ message: 'Flower not found' });
             }
-            return res.json({ ok: true, updatedId: id });
+            return res.status(200).json({ ok: true, updatedId: id });
         } catch (error) {
             console.error(error);
             return res.status(500).json({ message: 'Database error' });
         }
     },
+    // Testing delete API
+    // method: delete
+    // URL: http://localhost:3000/product/delete/:id
+    // params: id (FlowerID)
     delete: async (req, res) => {
         try {
             const FlowerID = req.params.id;
@@ -108,36 +147,47 @@ module.exports = {
             res.status(500).json({ message: 'Database error during deletion' });
         }
     },
+    // Testing search API
+    // method: get
+    // URL: http://localhost:3000/searchs
+    // body: raw JSON
+    // {
+    //   "FlowerName": "",
+    //   "Category": "",
+    //   "MinPrice": "",
+    //   "MaxPrice": ""
+    // }
     search: async (req, res) => {
         try {
-            const FlowerNameRaw = (req.query.FlowerName ?? req.query.PName ?? '').toString().trim();
-            const CIDraw = (req.query.CID ?? req.query.Category ?? '').toString().trim();
-            const MinPriceRaw = (req.query.MinPrice ?? '').toString().trim();
-            const MaxPriceRaw = (req.query.MaxPrice ?? '').toString().trim();
+            const FlowerName = (req.query.FlowerName ?? '').toString().trim();
+            const CID = (req.query.Category ?? '').toString().trim();
+            const MinPrice = (req.query.MinPrice ?? '').toString().trim();
+            const MaxPrice = (req.query.MaxPrice ?? '').toString().trim();
 
             const where = [];
             const params = [];
 
-            if (FlowerNameRaw) {
+            if (FlowerName) {
                 where.push('f.FlowerName LIKE ?');
-                params.push(`%${FlowerNameRaw}%`);
+                params.push(`%${FlowerName}%`);
             }
-            if (CIDraw !== '') {
-                const cid = Number(CIDraw);
+
+            if (CID !== '') {
+                const cid = Number(CID);
                 if (!Number.isNaN(cid)) {
                     where.push('f.CID = ?');
                     params.push(cid);
                 }
             }
-            if (MinPriceRaw !== '') {
-                const min = Number(MinPriceRaw);
+            if (MinPrice !== '') {
+                const min = Number(MinPrice);
                 if (!Number.isNaN(min)) {
                     where.push('f.Price >= ?');
                     params.push(min);
                 }
             }
-            if (MaxPriceRaw !== '') {
-                const max = Number(MaxPriceRaw);
+            if (MaxPrice !== '') {
+                const max = Number(MaxPrice);
                 if (!Number.isNaN(max)) {
                     where.push('f.Price <= ?');
                     params.push(max);
@@ -146,28 +196,80 @@ module.exports = {
 
             const whereSql = where.length ? `WHERE ${where.join(' AND ')}` : '';
 
-            const [rows] = await db.query(`
-      SELECT
-        f.FlowerID,
-        f.FlowerName,
-        f.Meaning,
-        f.Price,
-        f.srcImage,
-        f.CID,
-        c.CName
-      FROM Flower AS f
-      JOIN Category AS c ON f.CID = c.CID
-      ${whereSql}
-    `, params);
+            const sql = `
+            SELECT
+                f.FlowerID,
+                f.FlowerName,
+                f.Meaning,
+                f.Price,
+                f.srcImage,
+                f.CID,
+                c.CName
+            FROM Flower AS f
+            JOIN Category AS c ON f.CID = c.CID
+            ${whereSql}
+            `;
 
-            res
-                .type('application/json')
-                .status(200)
-                .send(JSON.stringify(rows));
+            const [rows] = await db.query(sql, params);
+            res.type('application/json').status(200).send(JSON.stringify(rows));
         } catch (err) {
             console.error('Search error:', err);
             res.status(500).json({ message: 'Database error' });
         }
-    }
+    },
+    // Testing search API
+    // method: post
+    // URL: http://localhost:3000/product/search2
+    // body: raw JSON
+    // {
+    //   "searchKey": "",
+    //   "searchId": "",
+    //   "CID": ""
+    // }
+    search2: async (req, res) => {
+        try {
+            const searchKey = (req.body.searchKey || '').toString().trim();
+            const searchId = (req.body.searchId || '').toString().trim();
+            const CID = (req.body.CID || '').toString().trim();
 
+            const where = [];
+            const params = [];
+
+            if (searchId) {
+                where.push('f.FlowerID = ?');
+                params.push(searchId);
+            }
+
+            if (searchKey) {
+                where.push('f.FlowerName LIKE ?');
+                params.push(`%${searchKey}%`);
+            }
+
+            if (CID) {
+                where.push('f.CID = ?');
+                params.push(CID);
+            }
+
+            const whereSql = where.length ? `WHERE ${where.join(' OR ')}` : '';
+
+            const sql = `
+            SELECT 
+                f.FlowerID,
+                f.FlowerName,
+                f.Price,
+                f.srcImage,
+                f.CID,
+                c.CName
+            FROM Flower AS f
+            JOIN Category AS c ON f.CID = c.CID
+            ${whereSql}
+            `;
+
+            const [rows] = await db.query(sql, params);
+            res.json(rows);
+        } catch (error) {
+            console.error('Search error:', error);
+            res.status(500).json({ message: 'Database error' });
+        }
+    }
 };

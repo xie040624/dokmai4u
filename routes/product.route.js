@@ -13,6 +13,8 @@ router.get('/add', ctrl.addPage);
 router.get('/update/:id', ctrl.updatePage);
 router.get('/delete/:id', ctrl.deletePage);
 
+router.post('/search2', ctrl.search2); // Search products with filters
+
 router.post('/add', ctrl.add); // Create a new product
 
 router.put('/update/:id', ctrl.update); // Update an existing product
