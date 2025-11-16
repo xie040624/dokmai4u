@@ -2,7 +2,7 @@ const router = require('express').Router();
 const ctrl = require('../controllers/account.controller');
 const requireAuth = require('../middleware/requireAuth');
 
-// router.use(requireAuth);
+router.use(requireAuth);
 
 // API endpoint to get account details by ID
 router.get('/api/admin/:id', ctrl.get);
