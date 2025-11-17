@@ -5,49 +5,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Update Account</title>
+    <link rel="stylesheet" href="/assets/management.css">
     <link rel="stylesheet" href="/assets/admin-users-account.css" />
     <link rel="stylesheet" href="/assets/desktop-shared.css" />
     <link rel="stylesheet" href="/assets/moblie-nav.css" />
-    <style>
-        html,
-        body {
-            height: 100%;
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .page-wrapper {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            padding-top: 60px;
-            box-sizing: border-box;
-        }
-
-        .main-content {
-            flex-grow: 1;
-            padding: 25px 0;
-        }
-
-        .desktop-footer {
-            background: #4a0072;
-            padding: 30px;
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-        }
-
-        @media (min-width: 720px) {
-            .page-wrapper {
-                padding-top: 0;
-            }
-
-            .main-content {
-                padding: 30px;
-            }
-        }
-    </style>
 </head>
 
 <body>
@@ -79,14 +40,12 @@
         </nav>
     </header>
 
-    <!-- Main Content -->
     <div class="page-wrapper">
         <main class="main-content">
-            <div class="admin-container">
+            <div class="container">
 
                 <form id="updateForm" class="admin-form">
                     <div class="account-icon-large">👨🏻‍💼</div>
-                    <input type="hidden" id="AdminID" name="AdminID" />
 
                     <div class="form-group">
                         <label for="FName">First Name</label>
@@ -108,7 +67,6 @@
                         <input type="tel" id="Phone" name="Phone" placeholder="Enter your phone number" required />
                     </div>
 
-                    <div id="result" style="color: rgb(200, 0, 0);"></div>
                     <button type="submit" class="btn-primary">Update</button>
                 </form>
             </div>
@@ -117,30 +75,26 @@
 
     <script src="/assets/moblie-nav.js" defer></script>
     <script>
-        // คืนค่า Path ของ URL แยกตาม / เป็น array ["", "account", "update", ":id"] .filter(Boolean) → ตัดค่าว่าง ("")
         const pathParts = window.location.pathname.split('/').filter(Boolean);
-        // ดึงค่าตัวสุดท้ายของ array id = :id
         const id = pathParts[pathParts.length - 1];
 
         const $ = (id) => document.querySelector(id);
-        const resultDiv = $('#result');
 
         async function loadData() {
             try {
                 const res = await fetch(`/account/api/admin/${id}`);
                 if (!res.ok) {
-                    resultDiv.textContent = 'No results found!';
+                    alert('Failed to load account data.');
                     return;
                 }
                 const data = await res.json();
-                $('#AdminID').value = data.AdminID || '';
                 $('#FName').value = data.FName || '';
                 $('#LName').value = data.LName || '';
                 $('#Email').value = data.Email || '';
                 $('#Phone').value = data.PhoneNumber || '';
             } catch (e) {
                 console.error(e);
-                resultDiv.textContent = 'Load data error!';
+                alert('Load data error!');
             }
         }
 
@@ -162,15 +116,16 @@
 
                 const data = await res.json();
                 if (!res.ok) {
-                    resultDiv.textContent = data?.message || 'Update failed!';
+                    alert(data?.message || 'Update failed!');
                     return;
                 }
 
-                resultDiv.style.color = 'green';
-                resultDiv.textContent = 'Update Success!';
+                alert('Update Success!');
+
+                location.href = '/account';
             } catch (e) {
                 console.error(e);
-                resultDiv.textContent = 'There was an error updating.';
+                alert('There was an error updating.');
             }
         });
 

@@ -146,15 +146,15 @@ module.exports = {
     search: async (req, res) => {
         try {
             const searchKey = (req.body.searchKey || '').trim();
-            const searchId = (req.body.searchId || '').trim();
+            const searchID = (req.body.searchID || '').trim();
             const searchRole = (req.body.searchRole || '').trim();
 
             const where = [];
             const params = [];
 
-            if (searchId) {
+            if (searchID) {
                 where.push('AdminID = ?');
-                params.push(searchId);
+                params.push(searchID);
             }
 
             if (searchKey) {

@@ -5,49 +5,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Add Product</title>
-    <link rel="stylesheet" href="/assets/admin-users-account.css" />
+    <link rel="stylesheet" href="/assets/management.css" />
+    <link rel="stylesheet" href="/assets/admin-product.css" />
     <link rel="stylesheet" href="/assets/desktop-shared.css" />
     <link rel="stylesheet" href="/assets/moblie-nav.css" />
-    <style>
-        html,
-        body {
-            height: 100%;
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .page-wrapper {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            padding-top: 60px;
-            box-sizing: border-box;
-        }
-
-        .main-content {
-            flex-grow: 1;
-            padding: 25px 0;
-        }
-
-        .desktop-footer {
-            background: #4a0072;
-            padding: 30px;
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-        }
-
-        @media (min-width: 720px) {
-            .page-wrapper {
-                padding-top: 0;
-            }
-
-            .main-content {
-                padding: 30px;
-            }
-        }
-    </style>
 </head>
 
 <body>
@@ -81,7 +42,7 @@
 
     <div class="page-wrapper">
         <main class="main-content">
-            <div class="admin-container">
+            <div class="container">
 
                 <form id="addForm" class="admin-form">
                     <div class="product-icon-large">💐</div>
@@ -92,9 +53,9 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="category">Category</label>
+                        <label for="cid">Category</label>
                         <div class="select-wrapper">
-                            <select id="category" required>
+                            <select id="cid">
                                 <option value="">Category</option>
                                 <option value="1">Bouquet</option>
                                 <option value="2">Gift Set</option>
@@ -104,7 +65,7 @@
 
                     <div class="form-group">
                         <label for="price">Price</label>
-                        <input type="number" id="price" placeholder="Enter flower price" min="0" step="1" required />
+                        <input type="number" id="price" placeholder="Enter flower price" min="99" step="10" required />
                     </div>
 
                     <div class="form-group">
@@ -126,8 +87,7 @@
                         <input type="text" id="srcImage" placeholder="e.g., rose.jpg" />
                     </div>
 
-                    <div id="result" style="color: rgb(200, 0, 0);"></div>
-                    <button type="submit" class="btn-primary">Add</button>
+                    <button type="submit" class="primary-btn">Add</button>
                 </form>
 
             </div>
@@ -137,23 +97,22 @@
     <script src="/assets/moblie-nav.js" defer></script>
     <script>
         const $ = (s) => document.querySelector(s);
-        const resultDiv = $('#result');
 
         $('#addForm').addEventListener('submit', async (e) => {
             e.preventDefault();
 
             const payload = {
                 FlowerName: $('#name').value.trim(),
-                CID: Number($('#category').value),
+                CID: Number($('#cid').value),
                 Price: Number($('#price').value),
                 StartDate: $('#startDate').value || null,
                 EndDate: $('#endDate').value || null,
                 Meaning: $('#meaning').value.trim(),
-                srcImage: ($('#srcImage')?.value || '').trim() || null
+                srcImage: ($('#srcImage').value.trim() || 'no-image.jpg')
             };
 
-            if (!payload.FlowerName || !payload.Meaning || Number.isNaN(payload.CID) || Number.isNaN(payload.Price)) {
-                resultDiv.textContent = 'Name, Category, Price, Meaning are require.';
+            if (!payload.FlowerName || Number.isNaN(payload.Price) || !payload.Meaning) {
+                alert('Flower name, price, and meaning are required.');
                 return;
             }
 
@@ -164,21 +123,19 @@
                     body: JSON.stringify(payload)
                 });
 
-                const data = await res.json().catch(() => ({}));
+                const data = await res.json()
 
                 if (!res.ok) {
-                    resultDiv.style.color = 'red';
-                    resultDiv.textContent = data?.message || 'Add failed!';
+                    alert(data?.message || 'There was an error inserting.');
                     return;
                 }
 
-                resultDiv.style.color = 'green';
-                resultDiv.textContent = 'Add Success!';
+                alert('Flower inserted successfully!');
 
                 location.href = '/product';
             } catch (err) {
                 console.error(err);
-                resultDiv.textContent = 'There was an error adding.';
+                alert('An error occurred. Please try again.');
             }
         });
     </script>

@@ -104,20 +104,20 @@ module.exports = {
     update: async (req, res) => {
         try {
             const { id } = req.params;
-            let { FlowerName, CID, Price, StartDate, EndDate, Meaning } = req.body;
+            let { FlowerName, CID, Price, StartDate, EndDate, Meaning, srcImage } = req.body;
 
-            CID = CID ? Number(CID) : 3;
+            CID = CID ? Number(CID) : null;
             Price = Number(Price);
 
-            if (!FlowerName || isNaN(Price) || !Meaning) {
+            if (!FlowerName || Number.isNaN(Price) || !Meaning) {
                 return res.status(400).json({ message: 'Flower Name, Price, and Meaning are required' });
             }
 
             const sql = `
-                UPDATE Flower SET FlowerName = ?, CID = ?, Price = ?, StartDate = ?, EndDate = ?, Meaning = ?
+                UPDATE Flower SET FlowerName = ?, CID = ?, Price = ?, StartDate = ?, EndDate = ?, Meaning = ?, srcImage = ?
                 WHERE FlowerID = ?`;
 
-            const params = [FlowerName, CID, Price, StartDate || null, EndDate || null, Meaning, id];
+            const params = [FlowerName, CID, Price, StartDate || null, EndDate || null, Meaning, srcImage || null, id];
 
             const [result] = await db.query(sql, params);
             if (result.affectedRows === 0) {
@@ -229,15 +229,15 @@ module.exports = {
     search2: async (req, res) => {
         try {
             const searchKey = (req.body.searchKey || '').toString().trim();
-            const searchId = (req.body.searchId || '').toString().trim();
-            const CID = (req.body.CID || '').toString().trim();
+            const searchID = (req.body.searchID || '').toString().trim();
+            const cid = (req.body.cid || '').toString().trim();
 
             const where = [];
             const params = [];
 
-            if (searchId) {
+            if (searchID) {
                 where.push('f.FlowerID = ?');
-                params.push(searchId);
+                params.push(searchID);
             }
 
             if (searchKey) {
@@ -245,9 +245,9 @@ module.exports = {
                 params.push(`%${searchKey}%`);
             }
 
-            if (CID) {
+            if (cid) {
                 where.push('f.CID = ?');
-                params.push(CID);
+                params.push(cid);
             }
 
             const whereSql = where.length ? `WHERE ${where.join(' OR ')}` : '';

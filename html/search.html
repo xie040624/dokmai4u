@@ -335,9 +335,9 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="CID">Category</label>
+                        <label for="Category">Category</label>
                         <div class="select-wrapper">
-                            <select id="CID" name="Category">
+                            <select id="Category" name="Category">
                                 <option value="">Category</option>
                                 <option value="1">Bouquet</option>
                                 <option value="2">Gift Set</option>
@@ -431,7 +431,7 @@
                 e.preventDefault();
 
                 const FlowerName = (e.target.FlowerName?.value || '').trim();
-                const CID = (e.target.CID?.value || '').trim();
+                const Category = (e.target.Category?.value || '').trim();
                 const MinPrice = (e.target.MinPrice?.value || '').trim();
                 const MaxPrice = (e.target.MaxPrice?.value || '').trim();
 
@@ -448,7 +448,7 @@
                 }
 
                 try {
-                    const list = await search({ FlowerName, CID, MinPrice, MaxPrice });
+                    const list = await search({ FlowerName, Category, MinPrice, MaxPrice });
                     render(list);
                 } catch (err) {
                     console.error(err);

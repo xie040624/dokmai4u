@@ -5,49 +5,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Add Account</title>
+    <link rel="stylesheet" href="/assets/management.css" />
     <link rel="stylesheet" href="/assets/admin-users-account.css" />
     <link rel="stylesheet" href="/assets/desktop-shared.css" />
     <link rel="stylesheet" href="/assets/moblie-nav.css" />
-    <style>
-        html,
-        body {
-            height: 100%;
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .page-wrapper {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            padding-top: 60px;
-            box-sizing: border-box;
-        }
-
-        .main-content {
-            flex-grow: 1;
-            padding: 25px 0;
-        }
-
-        .desktop-footer {
-            background: #4a0072;
-            padding: 30px;
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-        }
-
-        @media (min-width: 720px) {
-            .page-wrapper {
-                padding-top: 0;
-            }
-
-            .main-content {
-                padding: 30px;
-            }
-        }
-    </style>
 </head>
 
 <body>
@@ -79,10 +40,9 @@
         </nav>
     </header>
 
-    <!-- Main Content -->
     <div class="page-wrapper">
         <main class="main-content">
-            <div class="admin-container">
+            <div class="container">
 
                 <form id="addForm" class="admin-form">
 
@@ -119,8 +79,6 @@
                         <input type="password" id="Password" name="Password" placeholder="Enter your password" required>
                     </div>
 
-                    <div id="result"></div>
-
                     <button type="submit" class="btn-primary">Add</button>
 
                 </form>
@@ -132,7 +90,6 @@
     <script src="/assets/moblie-nav.js" defer></script>
     <script>
         const $ = (s) => document.querySelector(s);
-        const resultDiv = $('#result');
 
         $('#addForm').addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -156,17 +113,16 @@
                 const data = await res.json();
 
                 if (!res.ok) {
-                    resultDiv.textContent = data?.message || 'Insert failed!';
+                    alert(data?.message || 'There was an error inserting.');
                     return;
                 }
 
-                resultDiv.style.color = 'green';
-                resultDiv.textContent = 'Add Success!';
+                alert('Account inserted successfully!');
 
                 location.href = '/account';
             } catch (e) {
                 console.error(e);
-                resultDiv.textContent = 'There was an error adding.';
+                alert('An error occurred. Please try again.');
             }
         });
     </script>
