@@ -58,9 +58,11 @@
                         <label for="Category">Category</label>
                         <div class="select-wrapper">
                             <select id="Category" name="CID" required>
-                                <option value="3">Category</option>
-                                <option value="1">Bouquet</option>
-                                <option value="2">Gift Set</option>
+                                <option value="">Category</option>
+                                <option value="2">Bouquet</option>
+                                <option value="3">Gift Set</option>
+                                <option value="4">Flower Vase</option>
+                                <option value="5">Wedding</option>
                             </select>
                         </div>
                     </div>
@@ -123,7 +125,7 @@
                 $('image').src = `/image/${data.srcImage || 'no-image.jpg'}`;
                 $('FlowerID').value = data.FlowerID ?? '';
                 $('Name').value = data.FlowerName ?? '';
-                $('Category').value = data.CID ?? '3';
+                $('Category').value = data.CID ?? '1';
                 $('Price').value = data.Price ?? '';
                 $('StartDate').value = toDateInput(data.StartDate);
                 $('EndDate').value = toDateInput(data.EndDate);

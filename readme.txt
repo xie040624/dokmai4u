@@ -1,5 +1,5 @@
-1. เปิด MySQL Workbench รันไฟล์ dokmai4u.sql
-2. สร้างไฟล์ .env ในโฟลเดอร์โปรเจกต์ และกำหนดค่าตัวแปรต่อไปนี้
+1. รันไฟล์ dokmai4u.sql บน MySQL Workbench
+2. สร้างไฟล์ .env ในโฟลเดอร์โปรเจกต์ และกำหนดค่าให้แต่ละตัวแปร
     PORT
     MYSQL_HOST
     MYSQL_USERNAME
@@ -7,9 +7,9 @@
     MYSQL_DATABASE
     MYSQL_PORT
     SESSION_SECRET
-3. เปิด Terminal ไปที่โฟลเดอร์โปรเจกต์ (DOKMAI4U) แล้วรันคำสั่ง
+3. เปิด Terminal รันคำสั่ง
     npm i
-4. หลังติดตั้งเสร็จ ให้รันคำสั่ง
+4. หลังติดตั้งเสร็จ รันคำสั่ง
     npm start
-5. ถ้าต้องการสร้าง Super Admin ให้รันสคริปต์ (เนื่องจาก account ในไฟล์ถูกสร้างแล้วให้แก้ไขข้อมูลก่อน)
+5. สร้าง Super Admin
     node tools/create_admin.js

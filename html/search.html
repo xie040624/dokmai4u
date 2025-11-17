@@ -339,8 +339,10 @@
                         <div class="select-wrapper">
                             <select id="Category" name="Category">
                                 <option value="">Category</option>
-                                <option value="1">Bouquet</option>
-                                <option value="2">Gift Set</option>
+                                <option value="2">Bouquet</option>
+                                <option value="3">Gift Set</option>
+                                <option value="4">Flower Vase</option>
+                                <option value="5">Wedding</option>
                             </select>
                         </div>
                     </div>
@@ -372,7 +374,7 @@
             // Format number to THB currency
             const fmtTHB = value => {
                 const num = Number(value);
-                return Number.isFinite(num) ? num.toLocaleString() + ' THB' : '-'; // Return '-' if not a valid number
+                return Number.isFinite(num) ? num.toLocaleString() + ' THB' : '-';
             };
 
             // Render product list
@@ -386,7 +388,7 @@
                     <div class="product-list">
                         ${list.map(p => `
                             <div class="product-item">
-                                <img src="/image/${p.srcImage}" class="product-image" alt="${p.FlowerName}">
+                                <img src="/image/${p.srcImage ?? 'no-image.png'}" class="product-image" alt="${p.FlowerName}">
                                     <div class="product-info">
                                         <h4>${p.FlowerName}</h4>
                                         <p>${p.CName}</p>
@@ -420,9 +422,7 @@
                 const raw = await res.text(); // Get raw text response
                 const ctype = (res.headers.get('content-type') || '').toLowerCase(); // Get content-type
 
-                if (!res.ok) {
-                    throw new Error(`HTTP ${res.status}`);
-                }
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
                 return JSON.parse(raw);
             }

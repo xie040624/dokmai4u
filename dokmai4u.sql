@@ -47,22 +47,20 @@ CREATE TABLE IF NOT EXISTS Login (
         ON DELETE SET NULL
 );
 
--- Insert Admin (Or insert at tools/create_admin.js)
-INSERT INTO Admin (FName, LName, Email, PhoneNumber, Role, Username, Password)
-VALUES
-('Thanakorn', 'Kansorn', 'superadmin@dokmai4u.com', '012-345-6789', 'SuperAdmin', 'root',
- '$2b$10$iX11cHTR1PBFOVrFXdl24.7rbVe6F2u5.D/hSMQYjoxmhwlZUtlJa');
+-- Insert Admin
+INSERT INTO `Admin` (`FName`,`LName`,`Email`,`PhoneNumber`,`Role`,`Username`,`Password`) VALUES ('Thanakorn','Kansorn','thanakorn.kar@dokmai4u.com','-','SuperAdmin','thanakorn','$2b$10$/71MBT1aswSUwJD/JbXmVOqjoxYxB6gLjsC1.U39mNf9XUxcQsuWi');
+INSERT INTO `Admin` (`FName`,`LName`,`Email`,`PhoneNumber`,`Role`,`Username`,`Password`) VALUES ('Pakorn','Nimnuan','pakorn.nim@dokmai4u.com','-','Admin','pakorn','$2b$10$hz8mvnClZ8Fg9PYgc/UP6.poyOok2AmS2QTc.9D4XLF9BsiJ97O96');
+INSERT INTO `Admin` (`FName`,`LName`,`Email`,`PhoneNumber`,`Role`,`Username`,`Password`) VALUES ('Nitichot','Chaiyasit','nitichot.cha@dokmai4u.com','-','Admin','nitichot','$2b$10$RNDqTnB2XXw235YD877VNuVcPdUwM9qAii898L5pehHLwMjuGCr62');
+INSERT INTO `Admin` (`FName`,`LName`,`Email`,`PhoneNumber`,`Role`,`Username`,`Password`) VALUES ('Supakit','Suwan','supakit.suw@dokmai4u.com','-','Admin','supakit','$2b$10$eNwS0cEDKNtapuPOhc19He8JWTzouzNdTI9YveWFKZjCcBJiNnSkS');
 
 -- Insert Categories
-INSERT INTO Category (CName)
-VALUES
-('Bouquet'),
-('Gift Set'),
-('Category');
+INSERT INTO `category` (`CName`) VALUES ('Category');
+INSERT INTO `category` (`CName`) VALUES ('Bouquet');
+INSERT INTO `category` (`CName`) VALUES ('Gift Set');
+INSERT INTO `category` (`CName`) VALUES ('Flower Vase');
+INSERT INTO `category` (`CName`) VALUES ('Wedding');
 
 -- Insert Flowers
-INSERT INTO Flower (FlowerName, Meaning, Price, srcImage, StartDate, EndDate, CID)
-VALUES
-('Rose', 'Symbol of love and passion', 199.00, 'rose.jpg', '2024-01-01', '2025-12-31', 1),
-('Tulip', 'Perfect love and happiness', 249.00, 'tulip.jpg', '2024-01-01', '2024-02-14', 1),
-('Sunflower', 'Warmth, positivity, and loyalty', 299.00, 'sunflower.jpg', '2024-04-01', '2024-04-30', 2);
+INSERT INTO `flower` (`FlowerName`,`Meaning`,`Price`,`srcImage`,`StartDate`,`EndDate`,`CID`) VALUES ('Rose','Symbol of love and passion',199,'rose.jpg','2024-01-01','2025-12-31',5);
+INSERT INTO `flower` (`FlowerName`,`Meaning`,`Price`,`srcImage`,`StartDate`,`EndDate`,`CID`) VALUES ('Tulip','Perfect love and happiness',249,'tulip.jpg','2024-01-01','2024-02-14',2);
+INSERT INTO `flower` (`FlowerName`,`Meaning`,`Price`,`srcImage`,`StartDate`,`EndDate`,`CID`) VALUES ('Sunflower','Warmth, positivity, and loyalty',299,'sunflower.jpg','2024-04-01','2024-04-30',3);

@@ -5,32 +5,18 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>dokmai4u Shop</title>
+    <link rel="stylesheet" href="/assets/management.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <link rel="stylesheet" href="/assets/desktop-shared.css" />
     <link rel="stylesheet" href="/assets/moblie-nav.css" />
     <style>
-        html,
-        body {
-            color: #000;
-            display: flex;
-            flex-direction: column;
-            font-family: Cambria;
-            height: 100%;
-            margin: 0;
-        }
-
-        #page-wrapper {
+        .page-wrapper {
             background: linear-gradient(180deg, #ff7ba7 0%, #e4beff 50%, #3b004b 100%);
             box-sizing: border-box;
-            display: flex;
             flex: 1;
+            display: flex;
             flex-direction: column;
             padding-top: 60px;
-        }
-
-        main {
-            flex-grow: 1;
-            padding: 16px 0 28px;
         }
 
         .section {
@@ -116,47 +102,114 @@
             background: rgba(0, 0, 0, .45);
         }
 
-        footer {
-            background: #3b004b;
-            color: #fff;
+        .contact-section {
+            padding: 32px 16px;
+            background-color: #3b004b;
+        }
+
+        .contact-container {
+            max-width: 720px;
+            margin: 0 auto;
             display: flex;
-            flex-shrink: 0;
-            justify-content: space-between;
-            padding: 0 20px 10px;
+            flex-direction: column;
+            gap: 24px;
+            font-family: Cambria;
+            box-sizing: border-box;
         }
 
-        footer section h2 {
+        .contact-title {
+            font-size: 24px;
+            margin: 0 0 4px;
+        }
+
+        .contact-subtitle {
+            margin: 0 0 16px;
+            color: #6b7280;
             font-size: 16px;
-            font-weight: 500;
-            margin: 2px 0;
         }
 
-        footer a,
-        footer p {
-            color: #cbcbcb;
-            display: block;
-            font-size: 14px;
-            letter-spacing: .1px;
-            line-height: 1.4;
+        .contact-info {
+            background: #fff;
+            border-radius: 16px;
+            padding: 20px 18px;
+            box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
+        }
+
+        .contact-block {
+            margin-bottom: 16px;
+        }
+
+        .contact-block h3 {
+            margin: 0 0 4px;
+            font-size: 16px;
+        }
+
+        .contact-block p,
+        .contact-block a {
             margin: 0;
-            text-decoration: none;
+            font-size: 16px;
+            color: #374151;
         }
 
-        footer a:hover {
-            color: #fff;
+        .weather-box {
+            margin-top: 12px;
+            padding: 10px 12px;
+            border-radius: 12px;
+            background: #f3f4ff;
+            border: 1px solid #e5e7ff;
+            font-size: 14px;
+        }
+
+        .contact-map {
+            width: 100%;
+        }
+
+        .map-card {
+            background: #fff;
+            border-radius: 16px;
+            padding: 12px;
+            box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
+        }
+
+        .map-iframe {
+            width: 100%;
+            height: 260px;
+            border: 0;
+            border-radius: 12px;
+        }
+
+        .map-link {
+            display: inline-block;
+            margin-top: 8px;
+            font-size: 14px;
+            text-decoration: none;
+            color: #3b003c;
         }
 
         @media (min-width: 720px) {
-            footer {
-                padding: 30px;
+            .page-wrapper {
+                padding-top: 0;
             }
 
-            main {
+            .main-content {
                 padding: 30px 0;
             }
 
-            #page-wrapper {
-                padding-top: 0;
+            .contact-container {
+                flex-direction: row;
+                align-items: flex-start;
+            }
+
+            .contact-info {
+                flex: 1.1;
+            }
+
+            .contact-map {
+                flex: 1;
+            }
+
+            .map-iframe {
+                height: 320px;
             }
         }
     </style>
@@ -191,22 +244,21 @@
         </nav>
     </header>
 
-    <!-- Main Content -->
-    <div id="page-wrapper">
-        <main>
+    <div class="page-wrapper">
+        <main class="main-content">
             <!-- Slider 1 -->
             <section class="section">
                 <div class="slider-container">
                     <figure class="swiper mySwiper1">
                         <div class="swiper-wrapper">
                             <div class="swiper-slide">
-                                <a href="/detail/2"><img src="/image/Flower2.jpg" alt="Flower 1" /></a>
+                                <a href="/detail/3"><img src="/image/sunflower.jpg" alt="Flower 1" /></a>
                             </div>
                             <div class="swiper-slide">
                                 <a href="/detail/1"><img src="/image/rose.jpg" alt="Flower 2" /></a>
                             </div>
                             <div class="swiper-slide">
-                                <a href="/detail/3"><img src="/image/tulips.jpg" alt="Flower 3" /></a>
+                                <a href="/detail/2"><img src="/image/tulips.jpg" alt="Flower 3" /></a>
                             </div>
                         </div>
                         <div class="swiper-button-next"></div>
@@ -228,10 +280,10 @@
                     <figure class="swiper mySwiper2">
                         <div class="swiper-wrapper">
                             <div class="swiper-slide">
-                                <a href="/detail/3"><img src="/image/tulips.jpg" alt="Flower 1" /></a>
+                                <a href="/detail/2"><img src="/image/tulips.jpg" alt="Flower 1" /></a>
                             </div>
                             <div class="swiper-slide">
-                                <a href="/detail/2"><img src="/image/Flower2.jpg" alt="Flower 2" /></a>
+                                <a href="/detail/3"><img src="/image/sunflower.jpg" alt="Flower 2" /></a>
                             </div>
                             <div class="swiper-slide">
                                 <a href="/detail/1"><img src="/image/rose.jpg" alt="Flower 3" /></a>
@@ -246,25 +298,50 @@
         </main>
     </div>
 
-    <footer>
-        <!-- Left side -->
-        <section>
-            <h2>For Admin</h2>
-            <a href="/product">Product Management</a>
-            <a href="/account">Account Management</a>
-        </section>
+    <section class="contact-section">
+        <div class="contact-container">
+            <div class="contact-info">
+                <h2 class="contact-title">Contact us</h2>
+                <p class="contact-subtitle">dokmai4u - Flower Shop (Physical Store)</p>
 
-        <!-- Right side -->
-        <section>
-            <h2>About us</h2>
-            <a href="/team">Team</a>
-            <h2>Contact</h2>
-            <a href="mailto:contact@dokmai4u.com">contact@dokmai4u.com</a>
-            <p>012-345-6789</p>
-        </section>
-    </footer>
+                <div class="contact-block">
+                    <h3>Store Location</h3>
+                    <p>
+                        ICT Building, Mahidol University<br />
+                        999 Phutthamonthon Sai 4 Road<br />
+                        Salaya Subdistrict, Phutthamonthon District<br />
+                        Nakhon Pathom 73170, Thailand
+                    </p>
+                </div>
 
-    <!-- JS -->
+                <div class="contact-block">
+                    <h3>Contact Information</h3>
+                    <p>Phone: 012-345-6789</p>
+                    <p>LINE: @dokmai4u</p>
+                    <a href="mailto:contact@dokmai4u.com">Email: contact@dokmai4u.com</a>
+                </div>
+
+                <div class="contact-block weather-box" id="weather">
+                    <h3>Current Weather at the Shop</h3>
+                    <p>Loading weather data...</p>
+                </div>
+            </div>
+
+            <div class="contact-map">
+                <div class="map-card">
+                    <iframe class="map-iframe"
+                        src="https://www.google.com/maps?q=13.794404,100.3247247&z=18&output=embed" loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                    <a class="map-link" href="https://www.google.com/maps/place/@13.794404,100.3247247,20z"
+                        target="_blank" rel="noopener noreferrer">
+                        View Larger Map on Google Maps
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <script src="/assets/moblie-nav.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
@@ -279,6 +356,58 @@
         }
         initSwiper(".mySwiper1");
         initSwiper(".mySwiper2");
+    </script>
+    <script>
+        (async function loadWeather() {
+            const resultDiv = document.getElementById('weather');
+
+            const lat = 13.794404;
+            const lon = 100.3247247;
+            const url =
+                `https://api.open-meteo.com/v1/forecast` +
+                `?latitude=${lat}` +
+                `&longitude=${lon}` +
+                `&current_weather=true` +
+                `&timezone=Asia/Bangkok`;
+
+            const mapCodeToText = (code) => {
+                if (code === 0) return "☀️ clear sky";
+                if (code === 1) return "🌤️ few clouds";
+                if (code === 2) return "⛅ scattered clouds";
+                if (code === 3) return "🌥️ broken clouds";
+                if (code >= 45 && code <= 48) return "🌫️ fog";
+                if (code >= 51 && code <= 57) return "🌦️ light rain";
+                if (code >= 61 && code <= 67) return "🌧️ rain";
+                if (code >= 80 && code <= 82) return "⛈️ heavy rain";
+                if (code >= 95) return "⛈️ thunderstorm";
+                return "Unknown weather condition";
+            };
+
+            try {
+                const res = await fetch(url);
+
+                if (!res.ok) throw new Error('Fetch error: ' + res.status);
+
+                const data = await res.json();
+                const weather = data.current_weather;
+                if (!weather) throw new Error('No current weather data');
+
+                const text = mapCodeToText(weather.weathercode);
+
+                resultDiv.innerHTML = `
+                    <h3>Current Weather at the Shop</h3>
+                    <p>Temperature: ${weather.temperature}°C</p>
+                    <p>Condition: ${text}</p>
+                    <p style="font-size: 12px; color:#6b7280;">Last updated: ${weather.time}</p>
+                `;
+            } catch (err) {
+                console.error(err);
+                resultDiv.innerHTML = `
+                    <h3>Current Weather at the Shop</h3>
+                    <p>Failed to load weather data</p>
+                `;
+            }
+        })();
     </script>
 </body>
 

@@ -1,28 +1,27 @@
 // This script creates a super admin user in the database.
-require('dotenv').config();
 const bcrypt = require('bcryptjs');
 const db = require('../db');
 
 async function main() {
     try {
-        const FName = 'Thanakorn';
-        const LName = 'Kansorn';
-        const Email = 'superadmin@dokmai4u.com';
+        const FName = 'super';
+        const LName = 'admin';
+        const Email = 'example@dokmai4u.com';
         const PhoneNumber = '0123456789';
         const Role = 'SuperAdmin'; // SuperAdmin, Admin
         const Username = 'root';
-        const plain = '6787104';
+        const plain = 'rootpassword';
 
         const hash = await bcrypt.hash(plain, 10);
 
-        await db.query(
-            'INSERT INTO Admin (FName, LName, Email, PhoneNumber, Role, Username, Password) VALUES (?, ?, ?, ?, ?, ?, ?)',
-            [FName, LName, Email, PhoneNumber, Role, Username, hash]
-        );
+        const sql = 'INSERT INTO Admin (FName, LName, Email, PhoneNumber, Role, Username, Password) VALUES (?, ?, ?, ?, ?, ?, ?)';
+        const paramas = [FName, LName, Email, PhoneNumber, Role, Username, hash];
+
+        await db.query(sql, paramas);
 
         console.log('Created successfully');
-    } catch (e) {
-        console.error(e);
+    } catch (error) {
+        console.error({ message: `Error creating ${Role}`, error });
     } finally {
         process.exit(0);
     }
