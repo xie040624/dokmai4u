@@ -62,5 +62,5 @@ INSERT INTO `category` (`CName`) VALUES ('Wedding');
 
 -- Insert Flowers
 INSERT INTO `flower` (`FlowerName`,`Meaning`,`Price`,`srcImage`,`StartDate`,`EndDate`,`CID`) VALUES ('Rose','Symbol of love and passion',199,'rose.jpg','2024-01-01','2025-12-31',5);
-INSERT INTO `flower` (`FlowerName`,`Meaning`,`Price`,`srcImage`,`StartDate`,`EndDate`,`CID`) VALUES ('Tulip','Perfect love and happiness',249,'tulip.jpg','2024-01-01','2024-02-14',2);
+INSERT INTO `flower` (`FlowerName`,`Meaning`,`Price`,`srcImage`,`StartDate`,`EndDate`,`CID`) VALUES ('Tulip','Perfect love and happiness',249,'tulips.jpg','2024-01-01','2024-02-14',2);
 INSERT INTO `flower` (`FlowerName`,`Meaning`,`Price`,`srcImage`,`StartDate`,`EndDate`,`CID`) VALUES ('Sunflower','Warmth, positivity, and loyalty',299,'sunflower.jpg','2024-04-01','2024-04-30',3);
