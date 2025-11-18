@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS Login (
 );
 
 -- Insert Admin
-INSERT INTO `Admin` (`FName`,`LName`,`Email`,`PhoneNumber`,`Role`,`Username`,`Password`) VALUES ('Thanakorn','Kansorn','thanakorn.kar@dokmai4u.com','-','SuperAdmin','thanakorn','$2b$10$/71MBT1aswSUwJD/JbXmVOqjoxYxB6gLjsC1.U39mNf9XUxcQsuWi');
+INSERT INTO `Admin` (`FName`,`LName`,`Email`,`PhoneNumber`,`Role`,`Username`,`Password`) VALUES ('Thanakorn','Kansorn','thanakorn.kar@dokmai4u.com','0123456789','SuperAdmin','thanakorn','$2b$10$/71MBT1aswSUwJD/JbXmVOqjoxYxB6gLjsC1.U39mNf9XUxcQsuWi');
 INSERT INTO `Admin` (`FName`,`LName`,`Email`,`PhoneNumber`,`Role`,`Username`,`Password`) VALUES ('Pakorn','Nimnuan','pakorn.nim@dokmai4u.com','-','Admin','pakorn','$2b$10$hz8mvnClZ8Fg9PYgc/UP6.poyOok2AmS2QTc.9D4XLF9BsiJ97O96');
 INSERT INTO `Admin` (`FName`,`LName`,`Email`,`PhoneNumber`,`Role`,`Username`,`Password`) VALUES ('Nitichot','Chaiyasit','nitichot.cha@dokmai4u.com','-','Admin','nitichot','$2b$10$RNDqTnB2XXw235YD877VNuVcPdUwM9qAii898L5pehHLwMjuGCr62');
 INSERT INTO `Admin` (`FName`,`LName`,`Email`,`PhoneNumber`,`Role`,`Username`,`Password`) VALUES ('Supakit','Suwan','supakit.suw@dokmai4u.com','-','Admin','supakit','$2b$10$eNwS0cEDKNtapuPOhc19He8JWTzouzNdTI9YveWFKZjCcBJiNnSkS');

@@ -6,8 +6,10 @@ const createError = require('http-errors');
 
 dotenv.config();
 const app = express();
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/assets', express.static(path.join(__dirname, 'assets')));
 app.use('/image', express.static(path.join(__dirname, 'image')));

@@ -9,14 +9,6 @@
     <link rel="stylesheet" href="/assets/desktop-shared.css">
     <link rel="stylesheet" href="/assets/admin-product.css">
     <link rel="stylesheet" href="/assets/moblie-nav.css">
-    <style>
-        .app-header .title {
-            font-size: 34px;
-            font-weight: 700;
-            margin: 0;
-            color: #000;
-        }
-    </style>
 </head>
 
 <body>
@@ -52,10 +44,10 @@
         <main class="main-content">
             <div class="container">
 
-                <form id="delete" class="admin-form">
+                <form id="delete">
                     <div class="delete-confirmation">
 
-                        <img src="" id="image" class="product-icon-large" />
+                        <img src="" id="image" class="large-icon" />
 
                         <div id="deleteInfo" class="delete-info">
                             <p><strong>Name:</strong> <span id="Name">-</span></p>
@@ -67,12 +59,12 @@
 
                         <div class="delete-warning">
                             <span>⚠️</span>
-                            <p>Are you sure you want to delete this flower? This action cannot be undone.</p>
+                            <p>Are you sure you want to delete this flower?<br> This action cannot be undone.</p>
                         </div>
 
                         <div class="btn-group">
-                            <a href="javascript:void(0)" id="cancelBtn" class="btn-secondary">Cancel</a>
-                            <a href="javascript:void(0)" id="deleteBtn" class="btn-delete-confirm">Delete</a>
+                            <a href="javascript:void(0)" id="cancelBtn" class="secondary-btn">Cancel</a>
+                            <a href="javascript:void(0)" id="deleteBtn" class="confirm-btn">Delete</a>
                         </div>
 
                     </div>
@@ -85,8 +77,8 @@
     <script src="/assets/moblie-nav.js" defer></script>
     <script>
         (function () {
-            const pathParts = location.pathname.split('/').filter(Boolean);
-            const FlowerID = pathParts[pathParts.length - 1];
+            const parts = location.pathname.split('/').filter(Boolean);
+            const FlowerID = parts[parts.length - 1];
 
             const $ = (id) => document.getElementById(id);
 
@@ -97,7 +89,7 @@
 
                     if (!res.ok) throw new Error(data?.message || res.statusText);
 
-                    $('image').src = `/image/${data.srcImage || 'no-image.jpg'}`;
+                    $('image').src = `/image/${data.srcImage || ''}`;
                     $('Name').textContent = data.FlowerName || '-';
                     $('Category').textContent = data.CName || '-';
                     $('Price').textContent = data.Price || '-';

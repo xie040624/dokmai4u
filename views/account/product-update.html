@@ -7,7 +7,6 @@
     <title>Update Product</title>
     <link rel="stylesheet" href="/assets/management.css">
     <link rel="stylesheet" href="/assets/desktop-shared.css">
-    <link rel="stylesheet" href="/assets/admin-product.css">
     <link rel="stylesheet" href="/assets/moblie-nav.css">
 </head>
 
@@ -44,10 +43,8 @@
         <main class="main-content">
             <div class="container">
 
-                <form id="updateForm" class="admin-form">
-                    <img src="" id="image" class="product-icon-large" />
-
-                    <input type="hidden" id="FlowerID" name="FlowerID" />
+                <form id="updateForm">
+                    <img src="no-image.jpg" id="image" class="large-icon" />
 
                     <div class="form-group">
                         <label for="Name">Name</label>
@@ -106,31 +103,24 @@
 
         const $ = (id) => document.getElementById(id);
 
-        const toDateInput = (Date) => {
-            if (!Date) return '';
-            return String(Date).slice(0, 10);
-        };
-
         async function loadData() {
             try {
                 const res = await fetch(`/product/api/product/${id}`);
+                const data = await res.json();
 
                 if (!res.ok) {
                     alert('No results found!');
                     return;
                 }
 
-                const data = await res.json();
-
-                $('image').src = `/image/${data.srcImage || 'no-image.jpg'}`;
-                $('FlowerID').value = data.FlowerID ?? '';
+                $('image').src = `/image/${data.srcImage || ''}`;
                 $('Name').value = data.FlowerName ?? '';
-                $('Category').value = data.CID ?? '1';
+                $('Category').value = data.CID ?? '';
                 $('Price').value = data.Price ?? '';
-                $('StartDate').value = toDateInput(data.StartDate);
-                $('EndDate').value = toDateInput(data.EndDate);
+                $('StartDate').value = String(data.StartDate).slice(0, 10);;
+                $('EndDate').value = String(data.EndDate).slice(0, 10);;
                 $('Meaning').value = data.Meaning ?? '';
-                $('srcImage').value = data.srcImage ?? 'no-image.jpg';
+                $('srcImage').value = data.srcImage ?? '';
             } catch (e) {
                 console.error(e);
                 alert('Load data error!');
@@ -147,7 +137,7 @@
                 StartDate: $('StartDate').value || null,
                 EndDate: $('EndDate').value || null,
                 Meaning: $('Meaning').value.trim(),
-                srcImage: ($('srcImage').value.trim() || 'no-image.jpg')
+                srcImage: ($('srcImage').value.trim() || '')
             };
 
             if (!payload.FlowerName || !payload.Price || !payload.Meaning) {
@@ -162,7 +152,7 @@
                     body: JSON.stringify(payload),
                 });
 
-                const data = await res.json().catch(() => ({}));
+                const data = await res.json();
                 if (!res.ok) {
                     alert(data?.message || 'There was an error updating.');
                     return;

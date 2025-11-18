@@ -7,13 +7,13 @@ router.use(requireAuth);
 // API to get a single product by ID
 router.get('/api/product/:id', ctrl.getOne);
 
-router.get('/', ctrl.root);
-router.get('/getall', ctrl.getAll);
-router.get('/add', ctrl.addPage);
-router.get('/update/:id', ctrl.updatePage);
-router.get('/delete/:id', ctrl.deletePage);
+router.get('/', ctrl.root); // Root page for products
+router.get('/getall', ctrl.getAll); // Retrieve all products data
+router.get('/add', ctrl.addPage); // Page to add a new product
+router.get('/update/:id', ctrl.updatePage); // Page to update a product
+router.get('/delete/:id', ctrl.deletePage); // Page to delete a product
 
-router.post('/search2', ctrl.search2); // Search products with filters
+router.post('/search2', ctrl.search2); // Search products by criteria
 
 router.post('/add', ctrl.add); // Create a new product
 

@@ -1,15 +1,13 @@
-1. รันไฟล์ dokmai4u.sql บน MySQL Workbench
-2. สร้างไฟล์ .env ในโฟลเดอร์โปรเจกต์ และกำหนดค่าให้แต่ละตัวแปร
+1. Run the dokmai4u.sql script in MySQL Workbench.
+2. Create a .env file inside the dokmai4u folder and define the following variables:
     PORT
     MYSQL_HOST
+    MYSQL_PORT
     MYSQL_USERNAME
     MYSQL_PASSWORD
     MYSQL_DATABASE
-    MYSQL_PORT
     SESSION_SECRET
-3. เปิด Terminal รันคำสั่ง
-    npm i
-4. หลังติดตั้งเสร็จ รันคำสั่ง
+3. Run these commands in the terminal:
+    npm install
     npm start
-5. สร้าง Super Admin
     node tools/create_admin.js

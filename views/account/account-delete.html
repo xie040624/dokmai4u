@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Delete Account</title>
     <link rel="stylesheet" href="/assets/management.css">
-    <link rel="stylesheet" href="/assets/admin-users-account.css" />
     <link rel="stylesheet" href="/assets/desktop-shared.css" />
     <link rel="stylesheet" href="/assets/moblie-nav.css" />
 </head>
@@ -44,10 +43,10 @@
         <main class="main-content">
             <div class="container">
 
-                <form id="delete" class="admin-form">
+                <form id="delete">
                     <div class="delete-confirmation">
 
-                        <div class="account-icon-large">👨🏻‍💼</div>
+                        <div class="admin-icon">👨🏻‍💼</div>
 
                         <div id="deleteInfo" class="delete-info">
                             <p><strong>Name:</strong> <span id="Name"></span></p>
@@ -63,8 +62,8 @@
                         </div>
 
                         <div class="btn-group">
-                            <a href="javascript:void(0)" id="cancelBtn" class="btn-secondary">Cancel</a>
-                            <a href="javascript:void(0)" id="deleteBtn" class="btn-delete-confirm">Delete</a>
+                            <a href="javascript:void(0)" id="cancelBtn" class="secondary-btn">Cancel</a>
+                            <a href="javascript:void(0)" id="deleteBtn" class="confirm-btn">Delete</a>
                         </div>
 
                     </div>
@@ -89,7 +88,7 @@
 
                     if (!res.ok) throw new Error(data?.message || res.statusText);
 
-                    $('Name').textContent = `${data.FName ?? ''} ${data.LName ?? ''}` || '-';
+                    $('Name').textContent = `${data.FName ?? ''} ${data.LName ?? ''}` || '';
                     $('Email').textContent = data.Email || '-';
                     $('Username').textContent = data.Username || '-';
                     $('Role').textContent = data.Role || '-';

@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Add Product</title>
     <link rel="stylesheet" href="/assets/management.css" />
-    <link rel="stylesheet" href="/assets/admin-product.css" />
     <link rel="stylesheet" href="/assets/desktop-shared.css" />
     <link rel="stylesheet" href="/assets/moblie-nav.css" />
 </head>
@@ -44,8 +43,8 @@
         <main class="main-content">
             <div class="container">
 
-                <form id="addForm" class="admin-form">
-                    <div class="product-icon-large">💐</div>
+                <form id="addForm">
+                    <img src="/image/flower.jpg" alt="Flower Image" class="large-icon" />
 
                     <div class="form-group">
                         <label for="name">Name</label>
@@ -110,7 +109,7 @@
                 StartDate: $('#startDate').value || null,
                 EndDate: $('#endDate').value || null,
                 Meaning: $('#meaning').value.trim(),
-                srcImage: ($('#srcImage').value.trim() || 'no-image.jpg')
+                srcImage: ($('#srcImage').value.trim() || '')
             };
 
             if (!payload.FlowerName || Number.isNaN(payload.Price) || !payload.Meaning) {

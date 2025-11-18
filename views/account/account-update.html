@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Update Account</title>
     <link rel="stylesheet" href="/assets/management.css">
-    <link rel="stylesheet" href="/assets/admin-users-account.css" />
     <link rel="stylesheet" href="/assets/desktop-shared.css" />
     <link rel="stylesheet" href="/assets/moblie-nav.css" />
 </head>
@@ -44,8 +43,8 @@
         <main class="main-content">
             <div class="container">
 
-                <form id="updateForm" class="admin-form">
-                    <div class="account-icon-large">👨🏻‍💼</div>
+                <form id="updateForm">
+                    <div class="admin-icon">👨🏻‍💼</div>
 
                     <div class="form-group">
                         <label for="FName">First Name</label>
@@ -67,7 +66,7 @@
                         <input type="tel" id="Phone" name="Phone" placeholder="Enter your phone number" required />
                     </div>
 
-                    <button type="submit" class="btn-primary">Update</button>
+                    <button type="submit" class="primary-btn">Update</button>
                 </form>
             </div>
         </main>
@@ -75,19 +74,21 @@
 
     <script src="/assets/moblie-nav.js" defer></script>
     <script>
-        const pathParts = window.location.pathname.split('/').filter(Boolean);
-        const id = pathParts[pathParts.length - 1];
+        const parts = window.location.pathname.split('/').filter(Boolean);
+        const id = parts[parts.length - 1];
 
         const $ = (id) => document.querySelector(id);
 
         async function loadData() {
             try {
                 const res = await fetch(`/account/api/admin/${id}`);
+                const data = await res.json();
+
                 if (!res.ok) {
                     alert('Failed to load account data.');
                     return;
                 }
-                const data = await res.json();
+
                 $('#FName').value = data.FName || '';
                 $('#LName').value = data.LName || '';
                 $('#Email').value = data.Email || '';
