@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Detail</title>
+    <link rel="stylesheet" href="/assets/desktop-shared.css" />
+    <link rel="stylesheet" href="/assets/moblie-nav.css">
+    <style>
+        :root {
+            --bg: #fff;
+            --surface: #fff;
+            --text: #000;
+            --muted: #6b7280;
+            --accent: #f97316;
+            --accent-soft: rgba(249, 115, 22, .1);
+            --radius-lg: 20px;
+            --radius-md: 14px;
+        }
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+            color: var(--text);
+        }
+
+        .page-wrapper {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding-top: 60px;
+            background: #fff;
+        }
+
+        .main-content {
+            flex: 1;
+            padding-bottom: 110px;
+        }
+
+        /* image slider */
+        .slider-container {
+            width: 100%;
+            max-width: 900px;
+            margin: 40px auto 0;
+            padding: 0 20px;
+            box-sizing: border-box;
+        }
+
+        .swiper.detailSwiper {
+            width: 100%;
+            height: 340px;
+            border-radius: var(--radius-lg);
+            background: #eceff3;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(15, 23, 42, 0.08);
+        }
+
+        .swiper-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .product-info {
+            width: 100%;
+            max-width: 900px;
+            margin: 24px auto 0;
+            padding: 0 20px 24px;
+            box-sizing: border-box;
+        }
+
+        .product-info>*:not(#result) {
+            max-width: 100%;
+        }
+
+        .product-info-card {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            padding: 20px 20px 16px;
+            box-shadow: 0 12px 40px rgba(15, 23, 42, 0.04);
+            margin-bottom: 16px;
+        }
+
+        .product-info h1,
+        .product-info h3,
+        .product-info p {
+            margin-top: 0;
+        }
+
+        #name {
+            font-size: clamp(1.5rem, 3.8vw, 2.35rem);
+            font-weight: 700;
+            letter-spacing: -.01em;
+            margin-bottom: 6px;
+            line-height: 1.12;
+        }
+
+        #category {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #f3f4f6;
+            color: #374151;
+            font-size: 0.75rem;
+            font-weight: 500;
+            padding: 4px 14px 5px;
+            border-radius: 999px;
+            margin-bottom: 10px;
+        }
+
+        #price {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 14px;
+        }
+
+        #meaning {
+            background: #fff8f2;
+            border: 1px solid rgba(249, 115, 22, .15);
+            border-radius: 14px;
+            padding: 14px 14px 12px;
+            line-height: 1.5;
+            color: #6b7280;
+            font-size: 0.92rem;
+            margin-bottom: 16px;
+        }
+
+        .delivery-info,
+        .contact-info {
+            font-size: 0.8rem;
+            color: #94a3b8;
+            margin-bottom: 4px;
+        }
+
+        .delivery-info {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: #ecfdf3;
+            color: #166534;
+            border: 1px solid rgba(22, 101, 52, .08);
+            padding: 6px 12px 6px;
+            border-radius: 999px;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+
+        .contact-info {
+            margin-top: 6px;
+        }
+
+        #result {
+            margin-top: 18px;
+        }
+
+        /* Floating order button */
+        .order-footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(8px);
+            padding: 16px 18px 24px;
+            box-shadow: 0 -4px 24px rgba(15, 23, 42, 0.08);
+        }
+
+        .footer-content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .order-button {
+            width: 100%;
+            border: none;
+            outline: none;
+            background: linear-gradient(135deg, #f97316 0%, #f97316 65%, #f4a63c 100%);
+            color: #fff;
+            font-weight: 600;
+            font-size: 1rem;
+            padding: 14px 0 14px;
+            border-radius: 999px;
+            cursor: pointer;
+            box-shadow: 0 12px 30px rgba(249, 115, 22, .45);
+            transition: transform .1s ease-out;
+        }
+
+        .order-button:active {
+            transform: translateY(1px);
+        }
+
+        @media (min-width: 720px) {
+
+            .slider-container,
+            .product-info,
+            .footer-content {
+                max-width: 1000px;
+            }
+
+            .page-wrapper {
+                padding-top: 70px;
+            }
+
+            .main-content {
+                padding-bottom: 40px;
+            }
+
+            .slider-container {
+                padding: 0;
+                margin-top: 40px;
+            }
+
+            .swiper.detailSwiper {
+                height: 420px;
+            }
+
+            .product-info {
+                padding: 0;
+                margin-top: 26px;
+            }
+
+            /* Remove floating button, change to normal button */
+            .order-footer {
+                position: static;
+                background: transparent;
+                box-shadow: none;
+                padding: 0;
+                margin-top: 12px;
+            }
+
+            .footer-content {
+                display: flex;
+                justify-content: flex-start;
+            }
+
+            .order-button {
+                width: auto;
+                padding: 12px 28px 12px;
+            }
+
+            .product-info {
+                background: #fff;
+            }
+
+            .product-info>* {
+                background: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav class="mobile-nav">
+            <a href="/" class="mobile-logo">dokmai4u Shop</a>
+            <div id="hamburger-icon" class="hamburger-icon">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+
+        <div id="mobile-menu" class="mobile-menu">
+            <a href="/">Home</a>
+            <a href="/search">Search</a>
+            <a href="/team">Team</a>
+            <a href="/login">Login</a>
+        </div>
+
+        <nav class="desktop-nav">
+            <a href="/" class="logo">dokmai4u Shop</a>
+            <div class="nav-links">
+                <a href="/">Home</a>
+                <a href="/search">Search</a>
+                <a href="/team">Team</a>
+                <a href="/login">Login</a>
+            </div>
+        </nav>
+    </header>
+
+    <div class="page-wrapper">
+        <main class="main-content">
+            <div class="slider-container">
+                <div class="swiper detailSwiper">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+                            <img id="image" src="" alt="Image">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <section class="product-info">
+                <h1 id="name">Name</h1>
+                <h3 id="price">Price</h3>
+                <p id="category">Category</p>
+                <p id="meaning">Meaning</p>
+                <p class="delivery-info">Free delivery in Mahidol Salaya campus.</p>
+                <p class="contact-info">More information please contact us by E-mail inquiry.</p>
+                <div id="result"></div>
+            </section>
+
+            <footer class="order-footer">
+                <div class="footer-content">
+                    <button class="order-button">Order</button>
+                </div>
+            </footer>
+
+        </main>
+    </div>
+
+    <script src="/assets/moblie-nav.js" defer></script>
+    <script>
+        const parts = location.pathname.split('/').filter(Boolean);
+        const id = parts[parts.length - 1];
+
+
+        const $ = (id) => document.getElementById(id);
+        const resultDiv = $('result');
+
+        async function loadData() {
+            if (!id) {
+                resultDiv.textContent = 'No ID in URL!';
+                return;
+            }
+
+            try {
+                const res = await fetch(`http://localhost:3001/api/detail/${id}`);
+
+                if (!res.ok) {
+                    resultDiv.textContent = 'No results found!';
+                    return;
+                }
+
+                const data = await res.json();
+
+                // ใช้ field ตาม JSON ที่ได้:
+                // FlowerName, Meaning, Price, srcImage, CName
+                $('image').src = `/image/${data.srcImage}`;
+                $('name').textContent = data.FlowerName ?? '';
+                $('category').textContent = data.CName ?? '';
+                $('price').textContent = (data.Price ?? '') + ' THB';
+                $('meaning').textContent = data.Meaning ?? '';
+
+                resultDiv.textContent = ''; // ล้างข้อความ error ถ้ามี
+            } catch (e) {
+                console.error(e);
+                resultDiv.textContent = 'Load data error!';
+            }
+        }
+
+        loadData();
+    </script>
+
+</body>
+
+</html>

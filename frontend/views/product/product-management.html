@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Management</title>
+    <link rel="stylesheet" href="/assets/management.css" />
+    <link rel="stylesheet" href="/assets/desktop-shared.css">
+    <link rel="stylesheet" href="/assets/moblie-nav.css">
+</head>
+
+<body>
+    <header>
+        <nav class="mobile-nav">
+            <a href="/" class="mobile-logo">dokmai4u Shop</a>
+            <div id="hamburger-icon" class="hamburger-icon">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+
+        <div id="mobile-menu" class="mobile-menu">
+            <a href="/">Home</a>
+            <a href="/search">Search</a>
+            <a href="/account">Account</a>
+            <a style="color: #c800ff;" href="/product">Product</a>
+        </div>
+
+        <nav class="desktop-nav">
+            <a href="/" class="logo">dokmai4u Shop</a>
+            <div class="nav-links">
+                <a href="/">Home</a>
+                <a href="/search">Search</a>
+                <a href="/account">Account</a>
+                <a style="color: #c800ff;" href="/product">Product</a>
+            </div>
+        </nav>
+    </header>
+
+    <div class="page-wrapper">
+        <main class="main-content">
+            <div class="container">
+
+                <form id="searchForm" class="toolbar">
+                    <input type="text" class="search-bar" placeholder="Search by flower name" name="searchKey">
+                    <input type="text" class="search-bar" placeholder="Search by ID" name="searchID" />
+                    <select class="search-bar" name="cid">
+                        <option value="">Category</option>
+                        <option value="2">Bouquet</option>
+                        <option value="3">Gift Set</option>
+                        <option value="4">Flower Vase</option>
+                        <option value="5">Wedding</option>
+                    </select>
+                    <button type="submit" class="search-btn">Search</button>
+                    <a href="/product/add" class="add-btn">Add</a>
+                </form>
+
+                <div id="result" class="search-results"></div>
+
+            </div>
+        </main>
+    </div>
+
+    <script src="/assets/moblie-nav.js" defer></script>
+    <script>
+        (function () {
+            const form = document.getElementById('searchForm');
+            const resultDiv = document.getElementById('result');
+
+            function render(list) {
+                if (!list || !list.length) {
+                    resultDiv.innerHTML = '<p>No results found.</p>';
+                    return;
+                }
+
+                resultDiv.innerHTML = list.map(flower => `
+                    <div class="search-result-item">
+                        <div class="search-result-header">
+                            <img src="/image/${flower.srcImage ?? ''}" class="icon">
+                            <div class="info">
+                                <h4 class="name">${flower.FlowerName}</h4>
+                                <p class="category">Category: ${flower.CName ?? '-'}</p>
+                                <p class="price">Price: ${flower.Price} THB</p>
+                            </div>
+                        </div>
+                        <div class="search-result-actions">
+                            <a href="/product/update/${flower.FlowerID}" class="update-btn">Edit</a>
+                            <a href="/product/delete/${flower.FlowerID}" class="delete-btn">Delete</a>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                const searchKey = (e.target.searchKey.value || '').trim();
+                const searchID = (e.target.searchID.value || '').trim();
+                const cid = (e.target.cid.value || '');
+
+                try {
+                    const res = await fetch('http://localhost:3001/api/product/search', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        credentials: 'include',
+                        body: JSON.stringify({ searchKey, searchID, cid })
+                    });
+
+                    if (!res.ok) throw new Error('Fetch error: ' + res.status);
+
+                    const data = await res.json();
+                    render(data);
+                } catch (err) {
+                    console.error(err);
+                    resultDiv.innerHTML = `<p>Search error.</p>`;
+                }
+            });
+
+            (async () => {
+                try {
+                    const res = await fetch('http://localhost:3001/api/product/getall', { credentials: 'include' });
+                    const data = await res.json();
+                    render(data);
+                } catch (err) {
+                    console.error(err);
+                    resultDiv.innerHTML = '<p>Load error.</p>';
+                }
+            })();
+        })();
+    </script>
+</body>
+
+</html>

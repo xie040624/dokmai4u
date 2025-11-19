@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Update Account</title>
+    <link rel="stylesheet" href="/assets/management.css">
+    <link rel="stylesheet" href="/assets/desktop-shared.css" />
+    <link rel="stylesheet" href="/assets/moblie-nav.css" />
+</head>
+
+<body>
+    <header>
+        <nav class="mobile-nav">
+            <a href="/" class="mobile-logo">dokmai4u Shop</a>
+            <div id="hamburger-icon" class="hamburger-icon">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+
+        <div id="mobile-menu" class="mobile-menu">
+            <a href="/">Home</a>
+            <a href="/search">Search</a>
+            <a style="color: #c800ff;" href="/account">Account</a>
+            <a href="/product">Product</a>
+        </div>
+
+        <nav class="desktop-nav">
+            <a href="/" class="logo">dokmai4u Shop</a>
+            <div class="nav-links">
+                <a href="/">Home</a>
+                <a href="/search">Search</a>
+                <a style="color: #c800ff;" href="/account">Account</a>
+                <a href="/product">Product</a>
+            </div>
+        </nav>
+    </header>
+
+    <div class="page-wrapper">
+        <main class="main-content">
+            <div class="container">
+
+                <form id="updateForm">
+                    <div class="admin-icon">👨🏻‍💼</div>
+
+                    <div class="form-group">
+                        <label for="FName">First Name</label>
+                        <input type="text" id="FName" name="FName" placeholder="Enter your first name" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="LName">Last Name</label>
+                        <input type="text" id="LName" name="LName" placeholder="Enter your last name" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Email">Email</label>
+                        <input type="email" id="Email" name="Email" placeholder="Enter your email" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Phone">Phone</label>
+                        <input type="tel" id="Phone" name="Phone" placeholder="Enter your phone number" required />
+                    </div>
+
+                    <button type="submit" class="primary-btn">Update</button>
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <script src="/assets/moblie-nav.js" defer></script>
+    <script>
+        const parts = window.location.pathname.split('/').filter(Boolean);
+        const id = parts[parts.length - 1];
+
+        const $ = (id) => document.querySelector(id);
+
+        async function loadData() {
+            try {
+                const res = await fetch(`http://localhost:3001/api/account/get/${id}`, { credentials: 'include' });
+                const data = await res.json();
+
+                if (!res.ok) {
+                    alert('Failed to load account data.');
+                    return;
+                }
+
+                $('#FName').value = data.FName || '';
+                $('#LName').value = data.LName || '';
+                $('#Email').value = data.Email || '';
+                $('#Phone').value = data.PhoneNumber || '';
+            } catch (e) {
+                console.error(e);
+                alert('Load data error!');
+            }
+        }
+
+        $('#updateForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const payload = {
+                FName: $('#FName').value.trim(),
+                LName: $('#LName').value.trim(),
+                Email: $('#Email').value.trim(),
+                Phone: $('#Phone').value.trim(),
+            };
+
+            try {
+                const res = await fetch(`http://localhost:3001/api/account/update/${id}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify(payload)
+                });
+
+                const data = await res.json();
+                if (!res.ok) {
+                    alert(data?.message || 'Update failed!');
+                    return;
+                }
+
+                alert('Update Success!');
+
+                location.href = '/account';
+            } catch (e) {
+                console.error(e);
+                alert('There was an error updating.');
+            }
+        });
+
+        loadData();
+    </script>
+</body>
+
+</html>

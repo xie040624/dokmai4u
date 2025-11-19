@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Product</title>
+    <link rel="stylesheet" href="/assets/management.css">
+    <link rel="stylesheet" href="/assets/desktop-shared.css">
+    <link rel="stylesheet" href="/assets/moblie-nav.css">
+</head>
+
+<body>
+    <header>
+        <nav class="mobile-nav">
+            <a href="/" class="mobile-logo">dokmai4u Shop</a>
+            <div id="hamburger-icon" class="hamburger-icon">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+
+        <div id="mobile-menu" class="mobile-menu">
+            <a href="/">Home</a>
+            <a href="/search">Search</a>
+            <a href="/account">Account</a>
+            <a style="color: #c800ff;" href="/product">Product</a>
+        </div>
+
+        <nav class="desktop-nav">
+            <a href="/" class="logo">dokmai4u Shop</a>
+            <div class="nav-links">
+                <a href="/">Home</a>
+                <a href="/search">Search</a>
+                <a href="/account">Account</a>
+                <a style="color: #c800ff;" href="/product">Product</a>
+            </div>
+        </nav>
+    </header>
+
+    <div class="page-wrapper">
+        <main class="main-content">
+            <div class="container">
+
+                <form id="updateForm">
+                    <img src="no-image.jpg" id="image" class="large-icon" />
+
+                    <div class="form-group">
+                        <label for="Name">Name</label>
+                        <input type="text" id="Name" name="FlowerName" placeholder="Enter flower name" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Category">Category</label>
+                        <div class="select-wrapper">
+                            <select id="Category" name="CID" required>
+                                <option value="">Category</option>
+                                <option value="2">Bouquet</option>
+                                <option value="3">Gift Set</option>
+                                <option value="4">Flower Vase</option>
+                                <option value="5">Wedding</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Price">Price</label>
+                        <input type="number" id="Price" name="Price" placeholder="Enter flower price" min="0" step="1"
+                            required />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="StartDate">Available</label>
+                        <div class="date-range-inputs">
+                            <input type="date" id="StartDate" name="StartDate" />
+                            <span>to</span>
+                            <input type="date" id="EndDate" name="EndDate" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Meaning">Meaning</label>
+                        <textarea id="Meaning" name="Meaning" placeholder="Enter flower meaning" required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="srcImage">Image filename</label>
+                        <input type="text" id="srcImage" placeholder="e.g., rose.jpg" />
+                    </div>
+
+                    <button type="submit" class="primary-btn">Update</button>
+                </form>
+
+            </div>
+        </main>
+    </div>
+
+    <script src="/assets/moblie-nav.js" defer></script>
+    <script>
+        const parts = location.pathname.split('/').filter(Boolean);
+        const id = parts[parts.length - 1];
+
+        const $ = (id) => document.getElementById(id);
+
+        async function loadData() {
+            try {
+                const res = await fetch(`http://localhost:3001/api/product/get/${id}`, { credentials: 'include' });
+                const data = await res.json();
+
+                if (!res.ok) {
+                    alert('No results found!');
+                    return;
+                }
+
+                $('image').src = `/image/${data.srcImage || ''}`;
+                $('Name').value = data.FlowerName ?? '';
+                $('Category').value = data.CID ?? '';
+                $('Price').value = data.Price ?? '';
+                $('StartDate').value = String(data.StartDate).slice(0, 10);;
+                $('EndDate').value = String(data.EndDate).slice(0, 10);;
+                $('Meaning').value = data.Meaning ?? '';
+                $('srcImage').value = data.srcImage ?? '';
+            } catch (e) {
+                console.error(e);
+                alert('Load data error!');
+            }
+        }
+
+        $('updateForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const payload = {
+                FlowerName: $('Name').value.trim(),
+                CID: Number($('Category').value),
+                Price: Number($('Price').value),
+                StartDate: $('StartDate').value || null,
+                EndDate: $('EndDate').value || null,
+                Meaning: $('Meaning').value.trim(),
+                srcImage: ($('srcImage').value.trim() || '')
+            };
+
+            if (!payload.FlowerName || !payload.Price || !payload.Meaning) {
+                alert('Flower Name, Price, and Meaning are required');
+                return;
+            }
+
+            try {
+                const res = await fetch(`http://localhost:3001/api/product/update/${id}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify(payload),
+                });
+
+                const data = await res.json();
+                if (!res.ok) {
+                    alert(data?.message || 'There was an error updating.');
+                    return;
+                }
+
+                alert('Flower updated successfully!');
+
+                location.href = '/product';
+            } catch (e) {
+                console.error(e);
+                alert('An error occurred. Please try again.');
+            }
+        });
+
+        loadData();
+    </script>
+</body>
+
+</html>
