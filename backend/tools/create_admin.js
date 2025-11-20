@@ -1,13 +1,13 @@
 // This script creates a super admin user in the database.
 const bcrypt = require('bcryptjs');
-const db = require('../../db');
+const db = require('../db');
 
 async function main() {
     try {
         const FName = 'super';
         const LName = 'admin';
-        const Email = 'example@dokmai4u.com';
-        const PhoneNumber = '0123456789';
+        const Email = 'superadmin@dokmai4u.com';
+        const PhoneNumber = '+669-999-999';
         const Role = 'SuperAdmin'; // SuperAdmin, Admin
         const Username = 'root';
         const plain = 'rootpassword';

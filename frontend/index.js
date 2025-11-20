@@ -41,12 +41,12 @@ router.get('/account/add', (req, res) => {
   res.sendFile(path.join(__dirname, 'views/account/account-add.html'))
 });
 
-router.get('/account/delete/:id', (req, res) => {
-  res.sendFile(path.join(__dirname, 'views/account/account-delete.html'))
-});
-
 router.get('/account/update/:id', (req, res) => {
   res.sendFile(path.join(__dirname, 'views/account/account-update.html'))
+});
+
+router.get('/account/delete/:id', (req, res) => {
+  res.sendFile(path.join(__dirname, 'views/account/account-delete.html'))
 });
 
 app.get('/product', (req, res) => {
@@ -57,12 +57,12 @@ router.get('/product/add', (req, res) => {
   res.sendFile(path.join(__dirname, 'views/product/product-add.html'))
 });
 
-router.get('/product/delete/:id', (req, res) => {
-  res.sendFile(path.join(__dirname, 'views/product/product-delete.html'))
-});
-
 router.get('/product/update/:id', (req, res) => {
   res.sendFile(path.join(__dirname, 'views/product/product-update.html'))
+});
+
+router.get('/product/delete/:id', (req, res) => {
+  res.sendFile(path.join(__dirname, 'views/product/product-delete.html'))
 });
 
 app.use((req, res, next) => next(createError.NotFound()));

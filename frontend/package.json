@@ -6,7 +6,7 @@
   "scripts": {
     "start": "nodemon index.js"
   },
-  "author": "",
+  "author": "Thanakorn Kansorn",
   "license": "ISC",
   "dependencies": {
     "express": "^5.1.0",

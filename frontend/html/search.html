@@ -402,28 +402,16 @@
                     </div>`;
             }
 
-            // Perform search request
             async function search(paramsObj = {}) {
-                const query = new URLSearchParams();
-
-                // Append only non-empty parameters
-                Object.entries(paramsObj).forEach(([k, v]) => {
-                    if (v !== undefined && v !== null && String(v).trim() !== '') {
-                        query.append(k, v);
-                    }
+                const res = await fetch('http://localhost:3001/api/search', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify(paramsObj),
                 });
 
-                // Construct URL
-                const url = query.toString()
-                    ? `http://localhost:3001/api/search?${query.toString()}` // With parameters
-                    : `http://localhost:3001/api/search`; // No parameters
-
-                const res = await fetch(url, { credentials: 'same-origin' }); // Include cookies
-                const raw = await res.text(); // Get raw text response
-                const ctype = (res.headers.get('content-type') || '').toLowerCase(); // Get content-type
-
                 if (!res.ok) throw new Error(`HTTP ${res.status}`);
-
+                const raw = await res.text();
                 return JSON.parse(raw);
             }
 
