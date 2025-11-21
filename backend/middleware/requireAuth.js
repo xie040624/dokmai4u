@@ -2,6 +2,6 @@
 module.exports = function requireAuth(req, res, next) {
     // Check if the user is logged in by verifying the session.
     if (req.session && req.session.user) return next();
-    
+
     return res.status(401).json({ message: 'Unauthorized' });
 };
