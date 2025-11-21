@@ -174,15 +174,15 @@ exports.update = async (req, res) => {
 // URL: http://localhost:3001/api/account/delete/2
 exports.delete = async (req, res) => {
     try {
-        const { ID } = req.params;
+        const { id } = req.params;
 
-        if (!ID) return res.status(400).json({ message: 'Missing Admin ID' });
+        if (!id) return res.status(400).json({ message: 'Missing Admin ID' });
 
-        const [result] = await db.query('DELETE FROM Admin WHERE AdminID = ?', [ID]);
+        const [result] = await db.query('DELETE FROM Admin WHERE AdminID = ?', [id]);
 
         if (result.affectedRows === 0) return res.status(404).json({ message: 'Account not found' });
 
-        res.status(200).json({ message: 'Account deleted successfully', adminId: ID });
+        res.status(200).json({ message: 'Account deleted successfully', adminId: id });
     } catch (error) {
         console.error('Delete error:', error);
         res.status(500).json({ message: 'Database error during deletion' });

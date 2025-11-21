@@ -2,7 +2,7 @@ const router = require('express').Router();
 const ctrl = require('../controllers/product.controller');
 const requireAuth = require('../middleware/requireAuth');
 
-// router.use(requireAuth);
+router.use(requireAuth);
 
 router.get('/get/:id', ctrl.get); // Retrieve a product data by ID
 router.get('/getall', ctrl.getall); // Retrieve all products data
