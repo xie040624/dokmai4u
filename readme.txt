@@ -1,13 +1,20 @@
 1. Run the dokmai4u.sql script in MySQL Workbench.
-2. Create a .env file inside the dokmai4u folder and define the following variables:
-    PORT
-    MYSQL_HOST
-    MYSQL_PORT
-    MYSQL_USERNAME
-    MYSQL_PASSWORD
-    MYSQL_DATABASE
-    SESSION_SECRET
-3. Run these commands in the terminal:
+
+2. Open the Front End folder, then run:
     npm install
     npm start
-    node tools/create_admin.js
+
+3. Open the Back End folder and create a .env file with:
+   PORT=3001
+   MYSQL_HOST=127.0.0.1
+   MYSQL_PORT=3306
+   MYSQL_USERNAME=
+   MYSQL_PASSWORD=
+   MYSQL_DATABASE=dokmai4u
+   FRONT_ORIGIN=http://localhost:3000
+   SESSION_SECRET=
+
+4. In the Back End folder, run:
+   npm install
+   node tools/create_admin.js
+   npm start
