@@ -18,11 +18,6 @@
             --text: #fff;
         }
 
-        html,
-        body {
-            height: 100%;
-        }
-
         body {
             min-height: 100vh;
             display: flex;
@@ -30,13 +25,12 @@
             background: var(--bg);
         }
 
+        /* Form group */
         .form-group {
             display: flex;
             flex-direction: column;
             gap: 10px;
             width: 100%;
-            box-sizing: border-box;
-            margin: 0;
         }
 
         .form-group label {
@@ -47,7 +41,6 @@
         }
 
         .form-group input {
-            width: auto;
             height: 48px;
             padding: 0 14px;
             font-family: Georgia;
@@ -57,7 +50,6 @@
             border: 1px solid #1f2937;
             border-radius: 12px;
             outline: none;
-            box-shadow: inset 0 1px 0 rgba(0, 0, 0, .03);
             transition: box-shadow .15s, border-color .15s, background-color .15s;
         }
 
@@ -72,9 +64,10 @@
         }
 
         .form-group input::placeholder {
-            color: #9ca3af;
+            color: var(--muted);
         }
 
+        /* Button */
         .login-button {
             position: sticky;
             bottom: calc(8px + env(safe-area-inset-bottom));
@@ -84,33 +77,29 @@
             font-family: Georgia;
             font-size: 18px;
             font-weight: 500;
-            letter-spacing: .2px;
             color: #fff;
             background: linear-gradient(180deg, var(--brand) 0%, #0069e6 100%);
             border: none;
             border-radius: 28px;
             cursor: pointer;
-            box-shadow: 0 10px 22px rgba(0, 122, 255, .35), 0 2px 6px rgba(0, 0, 0, .08);
-            transition: transform .05s, box-shadow .15s, filter .15s, background .15s;
-            will-change: transform;
+            box-shadow: 0 10px 22px rgba(0, 122, 255, .35);
+            transition: transform .05s, box-shadow .15s, filter .15s;
         }
 
         .login-button:hover {
             filter: brightness(.98);
             transform: translateY(-2px);
             background: linear-gradient(180deg, var(--brand) 0%, #003e8a 100%);
-            box-shadow: 0 10px 22px rgba(0, 122, 255, .35), 0 2px 6px rgba(0, 0, 0, .08);
         }
 
         .login-button:active {
             transform: translateY(1px);
             background: var(--brand-press);
-            box-shadow: 0 8px 16px rgba(0, 122, 255, .3), 0 2px 6px rgba(0, 0, 0, .1);
         }
 
         .login-button:focus-visible {
             outline: none;
-            box-shadow: 0 0 0 4px var(--ring), 0 10px 22px rgba(0, 122, 255, .35);
+            box-shadow: 0 0 0 4px var(--ring);
         }
 
         .login-button:disabled {
@@ -119,6 +108,7 @@
             box-shadow: none;
         }
 
+        /* Container */
         .login-container {
             width: 100%;
             max-width: 420px;
@@ -126,7 +116,6 @@
             border-radius: 16px;
             padding: 32px clamp(22px, 4vw, 32px) 24px;
             box-shadow: 0 20px 40px rgba(0, 0, 0, .45);
-            box-sizing: border-box;
             display: flex;
             flex-direction: column;
             gap: 18px;
@@ -137,32 +126,26 @@
             flex-direction: column;
             gap: 18px;
             width: 100%;
-            max-width: 420px;
-            margin: 0 auto;
-            box-sizing: border-box;
         }
 
         .login-wrapper {
             width: 100%;
-            flex: 1 0 auto;
+            flex: 1;
             display: flex;
             justify-content: center;
-            align-items: stretch;
             padding: 72px 16px calc(24px + env(safe-area-inset-bottom));
-            box-sizing: border-box;
-            background: var(--bg);
         }
 
+        /* Title */
         .page-title {
             margin: 0 0 6px;
             font-family: Georgia;
             font-size: 28px;
             font-weight: 500;
-            line-height: 1.2;
             color: var(--text);
-            letter-spacing: .2px;
         }
 
+        /* Desktop */
         @media (min-width: 720px) {
             .login-wrapper {
                 padding: 64px 24px;
@@ -266,8 +249,6 @@
                     alert(data?.message || 'Login failed. Please try again.');
                     return;
                 }
-
-                alert('Login successful!');
 
                 location.href = '/product';
             } catch (err) {

@@ -24,7 +24,7 @@ exports.get = async (req, res) => {
 // URL: http://localhost:3001/api/product/getall
 exports.getall = async (req, res) => {
     try {
-        const sql = `SELECT * FROM Flower JOIN Category ON Flower.CID = Category.CID`;
+        const sql = `SELECT * FROM Flower AS f JOIN Category AS c ON f.CID = c.CID`;
         const [rows] = await db.query(sql);
         res.json(rows);
     } catch (error) {
@@ -67,18 +67,7 @@ exports.search = async (req, res) => {
 
         const whereSql = where.length ? `WHERE ${where.join(' OR ')}` : '';
 
-        const sql = `
-            SELECT
-                f.FlowerID,
-                f.FlowerName,
-                f.Price,
-                f.srcImage,
-                f.CID
-            FROM Flower AS f
-            JOIN Category AS c
-            ON f.CID = c.CID
-            ${whereSql}
-        `;
+        const sql = `SELECT * FROM Flower AS f JOIN Category AS c ON f.CID = c.CID ${whereSql}`;
 
         const [rows] = await db.query(sql, params);
         res.json(rows);
@@ -171,7 +160,7 @@ exports.searchs = async (req, res) => {
 exports.add = async (req, res) => {
     try {
         const FlowerName = (req.body.FlowerName ?? '').toString().trim();
-        const CID = req.body.CID ? Number(req.body.CID) : null;
+        const CID = Number(req.body.CID ?? 1);
         const Price = Number(req.body.Price ?? null);
         const StartDate = req.body.StartDate ? req.body.StartDate.toString().slice(0, 10) : null;
         const EndDate = req.body.EndDate ? req.body.EndDate.toString().slice(0, 10) : null;
