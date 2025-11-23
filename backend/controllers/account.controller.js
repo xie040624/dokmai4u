@@ -27,7 +27,7 @@ exports.getall = async (req, res) => {
         const [rows] = await db.query(`SELECT AdminID, Role, Username FROM Admin`);
         res.json(rows);
     } catch (error) {
-        console.error(error);
+        console.error('Get all accounts error:', error);
         res.status(500).json({ message: 'Database error' });
     }
 };
